@@ -112,7 +112,7 @@ export function BookmarkListView({ listId }: { listId: string }) {
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-x-1 gap-y-3">
-        <div className="flex flex-col gap-2">
+        <div className="flex min-w-0 flex-1 flex-col gap-2">
           {editing ? (
             <div className="mb-1 flex gap-2">
               <Input
@@ -128,9 +128,11 @@ export function BookmarkListView({ listId }: { listId: string }) {
               </Button>
             </div>
           ) : (
-            <div className="flex items-center gap-4">
-              <h1 className="text-2xl font-bold sm:text-3xl">{list.name}</h1>
-              <div className="flex gap-1">
+            <div className="flex min-w-0 items-center gap-4">
+              <h1 className="min-w-0 truncate text-2xl font-bold sm:text-3xl">
+                {list.name}
+              </h1>
+              <div className="flex shrink-0 gap-1">
                 <Button
                   variant="ghost"
                   size="icon-sm"

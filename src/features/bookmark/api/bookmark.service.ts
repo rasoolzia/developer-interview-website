@@ -17,6 +17,13 @@ export async function getBookmarkListSummaries(
     bookmarkRepository.getLists(),
     bookmarkRepository.getAllItems(),
   ]);
+  if (items.length === 0) {
+    return lists.map((list) => ({
+      list,
+      questionCount: 0,
+      containsQuestion: false,
+    }));
+  }
 
   const questionIds = [...new Set(items.map((item) => item.questionId))];
   const questions = await getQuestionsByIds(questionIds, language);
@@ -61,6 +68,7 @@ export async function getBookmarkListQuestionCounts(
   language: Language,
 ): Promise<Map<string, number>> {
   const items = await bookmarkRepository.getAllItems();
+  if (items.length === 0) return new Map<string, number>();
 
   const questionIds = [...new Set(items.map((item) => item.questionId))];
 
@@ -97,6 +105,11 @@ export async function resolveBookmarkListContext(
   }
 
   const items = await bookmarkRepository.getItems(listId);
+
+  if (items.length === 0) {
+    return { list, items, questions: [] };
+  }
+
   const questionRecords = await getQuestionsByIds(
     items.map((item) => item.questionId),
     language,
