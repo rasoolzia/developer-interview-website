@@ -23,6 +23,7 @@ export function QuestionSidebar({
           topic={topic}
           navigation={navigation}
           navigationHrefs={navigationHrefs}
+          enableKeyboardNavigation
         />
       </div>
     </aside>

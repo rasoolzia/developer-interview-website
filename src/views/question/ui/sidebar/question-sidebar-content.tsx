@@ -9,6 +9,7 @@ import { QuestionInfo } from "../question-info";
 type Props = Pick<QuestionDetails, "question" | "topic" | "navigation"> & {
   navigationHrefs: QuestionNavigationHrefs;
   onNavigate?: () => void;
+  enableKeyboardNavigation?: boolean;
 };
 
 export function QuestionSidebarContent({
@@ -17,6 +18,7 @@ export function QuestionSidebarContent({
   navigation,
   navigationHrefs,
   onNavigate,
+  enableKeyboardNavigation = false,
 }: Props) {
   return (
     <div className="space-y-6">
@@ -33,6 +35,7 @@ export function QuestionSidebarContent({
         className="hidden lg:flex"
         navigationHrefs={navigationHrefs}
         onNavigate={onNavigate}
+        enableKeyboardNavigation={enableKeyboardNavigation}
       />
     </div>
   );

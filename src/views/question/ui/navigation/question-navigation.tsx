@@ -2,7 +2,7 @@
 
 import { ArrowLeftIcon, ArrowRightIcon, LoaderCircleIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useState, useTransition } from "react";
+import { useCallback, useEffect, useState, useTransition } from "react";
 
 import { useRouter } from "@/shared/config/i18n";
 import { cn } from "@/shared/lib";
@@ -15,6 +15,7 @@ type Direction = "previous" | "next";
 type Props = {
   navigationHrefs: QuestionNavigationHrefs;
   onNavigate?: () => void;
+  enableKeyboardNavigation?: boolean;
   className?: string;
 };
 
@@ -40,6 +41,7 @@ const NAV_ITEMS = [
 export function QuestionNavigation({
   navigationHrefs,
   onNavigate,
+  enableKeyboardNavigation = false,
   className,
 }: Props) {
   const t = useTranslations("question");
@@ -48,14 +50,39 @@ export function QuestionNavigation({
   const [isPending, startTransition] = useTransition();
   const [navigatingTo, setNavigatingTo] = useState<Direction | null>(null);
 
-  const navigateQuestion = (direction: Direction, href: string) => {
-    setNavigatingTo(direction);
-    onNavigate?.();
+  const navigateQuestion = useCallback(
+    (direction: Direction, href: string) => {
+      setNavigatingTo(direction);
+      onNavigate?.();
 
-    startTransition(() => {
-      router.push(href);
-    });
-  };
+      startTransition(() => {
+        router.push(href);
+      });
+    },
+    [onNavigate, router, startTransition],
+  );
+
+  useEffect(() => {
+    if (!enableKeyboardNavigation) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const direction =
+        event.key === "ArrowLeft"
+          ? "previous"
+          : event.key === "ArrowRight"
+            ? "next"
+            : null;
+      const href = direction ? navigationHrefs[direction] : undefined;
+
+      if (!direction || !href) return;
+
+      event.preventDefault();
+      navigateQuestion(direction, href);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [enableKeyboardNavigation, navigationHrefs, navigateQuestion]);
 
   return (
     <nav className={cn("flex gap-2", className)}>
