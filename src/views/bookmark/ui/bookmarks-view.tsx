@@ -5,7 +5,10 @@ import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 
 import type { BookmarkList } from "@/features/bookmark/model";
-import { bookmarkRepository } from "@/features/bookmark/storage";
+import {
+  bookmarkRepository,
+  DuplicateListNameError,
+} from "@/features/bookmark/storage";
 import { useMutationState } from "@/shared/hooks";
 import { parseLanguage } from "@/shared/lib";
 import { ConfirmationDialog } from "@/shared/ui";
@@ -17,11 +20,23 @@ import { BookmarkLoading } from "./bookmark-loading";
 
 export function BookmarksView() {
   const t = useTranslations("management.bookmarks");
+  const tq = useTranslations("question.bookmark");
   const locale = useLocale();
   const { lists, loading, error, reload } = useBookmarkLists(
     parseLanguage(locale),
   );
-  const { saving, error: mutationError, run: runMutation } = useMutationState();
+  const {
+    saving,
+    error: mutationError,
+    hasError: hasMutationError,
+    run: runMutation,
+  } = useMutationState();
+
+  const mutationErrorMessage = hasMutationError
+    ? mutationError instanceof DuplicateListNameError
+      ? tq("errorDuplicateName")
+      : t("error")
+    : null;
 
   const [name, setName] = useState("");
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -75,8 +90,10 @@ export function BookmarksView() {
         </form>
       </div>
 
-      {(error || mutationError) && (
-        <p className="text-destructive text-sm">{t("error")}</p>
+      {(error || mutationErrorMessage) && (
+        <p className="text-destructive text-sm">
+          {error ? t("error") : mutationErrorMessage}
+        </p>
       )}
 
       {lists.length === 0 ? (

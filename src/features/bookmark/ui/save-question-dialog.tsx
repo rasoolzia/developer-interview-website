@@ -32,7 +32,7 @@ export function SaveQuestionDialog({ questionId, onSaved }: Props) {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [newName, setNewName] = useState("");
   const [counts, setCounts] = useState<Record<string, number>>({});
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isCreating, setIsCreating] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -168,7 +168,7 @@ export function SaveQuestionDialog({ questionId, onSaved }: Props) {
 
       {isLoading ? (
         <div className="text-muted-foreground flex items-center justify-center">
-          <LoaderCircleIcon className="size-4 animate-spin" />
+          <LoaderCircleIcon className="text-muted-foreground size-6 animate-spin" />
         </div>
       ) : lists.length === 0 && !error ? (
         <p className="text-muted-foreground text-sm">{t("noLists")}</p>

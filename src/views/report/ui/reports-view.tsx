@@ -22,7 +22,11 @@ export function ReportsView() {
   const { questions, loading, error, removeLocal } = useReportedQuestions(
     parseLanguage(locale),
   );
-  const { saving, error: mutationError, run: runMutation } = useMutationState();
+  const {
+    saving,
+    hasError: hasMutationError,
+    run: runMutation,
+  } = useMutationState();
   const [pendingQuestionId, setPendingQuestionId] = useState<string | null>(
     null,
   );
@@ -51,7 +55,7 @@ export function ReportsView() {
         )}
       </div>
 
-      {(error || mutationError) && (
+      {(error || hasMutationError) && (
         <p className="text-destructive text-sm">{t("error")}</p>
       )}
 

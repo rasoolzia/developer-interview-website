@@ -31,8 +31,11 @@ export function ThemeSwitcher() {
       <TooltipTrigger
         render={
           <Button
-            onClick={() => setTheme(THEMES[currentTheme])}
-            disabled={!mounted}
+            onClick={() => {
+              if (!mounted) return;
+
+              setTheme(THEMES[currentTheme]);
+            }}
             aria-label="Toggle theme"
             variant="ghost"
             className="h-10 px-2"

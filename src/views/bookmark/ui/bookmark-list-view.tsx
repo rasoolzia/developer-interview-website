@@ -4,7 +4,10 @@ import { PencilIcon, Trash2Icon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 
-import { bookmarkRepository } from "@/features/bookmark/storage";
+import {
+  bookmarkRepository,
+  DuplicateListNameError,
+} from "@/features/bookmark/storage";
 import { ROUTES } from "@/shared/config";
 import { Link, useRouter } from "@/shared/config/i18n";
 import { useMutationState } from "@/shared/hooks";
@@ -18,6 +21,7 @@ import { BookmarkLoading } from "./bookmark-loading";
 
 export function BookmarkListView({ listId }: { listId: string }) {
   const t = useTranslations("management.bookmarks");
+  const tq = useTranslations("question.bookmark");
   const locale = useLocale();
   const router = useRouter();
 
@@ -31,7 +35,18 @@ export function BookmarkListView({ listId }: { listId: string }) {
     applyRename,
   } = useBookmarkList(listId, parseLanguage(locale));
 
-  const { saving, error: mutationError, run: runMutation } = useMutationState();
+  const {
+    saving,
+    error: mutationError,
+    hasError: hasMutationError,
+    run: runMutation,
+  } = useMutationState();
+
+  const mutationErrorMessage = hasMutationError
+    ? mutationError instanceof DuplicateListNameError
+      ? tq("errorDuplicateName")
+      : t("error")
+    : null;
 
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState("");
@@ -156,8 +171,8 @@ export function BookmarkListView({ listId }: { listId: string }) {
         </div>
       </div>
 
-      {mutationError && (
-        <p className="text-destructive text-sm">{t("error")}</p>
+      {mutationErrorMessage && (
+        <p className="text-destructive text-sm">{mutationErrorMessage}</p>
       )}
 
       {questions.length === 0 ? (

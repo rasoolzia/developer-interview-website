@@ -4,6 +4,28 @@ import type { BookmarkItem, BookmarkList, BookmarkRepository } from "../model";
 
 export class DuplicateListNameError extends Error {}
 
+async function assertUniqueListName(
+  name: string,
+  excludeListId?: string,
+): Promise<string> {
+  const trimmed = name.trim();
+  const normalized = trimmed.toLowerCase();
+
+  const existing = await dbGetAll<BookmarkList>("bookmarkLists");
+
+  const duplicate = existing.some(
+    (list) =>
+      list.id !== excludeListId &&
+      list.name.trim().toLowerCase() === normalized,
+  );
+
+  if (duplicate) {
+    throw new DuplicateListNameError(name);
+  }
+
+  return trimmed;
+}
+
 const byCreatedAtDesc = <T extends { createdAt: number }>(a: T, b: T) =>
   b.createdAt - a.createdAt;
 
@@ -28,13 +50,7 @@ export const indexedDbBookmarkRepository: BookmarkRepository = {
   },
 
   async createList(name) {
-    const trimmed = name.trim();
-    const normalized = trimmed.toLowerCase();
-
-    const existing = await dbGetAll<BookmarkList>("bookmarkLists");
-    if (existing.some((l) => l.name.trim().toLowerCase() === normalized)) {
-      throw new DuplicateListNameError(name);
-    }
+    const trimmed = await assertUniqueListName(name);
 
     const now = Date.now();
     const list: BookmarkList = {
@@ -43,6 +59,7 @@ export const indexedDbBookmarkRepository: BookmarkRepository = {
       createdAt: now,
       updatedAt: now,
     };
+
     await dbPut("bookmarkLists", list);
     return list;
   },
@@ -82,9 +99,11 @@ export const indexedDbBookmarkRepository: BookmarkRepository = {
     const list = await dbGet<BookmarkList>("bookmarkLists", listId);
     if (!list) return;
 
+    const trimmed = await assertUniqueListName(name, listId);
+
     await dbPut("bookmarkLists", {
       ...list,
-      name: name.trim(),
+      name: trimmed,
       updatedAt: Date.now(),
     });
   },
