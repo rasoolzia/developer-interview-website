@@ -166,7 +166,7 @@ export function BookmarkListView({ listId }: { listId: string }) {
               nativeButton={false}
               render={
                 <Link href={ROUTES.bookmarkReview(listId, questions[0].id)}>
-                  review
+                  {t("review")}
                 </Link>
               }
             />

@@ -18,7 +18,7 @@ export function BookmarkLoading({ detail = false }: { detail?: boolean }) {
           </div>
           <div className="flex flex-col gap-3">
             <Skeleton className="h-6 w-24" />
-            <Skeleton className="h-8 w-24" />
+            <Skeleton className="h-8 w-32" />
           </div>
         </div>
         <QuestionListLoading count={5} showDate />

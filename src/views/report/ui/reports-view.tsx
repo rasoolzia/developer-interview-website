@@ -49,7 +49,9 @@ export function ReportsView() {
           <Button
             nativeButton={false}
             render={
-              <Link href={ROUTES.reportReview(questions[0].id)}>review</Link>
+              <Link href={ROUTES.reportReview(questions[0].id)}>
+                {t("review")}
+              </Link>
             }
           />
         )}
