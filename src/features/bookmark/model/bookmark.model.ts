@@ -40,5 +40,5 @@ export type BookmarkRepository = {
 
   deleteList(listId: string): Promise<void>;
 
-  renameList(listId: string, name: string): Promise<void>;
+  renameList(listId: string, name: string): Promise<BookmarkList | undefined>;
 };

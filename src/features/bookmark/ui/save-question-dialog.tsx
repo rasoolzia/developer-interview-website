@@ -101,7 +101,7 @@ export function SaveQuestionDialog({ questionId, onSaved }: Props) {
 
   async function handleCreateList() {
     const name = newName.trim();
-    if (!name || isCreating) return;
+    if (!name || isCreating || isLoading) return;
     setIsCreating(true);
     setError(null);
     try {
@@ -189,6 +189,7 @@ export function SaveQuestionDialog({ questionId, onSaved }: Props) {
                   type="checkbox"
                   className="accent-primary"
                   checked={selected.has(list.id)}
+                  disabled={isSaving}
                   onChange={() => toggleList(list.id)}
                 />
 
@@ -210,7 +211,7 @@ export function SaveQuestionDialog({ questionId, onSaved }: Props) {
           value={newName}
           onChange={(e) => setNewName(e.target.value)}
           placeholder={t("newListPlaceholder")}
-          disabled={isCreating}
+          disabled={isCreating || isLoading}
           onKeyDown={(e) => {
             if (e.key === "Enter") void handleCreateList();
           }}
@@ -220,7 +221,7 @@ export function SaveQuestionDialog({ questionId, onSaved }: Props) {
           variant="outline"
           size="icon"
           onClick={() => void handleCreateList()}
-          disabled={!newName.trim() || isCreating}
+          disabled={!newName.trim() || isCreating || isLoading}
         >
           <PlusIcon className="size-4" />
         </Button>

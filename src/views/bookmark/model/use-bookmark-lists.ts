@@ -59,6 +59,7 @@ export function useBookmarkLists(language: Language) {
 
   const reload = useCallback(async () => {
     setState((s) => ({ ...s, loading: true, error: false }));
+
     try {
       const lists = await fetchListsWithCounts(language);
       setState({ lists, loading: false, error: false });
@@ -67,21 +68,57 @@ export function useBookmarkLists(language: Language) {
     }
   }, [language]);
 
+  const addListLocal = useCallback((list: BookmarkList) => {
+    setState((s) => ({
+      ...s,
+      lists: [
+        { ...list, questionCount: 0 },
+        ...s.lists.filter((item) => item.id !== list.id),
+      ],
+      error: false,
+    }));
+  }, []);
+
+  const updateListLocal = useCallback(
+    (listId: string, update: Partial<BookmarkList>) => {
+      setState((s) => ({
+        ...s,
+        lists: s.lists.map((list) =>
+          list.id === listId ? { ...list, ...update } : list,
+        ),
+      }));
+    },
+    [],
+  );
+
+  const removeListLocal = useCallback((listId: string) => {
+    setState((s) => ({
+      ...s,
+      lists: s.lists.filter((list) => list.id !== listId),
+    }));
+  }, []);
+
   useEffect(() => {
     let ignore = false;
+
     fetchListsWithCounts(language)
       .then((lists) => {
-        if (!ignore) setState({ lists, loading: false, error: false });
+        if (!ignore) {
+          setState({ lists, loading: false, error: false });
+        }
       })
       .catch(() => {
-        if (!ignore) setState((s) => ({ ...s, loading: false, error: true }));
+        if (!ignore) {
+          setState((s) => ({ ...s, loading: false, error: true }));
+        }
       });
+
     return () => {
       ignore = true;
     };
   }, [language]);
 
-  return { ...state, reload };
+  return { ...state, reload, addListLocal, updateListLocal, removeListLocal };
 }
 
 // ---------- Hook: one list + its questions ----------
@@ -157,8 +194,8 @@ export function useBookmarkList(listId: string, language: Language) {
     }));
   }, []);
 
-  const applyRename = useCallback((name: string) => {
-    setState((s) => (s.list ? { ...s, list: { ...s.list, name } } : s));
+  const applyRename = useCallback((list: BookmarkList) => {
+    setState((s) => ({ ...s, list }));
   }, []);
 
   return { ...state, reload, removeQuestionLocal, applyRename };

@@ -72,8 +72,9 @@ export function BookmarkListView({ listId }: { listId: string }) {
   async function rename() {
     if (!list || !name.trim()) return;
     await runMutation(async () => {
-      await bookmarkRepository.renameList(list.id, name);
-      applyRename(name);
+      const updatedList = await bookmarkRepository.renameList(list.id, name);
+
+      if (updatedList) applyRename(updatedList);
       setEditing(false);
     });
   }

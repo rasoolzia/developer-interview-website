@@ -32,20 +32,24 @@ const byCreatedAtDesc = <T extends { createdAt: number }>(a: T, b: T) =>
 async function updateList(
   listId: string,
   update: (list: BookmarkList) => BookmarkList,
-): Promise<void> {
+): Promise<BookmarkList | undefined> {
   const db = await getDb();
 
-  await new Promise<void>((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const transaction = db.transaction("bookmarkLists", "readwrite");
     const store = transaction.objectStore("bookmarkLists");
     const request = store.get(listId);
+    let updatedList: BookmarkList | undefined;
 
     request.onsuccess = () => {
       const list = request.result as BookmarkList | undefined;
-      if (list) store.put(update(list));
+      if (list) {
+        updatedList = update(list);
+        store.put(updatedList);
+      }
     };
     request.onerror = () => reject(request.error);
-    transaction.oncomplete = () => resolve();
+    transaction.oncomplete = () => resolve(updatedList);
     transaction.onerror = () => reject(transaction.error);
     transaction.onabort = () => reject(transaction.error);
   });
@@ -152,7 +156,7 @@ export const indexedDbBookmarkRepository: BookmarkRepository = {
 
     const trimmed = await assertUniqueListName(name, listId);
 
-    await updateList(listId, (currentList) => ({
+    return updateList(listId, (currentList) => ({
       ...currentList,
       name: trimmed,
       updatedAt: Date.now(),

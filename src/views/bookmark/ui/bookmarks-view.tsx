@@ -22,9 +22,14 @@ export function BookmarksView() {
   const t = useTranslations("management.bookmarks");
   const tq = useTranslations("question.bookmark");
   const locale = useLocale();
-  const { lists, loading, error, reload } = useBookmarkLists(
-    parseLanguage(locale),
-  );
+  const {
+    lists,
+    loading,
+    error,
+    addListLocal,
+    updateListLocal,
+    removeListLocal,
+  } = useBookmarkLists(parseLanguage(locale));
   const {
     saving,
     error: mutationError,
@@ -45,19 +50,24 @@ export function BookmarksView() {
 
   async function createList(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!name.trim()) return;
+
+    const trimmedName = name.trim();
+    if (!trimmedName || saving) return;
+
     await runMutation(async () => {
-      await bookmarkRepository.createList(name);
+      const list = await bookmarkRepository.createList(trimmedName);
+
+      addListLocal(list);
       setName("");
-      await reload();
     });
   }
 
   async function renameList(listId: string, newName: string) {
     await runMutation(async () => {
-      await bookmarkRepository.renameList(listId, newName);
+      const list = await bookmarkRepository.renameList(listId, newName);
+
+      if (list) updateListLocal(listId, list);
       setEditingId(null);
-      await reload();
     });
   }
 
@@ -65,8 +75,8 @@ export function BookmarksView() {
     if (!pendingDelete) return;
     await runMutation(async () => {
       await bookmarkRepository.deleteList(pendingDelete.id);
+      removeListLocal(pendingDelete.id);
       setPendingDelete(null);
-      await reload();
     });
   }
 
