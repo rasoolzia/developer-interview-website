@@ -6,6 +6,7 @@ import { useState } from "react";
 
 import { reportRepository } from "@/features/report/storage";
 import { ROUTES } from "@/shared/config";
+import { Link } from "@/shared/config/i18n";
 import { useMutationState } from "@/shared/hooks";
 import { parseLanguage } from "@/shared/lib";
 import { ConfirmationDialog } from "@/shared/ui";
@@ -38,7 +39,17 @@ export function ReportsView() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold sm:text-3xl">{t("title")}</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold sm:text-3xl">{t("title")}</h1>
+        {questions.length > 0 && (
+          <Button
+            nativeButton={false}
+            render={
+              <Link href={ROUTES.reportReview(questions[0].id)}>review</Link>
+            }
+          />
+        )}
+      </div>
 
       {(error || mutationError) && (
         <p className="text-destructive text-sm">{t("error")}</p>

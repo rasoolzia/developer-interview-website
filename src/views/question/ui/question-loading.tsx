@@ -39,7 +39,7 @@ export function QuestionLoading() {
 
           {/* Code block */}
           <div className="rounded-lg border">
-            <div className="bg-muted flex h-10 items-center justify-between rounded-t-lg border-b px-3">
+            <div className="bg-muted flex h-10 items-center justify-between rounded-lg border-b px-3">
               <Skeleton className="h-3 w-16 rounded-md" />
               <Skeleton className="size-7 rounded-md" />
             </div>

@@ -6,7 +6,7 @@ import { useState } from "react";
 
 import { bookmarkRepository } from "@/features/bookmark/storage";
 import { ROUTES } from "@/shared/config";
-import { useRouter } from "@/shared/config/i18n";
+import { Link, useRouter } from "@/shared/config/i18n";
 import { useMutationState } from "@/shared/hooks";
 import { parseLanguage } from "@/shared/lib";
 import { BackLink, ConfirmationDialog } from "@/shared/ui";
@@ -95,12 +95,10 @@ export function BookmarkListView({ listId }: { listId: string }) {
 
   return (
     <div className="space-y-6">
-      <BackLink href={ROUTES.bookmarks}>{t("title")}</BackLink>
-
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
+      <div className="flex flex-wrap items-center justify-between gap-x-1 gap-y-3">
+        <div className="flex flex-col gap-2">
           {editing ? (
-            <div className="flex gap-2">
+            <div className="mb-1 flex gap-2">
               <Input
                 value={name}
                 onChange={(event) => setName(event.target.value)}
@@ -114,33 +112,48 @@ export function BookmarkListView({ listId }: { listId: string }) {
               </Button>
             </div>
           ) : (
-            <h1 className="text-2xl font-bold sm:text-3xl">{list.name}</h1>
+            <div className="flex items-center gap-4">
+              <h1 className="text-2xl font-bold sm:text-3xl">{list.name}</h1>
+              <div className="flex gap-1">
+                <Button
+                  variant="ghost"
+                  size="icon-sm"
+                  aria-label={t("rename")}
+                  onClick={startEditing}
+                >
+                  <PencilIcon />
+                </Button>
+                <Button
+                  variant="destructive"
+                  size="icon-sm"
+                  aria-label={t("delete")}
+                  onClick={() => setConfirmAction("delete")}
+                >
+                  <Trash2Icon />
+                </Button>
+              </div>
+            </div>
           )}
           <p className="text-muted-foreground mt-1 text-sm">
             {t("questions", { count: questions.length })}
           </p>
         </div>
 
-        {!editing && (
-          <div className="flex gap-1">
+        <div className="flex flex-col">
+          <BackLink href={ROUTES.bookmarks} className="mb-4">
+            {t("title")}
+          </BackLink>
+          {questions.length > 0 && (
             <Button
-              variant="ghost"
-              size="icon-sm"
-              aria-label={t("rename")}
-              onClick={startEditing}
-            >
-              <PencilIcon />
-            </Button>
-            <Button
-              variant="destructive"
-              size="icon-sm"
-              aria-label={t("delete")}
-              onClick={() => setConfirmAction("delete")}
-            >
-              <Trash2Icon />
-            </Button>
-          </div>
-        )}
+              nativeButton={false}
+              render={
+                <Link href={ROUTES.bookmarkReview(listId, questions[0].id)}>
+                  review
+                </Link>
+              }
+            />
+          )}
+        </div>
       </div>
 
       {mutationError && (
