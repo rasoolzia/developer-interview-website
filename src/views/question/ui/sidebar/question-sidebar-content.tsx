@@ -6,20 +6,21 @@ import { QuestionProgress } from "../navigation/question-progress";
 import { QuestionActions } from "../question-actions";
 import { QuestionInfo } from "../question-info";
 
-type Props = QuestionDetails & {
-  navigationHrefs?: QuestionNavigationHrefs;
+type Props = Pick<QuestionDetails, "question" | "topic" | "navigation"> & {
+  navigationHrefs: QuestionNavigationHrefs;
   onNavigate?: () => void;
 };
 
 export function QuestionSidebarContent({
   question,
+  topic,
   navigation,
   navigationHrefs,
   onNavigate,
 }: Props) {
   return (
     <div className="space-y-6">
-      <QuestionInfo question={question} />
+      <QuestionInfo question={question} topic={topic} />
 
       <QuestionProgress
         className="hidden lg:block"
@@ -30,9 +31,6 @@ export function QuestionSidebarContent({
 
       <QuestionNavigation
         className="hidden lg:flex"
-        question={question}
-        previousSlug={navigation.previousSlug}
-        nextSlug={navigation.nextSlug}
         navigationHrefs={navigationHrefs}
         onNavigate={onNavigate}
       />

@@ -1,19 +1,16 @@
 import { useTranslations } from "next-intl";
 
-import type { Question } from "@/entities/question/model";
-import { ROUTES } from "@/shared/config";
-import { formatLabel } from "@/shared/lib";
 import { BackLink } from "@/shared/ui";
 
 type Props = {
-  question: Question;
+  questionTitle: string;
+  backHref: string;
+  backPage: string;
   className?: string;
-  backHref?: string;
-  backPage?: string;
 };
 
 export function QuestionHeader({
-  question,
+  questionTitle,
   className,
   backHref,
   backPage,
@@ -22,17 +19,14 @@ export function QuestionHeader({
 
   return (
     <header className={className}>
-      <BackLink
-        href={backHref ?? ROUTES.topic(question.domain, question.topic)}
-        className="mb-4"
-      >
+      <BackLink href={backHref} className="mb-4">
         {t("backToPage", {
-          page: backPage ?? formatLabel(question.topic),
+          page: backPage,
         })}
       </BackLink>
 
       <h1 className="text-2xl leading-tight font-bold tracking-tight sm:text-3xl">
-        {question.title}
+        {questionTitle}
       </h1>
     </header>
   );

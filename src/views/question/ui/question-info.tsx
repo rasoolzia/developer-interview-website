@@ -6,8 +6,9 @@ import { formatLabel } from "@/shared/lib";
 
 type Props = {
   question: Question;
+  topic: string;
 };
-export function QuestionInfo({ question }: Props) {
+export function QuestionInfo({ question, topic }: Props) {
   const t = useTranslations("question");
 
   return (
@@ -18,7 +19,7 @@ export function QuestionInfo({ question }: Props) {
         <div>
           <dt className="text-muted-foreground mb-1">{t("topic")}</dt>
 
-          <dd className="font-medium">{formatLabel(question.topic)}</dd>
+          <dd className="font-medium">{formatLabel(topic)}</dd>
         </div>
 
         <div>

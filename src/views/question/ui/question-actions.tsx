@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 
-import { Question } from "@/entities/question/model";
+import type { Question } from "@/entities/question/model";
 import { SaveQuestionButton } from "@/features/bookmark";
 import { CopyButton } from "@/features/copy";
 import { ReportQuestionButton } from "@/features/report";

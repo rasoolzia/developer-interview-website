@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 
 import { fetchQuestionById } from "@/entities/question/api/question.actions";
 import type { Question, QuestionDetails } from "@/entities/question/model";
+import type { SearchItem } from "@/entities/search/model";
 import { resolveBookmarkListContext } from "@/features/bookmark/api";
 import type { BookmarkList } from "@/features/bookmark/model";
 import { ROUTES } from "@/shared/config";
-import type { Language, QuestionBase } from "@/shared/types";
+import type { Language } from "@/shared/types";
 
 type ReviewState = {
   loading: boolean;
@@ -29,8 +30,9 @@ const initialState: ReviewState = {
 
 function buildBookmarkNavigation(
   listId: string,
-  questions: QuestionBase[],
+  questions: SearchItem[],
   questionId: string,
+  questionBase: SearchItem,
   question: Question,
   listName: string,
 ): QuestionDetails {
@@ -38,6 +40,8 @@ function buildBookmarkNavigation(
 
   return {
     question,
+    domain: questionBase.domain,
+    topic: questionBase.topic,
     header: {
       backHref: ROUTES.bookmarkList(listId),
       backPage: listName,
@@ -113,6 +117,7 @@ async function loadBookmarkReview(
         listId,
         questions,
         questionId,
+        questionBase,
         question,
         list.name,
       ),

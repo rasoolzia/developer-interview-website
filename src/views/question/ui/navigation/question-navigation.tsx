@@ -4,8 +4,6 @@ import { ArrowLeftIcon, ArrowRightIcon, LoaderCircleIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState, useTransition } from "react";
 
-import type { Question } from "@/entities/question/model";
-import { ROUTES } from "@/shared/config";
 import { useRouter } from "@/shared/config/i18n";
 import { cn } from "@/shared/lib";
 import { Button } from "@/shared/ui/shadcn";
@@ -15,10 +13,7 @@ import type { QuestionNavigationHrefs } from "../../model/question-navigation.mo
 type Direction = "previous" | "next";
 
 type Props = {
-  question: Question;
-  previousSlug?: string;
-  nextSlug?: string;
-  navigationHrefs?: QuestionNavigationHrefs;
+  navigationHrefs: QuestionNavigationHrefs;
   onNavigate?: () => void;
   className?: string;
 };
@@ -43,9 +38,6 @@ const NAV_ITEMS = [
 ];
 
 export function QuestionNavigation({
-  question,
-  previousSlug,
-  nextSlug,
   navigationHrefs,
   onNavigate,
   className,
@@ -56,22 +48,11 @@ export function QuestionNavigation({
   const [isPending, startTransition] = useTransition();
   const [navigatingTo, setNavigatingTo] = useState<Direction | null>(null);
 
-  const neighbors: Record<Direction, string | undefined> = navigationHrefs
-    ? {
-        previous: navigationHrefs.previous,
-        next: navigationHrefs.next,
-      }
-    : { previous: previousSlug, next: nextSlug };
-
-  const navigateQuestion = (direction: Direction, target: string) => {
+  const navigateQuestion = (direction: Direction, href: string) => {
     setNavigatingTo(direction);
     onNavigate?.();
 
     startTransition(() => {
-      const href = navigationHrefs
-        ? target
-        : ROUTES.question(question.domain, question.topic, target);
-
       router.push(href);
     });
   };
@@ -80,7 +61,7 @@ export function QuestionNavigation({
     <nav className={cn("flex gap-2", className)}>
       {NAV_ITEMS.map(
         ({ direction, icon: Icon, labelKey, iconClassName, iconPosition }) => {
-          const target = neighbors[direction];
+          const target = navigationHrefs[direction];
           if (!target) return null;
 
           const isLoading = isPending && navigatingTo === direction;

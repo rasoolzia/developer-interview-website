@@ -3,13 +3,14 @@ import type { QuestionDetails } from "@/entities/question/model";
 import type { QuestionNavigationHrefs } from "../../model/question-navigation.model";
 import { QuestionSidebarContent } from "./question-sidebar-content";
 
-type Props = QuestionDetails & {
-  navigationHrefs?: QuestionNavigationHrefs;
+type Props = Pick<QuestionDetails, "question" | "topic" | "navigation"> & {
+  navigationHrefs: QuestionNavigationHrefs;
   className?: string;
 };
 
 export function QuestionSidebar({
   question,
+  topic,
   navigation,
   navigationHrefs,
   className,
@@ -19,6 +20,7 @@ export function QuestionSidebar({
       <div className="sticky top-20">
         <QuestionSidebarContent
           question={question}
+          topic={topic}
           navigation={navigation}
           navigationHrefs={navigationHrefs}
         />

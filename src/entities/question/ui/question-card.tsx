@@ -9,6 +9,8 @@ import { Badge } from "@/shared/ui/shadcn";
 
 type Props = {
   question: QuestionBase;
+  domain: string;
+  topic: string;
   href?: string;
   action?: React.ReactNode;
   showArrow?: boolean;
@@ -22,6 +24,8 @@ const VISIBLE_CATEGORIES = 2;
 
 export function QuestionCard({
   question,
+  domain,
+  topic,
   href,
   action,
   showArrow: showArrowProp,
@@ -31,18 +35,16 @@ export function QuestionCard({
 
   const visibleCategories = question.categories.slice(0, VISIBLE_CATEGORIES);
   const hiddenCount = question.categories.length - visibleCategories.length;
-  const showArrow = !!action ? false : showArrowProp;
+  const showArrow = action ? false : showArrowProp;
 
   return (
     <BaseCard
-      href={
-        href ?? ROUTES.question(question.domain, question.topic, question.slug)
-      }
+      href={href ?? ROUTES.question(domain, topic, question.slug)}
       showArrow={showArrow}
       action={action}
     >
       <div className="mb-3 flex flex-wrap items-center gap-1.5">
-        <Badge>{formatLabel(question.topic)}</Badge>
+        {topic && <Badge>{formatLabel(topic)}</Badge>}
 
         <Badge variant="outline">{question.difficulty}</Badge>
 

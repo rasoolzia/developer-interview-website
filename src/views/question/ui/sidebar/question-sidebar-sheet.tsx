@@ -18,13 +18,14 @@ import {
 import type { QuestionNavigationHrefs } from "../../model/question-navigation.model";
 import { QuestionSidebarContent } from "./question-sidebar-content";
 
-type Props = QuestionDetails & {
-  navigationHrefs?: QuestionNavigationHrefs;
+type Props = Pick<QuestionDetails, "question" | "topic" | "navigation"> & {
+  navigationHrefs: QuestionNavigationHrefs;
   className?: string;
 };
 
 export function QuestionSidebarSheet({
   question,
+  topic,
   navigation,
   navigationHrefs,
   className,
@@ -55,6 +56,7 @@ export function QuestionSidebarSheet({
           <div className="overflow-y-auto px-4 pb-6">
             <QuestionSidebarContent
               question={question}
+              topic={topic}
               navigation={navigation}
               navigationHrefs={navigationHrefs}
               onNavigate={() => setOpen(false)}

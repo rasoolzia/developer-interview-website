@@ -64,7 +64,11 @@ function TopicDetailsContent({ data, questions, filters }: Props) {
       {isPending ? (
         <QuestionListLoading count={questions.length} />
       ) : questions.length > 0 ? (
-        <QuestionList questions={questions} />
+        <QuestionList
+          questions={questions}
+          domain={data.meta.domain}
+          topic={data.meta.topic}
+        />
       ) : (
         <div className="bg-muted/40 rounded-lg border p-8 text-center">
           <p className="text-muted-foreground">

@@ -54,6 +54,8 @@ async function loadReportReview(
       questionNotFound: false,
       details: {
         question,
+        domain: questions[index].domain,
+        topic: questions[index].topic,
         navigation: {
           previousQuestionId: questions[index - 1]?.id,
           nextQuestionId: questions[index + 1]?.id,

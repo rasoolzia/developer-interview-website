@@ -1,4 +1,6 @@
 import type { QuestionDetails } from "@/entities/question/model";
+import { ROUTES } from "@/shared/config";
+import { formatLabel } from "@/shared/lib";
 
 import type { QuestionNavigationHrefs } from "../model/question-navigation.model";
 import { QuestionContent } from "./content/question-content";
@@ -14,25 +16,46 @@ type Props = QuestionDetails & {
 
 export function QuestionDetailsView({
   question,
+  domain,
+  topic,
   navigation,
   header,
   navigationHrefs,
 }: Props) {
+  const resolvedHeader = {
+    backHref: header?.backHref ?? ROUTES.topic(domain, topic),
+    backPage: header?.backPage ?? formatLabel(topic),
+  };
+
+  const resolvedNavigationHrefs: QuestionNavigationHrefs = {
+    previous:
+      navigationHrefs?.previous ??
+      (navigation.previousSlug
+        ? ROUTES.question(domain, topic, navigation.previousSlug)
+        : undefined),
+
+    next:
+      navigationHrefs?.next ??
+      (navigation.nextSlug
+        ? ROUTES.question(domain, topic, navigation.nextSlug)
+        : undefined),
+  };
+
   return (
     <main className="mx-auto max-w-7xl lg:flex lg:gap-10 lg:px-6">
       <QuestionSidebarSheet
         className="mb-6 lg:hidden"
         question={question}
+        topic={topic}
         navigation={navigation}
-        navigationHrefs={navigationHrefs}
+        navigationHrefs={resolvedNavigationHrefs}
       />
 
       <article className="min-w-0 flex-1 lg:max-w-4xl">
         <QuestionHeader
           className="mb-10"
-          question={question}
-          backHref={header?.backHref}
-          backPage={header?.backPage}
+          questionTitle={question.title}
+          {...resolvedHeader}
         />
 
         <QuestionContent markdown={question.markdown} />
@@ -44,18 +67,16 @@ export function QuestionDetailsView({
 
         <QuestionNavigation
           className="mt-10 lg:hidden"
-          question={question}
-          previousSlug={navigation.previousSlug}
-          nextSlug={navigation.nextSlug}
-          navigationHrefs={navigationHrefs}
+          navigationHrefs={resolvedNavigationHrefs}
         />
       </article>
 
       <QuestionSidebar
         className="hidden w-72 shrink-0 lg:block"
         question={question}
+        topic={topic}
         navigation={navigation}
-        navigationHrefs={navigationHrefs}
+        navigationHrefs={resolvedNavigationHrefs}
       />
     </main>
   );
