@@ -1,3 +1,5 @@
+import type { QuestionBase } from "@/shared/types";
+
 export type ReportItem = {
   questionId: string;
   createdAt: number;
@@ -11,4 +13,8 @@ export type ReportRepository = {
   addReport(questionId: string): Promise<void>;
 
   removeReport(questionId: string): Promise<void>;
+};
+
+export type ReportedQuestion = QuestionBase & {
+  reportedAt: number;
 };

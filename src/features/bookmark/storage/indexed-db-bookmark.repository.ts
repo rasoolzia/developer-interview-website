@@ -1,4 +1,4 @@
-import { dbDelete, dbGet, dbGetAll, dbPut } from "@/shared/lib";
+import { dbDelete, dbGet, dbGetAll, dbPut, getDb } from "@/shared/lib";
 
 import type { BookmarkItem, BookmarkList, BookmarkRepository } from "../model";
 
@@ -28,6 +28,67 @@ async function assertUniqueListName(
 
 const byCreatedAtDesc = <T extends { createdAt: number }>(a: T, b: T) =>
   b.createdAt - a.createdAt;
+
+async function updateList(
+  listId: string,
+  update: (list: BookmarkList) => BookmarkList,
+): Promise<void> {
+  const db = await getDb();
+
+  await new Promise<void>((resolve, reject) => {
+    const transaction = db.transaction("bookmarkLists", "readwrite");
+    const store = transaction.objectStore("bookmarkLists");
+    const request = store.get(listId);
+
+    request.onsuccess = () => {
+      const list = request.result as BookmarkList | undefined;
+      if (list) store.put(update(list));
+    };
+    request.onerror = () => reject(request.error);
+    transaction.oncomplete = () => resolve();
+    transaction.onerror = () => reject(transaction.error);
+    transaction.onabort = () => reject(transaction.error);
+  });
+}
+
+async function mutateListQuestion(
+  listId: string,
+  questionId: string,
+  operation: "add" | "remove",
+): Promise<void> {
+  const db = await getDb();
+
+  await new Promise<void>((resolve, reject) => {
+    const transaction = db.transaction(
+      ["bookmarkItems", "bookmarkLists"],
+      "readwrite",
+    );
+    const items = transaction.objectStore("bookmarkItems");
+    const request = items.get([listId, questionId]);
+
+    request.onsuccess = () => {
+      const item = request.result as BookmarkItem | undefined;
+      const changed = operation === "add" ? !item : !!item;
+      if (!changed) return;
+
+      if (operation === "add") {
+        items.put({ listId, questionId, createdAt: Date.now() });
+      } else {
+        items.delete([listId, questionId]);
+      }
+
+      const lists = transaction.objectStore("bookmarkLists");
+      const listRequest = lists.get(listId);
+      listRequest.onsuccess = () => {
+        const list = listRequest.result as BookmarkList | undefined;
+        if (list) lists.put({ ...list, updatedAt: Date.now() });
+      };
+    };
+    transaction.oncomplete = () => resolve();
+    transaction.onerror = () => reject(transaction.error);
+    transaction.onabort = () => reject(transaction.error);
+  });
+}
 
 export const indexedDbBookmarkRepository: BookmarkRepository = {
   async getLists() {
@@ -65,21 +126,11 @@ export const indexedDbBookmarkRepository: BookmarkRepository = {
   },
 
   async addQuestion(listId, questionId) {
-    const existing = await dbGet<BookmarkItem>("bookmarkItems", [
-      listId,
-      questionId,
-    ]);
-    if (existing) return;
-
-    await dbPut("bookmarkItems", {
-      listId,
-      questionId,
-      createdAt: Date.now(),
-    });
+    await mutateListQuestion(listId, questionId, "add");
   },
 
   async removeQuestion(listId, questionId) {
-    await dbDelete("bookmarkItems", [listId, questionId]);
+    await mutateListQuestion(listId, questionId, "remove");
   },
 
   async deleteList(listId) {
@@ -101,10 +152,10 @@ export const indexedDbBookmarkRepository: BookmarkRepository = {
 
     const trimmed = await assertUniqueListName(name, listId);
 
-    await dbPut("bookmarkLists", {
-      ...list,
+    await updateList(listId, (currentList) => ({
+      ...currentList,
       name: trimmed,
       updatedAt: Date.now(),
-    });
+    }));
   },
 };

@@ -1,4 +1,4 @@
-import { ClockIcon } from "lucide-react";
+import { CalendarDaysIcon, ClockIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { ROUTES } from "@/shared/config";
@@ -12,6 +12,10 @@ type Props = {
   href?: string;
   action?: React.ReactNode;
   showArrow?: boolean;
+  date?: {
+    timestamp: number;
+    message: string;
+  };
 };
 
 const VISIBLE_CATEGORIES = 2;
@@ -21,6 +25,7 @@ export function QuestionCard({
   href,
   action,
   showArrow: showArrowProp,
+  date,
 }: Props) {
   const t = useTranslations("question");
 
@@ -65,9 +70,19 @@ export function QuestionCard({
         {question.title}
       </h2>
 
-      <div className="text-muted-foreground mt-3 flex items-center gap-1.5 text-xs">
-        <ClockIcon className="size-3.5" />
-        <span>{t("readingTime", { minutes: question.readingTime })}</span>
+      <div className="text-muted-foreground mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs">
+        <span className="inline-flex items-center gap-1.5">
+          <ClockIcon className="size-3.5" />
+          {t("readingTime", { minutes: question.readingTime })}
+        </span>
+        {date && (
+          <span className="inline-flex items-center gap-1.5">
+            <CalendarDaysIcon className="size-3.5" />
+            <time dateTime={new Date(date.timestamp).toISOString()}>
+              {date.message}
+            </time>
+          </span>
+        )}
       </div>
     </BaseCard>
   );

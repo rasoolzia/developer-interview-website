@@ -21,7 +21,10 @@
     "removeTitle": "حذف سوال",
     "removeDescription": "آیا از حذف این سوال از لیست مطمئن هستید؟",
     "confirmDelete": "این لیست نشانک حذف شود؟",
-    "confirmRemove": "این سوال از لیست حذف شود؟"
+    "confirmRemove": "این سوال از لیست حذف شود؟",
+    "createdAt": "تاریخ ایجاد: {date}",
+    "updatedAt": "تاریخ به‌روزرسانی: {date}",
+    "savedAt": "تاریخ ذخیره: {date}"
   },
   "reports": {
     "title": "سوال‌های گزارش‌شده",
@@ -33,6 +36,7 @@
     "removeDescription": "آیا از حذف این گزارش مطمئن هستید؟",
     "remove": "حذف گزارش",
     "cancel": "انصراف",
-    "confirmRemove": "این گزارش حذف شود؟"
+    "confirmRemove": "این گزارش حذف شود؟",
+    "reportedAt": "تاریخ گزارش: {date}"
   }
 }

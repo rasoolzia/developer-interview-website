@@ -11,7 +11,7 @@ import {
 import { ROUTES } from "@/shared/config";
 import { Link, useRouter } from "@/shared/config/i18n";
 import { useMutationState } from "@/shared/hooks";
-import { parseLanguage } from "@/shared/lib";
+import { formatDate, parseLanguage } from "@/shared/lib";
 import { BackLink, ConfirmationDialog } from "@/shared/ui";
 import { Button, Input } from "@/shared/ui/shadcn";
 import { QuestionList } from "@/widgets/question-list";
@@ -199,6 +199,12 @@ export function BookmarkListView({ listId }: { listId: string }) {
               <Trash2Icon />
             </Button>
           )}
+          getDate={(question) => ({
+            timestamp: question.savedAt,
+            message: t("savedAt", {
+              date: formatDate(question.savedAt, locale),
+            }),
+          })}
         />
       )}
 

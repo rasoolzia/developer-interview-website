@@ -1,3 +1,5 @@
+import type { QuestionBase } from "@/shared/types";
+
 export type BookmarkList = {
   id: string;
   name: string;
@@ -9,6 +11,10 @@ export type BookmarkItem = {
   listId: string;
   questionId: string;
   createdAt: number;
+};
+
+export type BookmarkedQuestion = QuestionBase & {
+  savedAt: number;
 };
 
 export type BookmarkListSummary = {

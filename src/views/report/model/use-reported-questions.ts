@@ -3,10 +3,11 @@
 import { useCallback, useEffect, useState } from "react";
 
 import { getReportedQuestions } from "@/features/report/api";
-import type { Language, QuestionBase } from "@/shared/types";
+import type { ReportedQuestion } from "@/features/report/model";
+import type { Language } from "@/shared/types";
 
 type State = {
-  questions: QuestionBase[];
+  questions: ReportedQuestion[];
   loading: boolean;
   error: boolean;
 };

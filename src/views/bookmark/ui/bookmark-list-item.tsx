@@ -1,9 +1,10 @@
 import { ChevronRightIcon, PencilIcon, Trash2Icon } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 import type { BookmarkList } from "@/features/bookmark/model";
 import { ROUTES } from "@/shared/config";
 import { Link } from "@/shared/config/i18n";
+import { formatDate } from "@/shared/lib";
 import { Button } from "@/shared/ui/shadcn";
 
 import { BookmarkListEditForm } from "./bookmark-list-edit-form";
@@ -32,6 +33,7 @@ export function BookmarkListItem({
   onDelete,
 }: Props) {
   const t = useTranslations("management.bookmarks");
+  const locale = useLocale();
 
   if (editing.id === list.id) {
     return (
@@ -61,6 +63,18 @@ export function BookmarkListItem({
 
         <span className="text-muted-foreground mt-1 block text-sm">
           {t("questions", { count: list.questionCount })}
+        </span>
+
+        <span className="text-muted-foreground mt-1 block text-xs">
+          {t("createdAt", {
+            date: formatDate(list.createdAt, locale),
+          })}
+        </span>
+
+        <span className="text-muted-foreground mt-1 block text-xs">
+          {t("updatedAt", {
+            date: formatDate(list.updatedAt, locale),
+          })}
         </span>
       </div>
 

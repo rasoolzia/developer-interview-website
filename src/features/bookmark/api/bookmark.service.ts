@@ -1,7 +1,12 @@
 import { getQuestionsByIds } from "@/entities/search/api/search.actions";
-import type { Language, QuestionBase } from "@/shared/types";
+import type { Language } from "@/shared/types";
 
-import type { BookmarkItem, BookmarkList, BookmarkListSummary } from "../model";
+import type {
+  BookmarkedQuestion,
+  BookmarkItem,
+  BookmarkList,
+  BookmarkListSummary,
+} from "../model";
 import { bookmarkRepository } from "../storage";
 
 export async function getBookmarkListSummaries(
@@ -83,7 +88,7 @@ export async function resolveBookmarkListContext(
 ): Promise<{
   list: BookmarkList;
   items: BookmarkItem[];
-  questions: QuestionBase[];
+  questions: BookmarkedQuestion[];
 } | null> {
   const lists = await bookmarkRepository.getLists();
   const list = lists.find((item) => item.id === listId);
@@ -92,10 +97,18 @@ export async function resolveBookmarkListContext(
   }
 
   const items = await bookmarkRepository.getItems(listId);
-  const questions = await getQuestionsByIds(
+  const questionRecords = await getQuestionsByIds(
     items.map((item) => item.questionId),
     language,
   );
+  const questionsById = new Map(
+    questionRecords.map((question) => [question.id, question]),
+  );
+  const questions = items.flatMap((item) => {
+    const question = questionsById.get(item.questionId);
+
+    return question ? [{ ...question, savedAt: item.createdAt }] : [];
+  });
 
   return { list, items, questions };
 }

@@ -21,7 +21,10 @@
     "removeTitle": "Remove question",
     "removeDescription": "Are you sure you want to remove this question from the list?",
     "confirmDelete": "Delete this bookmark list?",
-    "confirmRemove": "Remove this question from the list?"
+    "confirmRemove": "Remove this question from the list?",
+    "createdAt": "Created: {date}",
+    "updatedAt": "Updated: {date}",
+    "savedAt": "Saved: {date}"
   },
   "reports": {
     "title": "Reported questions",
@@ -33,6 +36,7 @@
     "removeDescription": "Are you sure you want to remove this report?",
     "remove": "Remove report",
     "cancel": "Cancel",
-    "confirmRemove": "Remove this report?"
+    "confirmRemove": "Remove this report?",
+    "reportedAt": "Reported: {date}"
   }
 }

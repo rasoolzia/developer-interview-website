@@ -6,9 +6,12 @@ import {
   getBookmarkListQuestionCounts,
   resolveBookmarkListContext,
 } from "@/features/bookmark/api";
-import type { BookmarkList } from "@/features/bookmark/model";
+import type {
+  BookmarkedQuestion,
+  BookmarkList,
+} from "@/features/bookmark/model";
 import { bookmarkRepository } from "@/features/bookmark/storage";
-import type { Language, QuestionBase } from "@/shared/types";
+import type { Language } from "@/shared/types";
 
 export type ListWithCount = BookmarkList & { questionCount: number };
 
@@ -31,7 +34,7 @@ export async function fetchListsWithCounts(
 export async function fetchListWithQuestions(
   listId: string,
   language: Language,
-): Promise<{ list: BookmarkList; questions: QuestionBase[] } | null> {
+): Promise<{ list: BookmarkList; questions: BookmarkedQuestion[] } | null> {
   const context = await resolveBookmarkListContext(listId, language);
   if (!context) return null;
   return { list: context.list, questions: context.questions };
@@ -85,7 +88,7 @@ export function useBookmarkLists(language: Language) {
 
 type ListDetailState = {
   list: BookmarkList | null;
-  questions: QuestionBase[];
+  questions: BookmarkedQuestion[];
   loading: boolean;
   error: boolean;
   notFound: boolean;

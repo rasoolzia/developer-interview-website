@@ -8,7 +8,7 @@ import { reportRepository } from "@/features/report/storage";
 import { ROUTES } from "@/shared/config";
 import { Link } from "@/shared/config/i18n";
 import { useMutationState } from "@/shared/hooks";
-import { parseLanguage } from "@/shared/lib";
+import { formatDate, parseLanguage } from "@/shared/lib";
 import { ConfirmationDialog } from "@/shared/ui";
 import { Button } from "@/shared/ui/shadcn";
 import { QuestionList } from "@/widgets/question-list";
@@ -78,6 +78,12 @@ export function ReportsView() {
               <Trash2Icon />
             </Button>
           )}
+          getDate={(question) => ({
+            timestamp: question.reportedAt,
+            message: t("reportedAt", {
+              date: formatDate(question.reportedAt, locale),
+            }),
+          })}
         />
       )}
 
