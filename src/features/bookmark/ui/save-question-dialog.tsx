@@ -1,9 +1,10 @@
 "use client";
 
 import { LoaderCircleIcon, PlusIcon } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { startTransition, useEffect, useState } from "react";
 
+import { cn, parseLanguage } from "@/shared/lib";
 import {
   Button,
   DialogContent,
@@ -14,6 +15,7 @@ import {
   ScrollArea,
 } from "@/shared/ui/shadcn";
 
+import { getBookmarkListSummaries } from "../api";
 import type { BookmarkList } from "../model";
 import { bookmarkRepository, DuplicateListNameError } from "../storage";
 
@@ -24,10 +26,12 @@ type Props = {
 
 export function SaveQuestionDialog({ questionId, onSaved }: Props) {
   const t = useTranslations("question.bookmark");
+  const locale = useLocale();
 
   const [lists, setLists] = useState<BookmarkList[]>([]);
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [newName, setNewName] = useState("");
+  const [counts, setCounts] = useState<Record<string, number>>({});
   const [isLoading, setIsLoading] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -38,28 +42,45 @@ export function SaveQuestionDialog({ questionId, onSaved }: Props) {
 
     async function load() {
       startTransition(() => setIsLoading(true));
+
       try {
-        const allLists = await bookmarkRepository.getLists();
-        const checks = await Promise.all(
-          allLists.map(async (l) => {
-            const items = await bookmarkRepository.getItems(l.id);
-            return items.some((i) => i.questionId === questionId) ? l.id : null;
-          }),
+        const summaries = await getBookmarkListSummaries(
+          questionId,
+          parseLanguage(locale),
         );
+
         if (!cancelled) {
           startTransition(() => {
-            setLists(allLists);
-            setSelected(new Set(checks.filter(Boolean) as string[]));
+            setLists(summaries.map(({ list }) => list));
+
+            setCounts(
+              Object.fromEntries(
+                summaries.map(({ list, questionCount }) => [
+                  list.id,
+                  questionCount,
+                ]),
+              ),
+            );
+
+            setSelected(
+              new Set(
+                summaries
+                  .filter(({ containsQuestion }) => containsQuestion)
+                  .map(({ list }) => list.id),
+              ),
+            );
+
             setError(null);
             setIsLoading(false);
           });
         }
       } catch {
-        if (!cancelled)
+        if (!cancelled) {
           startTransition(() => {
             setError(t("errorLoad"));
             setIsLoading(false);
           });
+        }
       }
     }
 
@@ -67,7 +88,7 @@ export function SaveQuestionDialog({ questionId, onSaved }: Props) {
     return () => {
       cancelled = true;
     };
-  }, [questionId, t]);
+  }, [locale, questionId, t]);
 
   function toggleList(id: string) {
     setSelected((prev) => {
@@ -86,6 +107,7 @@ export function SaveQuestionDialog({ questionId, onSaved }: Props) {
     try {
       const list = await bookmarkRepository.createList(name);
       setLists((prev) => [list, ...prev]);
+      setCounts((prev) => ({ ...prev, [list.id]: 0 }));
       setSelected((prev) => new Set([...prev, list.id]));
       setNewName("");
     } catch (err) {
@@ -103,24 +125,30 @@ export function SaveQuestionDialog({ questionId, onSaved }: Props) {
     if (isSaving) return;
     setIsSaving(true);
     try {
-      const allItems = await Promise.all(
-        lists.map(async (l) => {
-          const items = await bookmarkRepository.getItems(l.id);
-          return {
-            listId: l.id,
-            has: items.some((i) => i.questionId === questionId),
-          };
-        }),
+      const allItems = await bookmarkRepository.getAllItems();
+
+      const listsContainingQuestion = new Set(
+        allItems
+          .filter((item) => item.questionId === questionId)
+          .map((item) => item.listId),
       );
-      await Promise.all(
-        allItems.flatMap(({ listId, has }) => {
-          if (selected.has(listId) && !has)
-            return [bookmarkRepository.addQuestion(listId, questionId)];
-          if (!selected.has(listId) && has)
-            return [bookmarkRepository.removeQuestion(listId, questionId)];
-          return [];
-        }),
-      );
+
+      const changes = lists.flatMap((list) => {
+        const has = listsContainingQuestion.has(list.id);
+
+        if (selected.has(list.id) && !has) {
+          return [bookmarkRepository.addQuestion(list.id, questionId)];
+        }
+
+        if (!selected.has(list.id) && has) {
+          return [bookmarkRepository.removeQuestion(list.id, questionId)];
+        }
+
+        return [];
+      });
+
+      await Promise.all(changes);
+
       const saved = await bookmarkRepository.isQuestionSaved(questionId);
       onSaved(saved);
     } catch {
@@ -146,11 +174,16 @@ export function SaveQuestionDialog({ questionId, onSaved }: Props) {
         <p className="text-muted-foreground text-sm">{t("noLists")}</p>
       ) : (
         <ScrollArea className="max-h-60">
-          <div className="space-y-1 pe-2">
+          <div className={cn("space-y-1", lists.length > 5 && "pe-4")}>
             {lists.map((list) => (
               <label
                 key={list.id}
-                className="hover:bg-muted flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1.5"
+                className={cn(
+                  "flex cursor-pointer items-center gap-3 rounded-lg border px-3 py-2.5 transition-colors",
+                  selected.has(list.id)
+                    ? "border-primary/50 bg-primary/5"
+                    : "border-border hover:bg-muted/60",
+                )}
               >
                 <input
                   type="checkbox"
@@ -158,7 +191,14 @@ export function SaveQuestionDialog({ questionId, onSaved }: Props) {
                   checked={selected.has(list.id)}
                   onChange={() => toggleList(list.id)}
                 />
-                <span className="text-sm">{list.name}</span>
+
+                <span className="min-w-0 flex-1 truncate text-sm font-medium">
+                  {list.name}
+                </span>
+
+                <span className="bg-muted/50 text-muted-foreground shrink-0 rounded-md border px-2 py-0.5 text-xs tabular-nums">
+                  {counts[list.id] ?? 0}
+                </span>
               </label>
             ))}
           </div>

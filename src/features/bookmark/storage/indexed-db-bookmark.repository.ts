@@ -13,18 +13,13 @@ export const indexedDbBookmarkRepository: BookmarkRepository = {
     return lists.sort(byCreatedAtDesc);
   },
 
+  async getAllItems() {
+    return dbGetAll<BookmarkItem>("bookmarkItems");
+  },
+
   async getItems(listId) {
     const items = await dbGetAll<BookmarkItem>("bookmarkItems");
     return items.filter((item) => item.listId === listId).sort(byCreatedAtDesc);
-  },
-
-  async getItemsCount(listId) {
-    //TODO remove if not needed
-    const items = await dbGetAll<BookmarkItem>("bookmarkItems");
-    return items.reduce(
-      (count, item) => (item.listId === listId ? count + 1 : count),
-      0,
-    );
   },
 
   async isQuestionSaved(questionId) {

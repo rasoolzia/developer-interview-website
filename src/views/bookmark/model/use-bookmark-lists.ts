@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 
 import {
-  getBookmarkedQuestions,
+  getBookmarkListQuestionCounts,
   resolveBookmarkListContext,
 } from "@/features/bookmark/api";
 import type { BookmarkList } from "@/features/bookmark/model";
@@ -17,13 +17,15 @@ export type ListWithCount = BookmarkList & { questionCount: number };
 export async function fetchListsWithCounts(
   language: Language,
 ): Promise<ListWithCount[]> {
-  const storedLists = await bookmarkRepository.getLists();
-  return Promise.all(
-    storedLists.map(async (list) => ({
-      ...list,
-      questionCount: (await getBookmarkedQuestions(list.id, language)).length,
-    })),
-  );
+  const [storedLists, questionCounts] = await Promise.all([
+    bookmarkRepository.getLists(),
+    getBookmarkListQuestionCounts(language),
+  ]);
+
+  return storedLists.map((list) => ({
+    ...list,
+    questionCount: questionCounts.get(list.id) ?? 0,
+  }));
 }
 
 export async function fetchListWithQuestions(

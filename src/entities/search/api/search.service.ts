@@ -15,10 +15,20 @@ export async function getQuestionsByIds(
   questionIds: string[],
   language: Language,
 ): Promise<QuestionBase[]> {
-  const questions = await getSearchQuestions(language);
+  if (questionIds.length === 0) return [];
+
+  const requestedIds = new Set(questionIds);
+  const questions = await fetchSearchIndex();
+
+  const matchingQuestions = mapSearchQuestions(
+    questions.filter((question) =>
+      requestedIds.has(`${question.id}-${question.language}`),
+    ),
+    language,
+  );
 
   const questionsById = new Map(
-    questions.map((question) => [question.id, question]),
+    matchingQuestions.map((question) => [question.id, question]),
   );
 
   return questionIds.flatMap((id) => {

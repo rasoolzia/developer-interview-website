@@ -11,12 +11,18 @@ export type BookmarkItem = {
   createdAt: number;
 };
 
+export type BookmarkListSummary = {
+  list: BookmarkList;
+  questionCount: number;
+  containsQuestion: boolean;
+};
+
 export type BookmarkRepository = {
   getLists(): Promise<BookmarkList[]>;
 
   getItems(listId: string): Promise<BookmarkItem[]>;
 
-  getItemsCount(listId: string): Promise<number>;
+  getAllItems(): Promise<BookmarkItem[]>;
 
   isQuestionSaved(questionId: string): Promise<boolean>;
 

@@ -1,4 +1,5 @@
 export {
-  getBookmarkedQuestions,
+  getBookmarkListQuestionCounts,
+  getBookmarkListSummaries,
   resolveBookmarkListContext,
 } from "./bookmark.service";
