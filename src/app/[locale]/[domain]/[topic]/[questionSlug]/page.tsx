@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getLocale } from "next-intl/server";
 
-import { getQuestionDetails } from "@/entities/question/api";
+import { getQuestionDetails, getQuestions } from "@/entities/question/api";
+import { ROUTES } from "@/shared/config";
+import { LOCALE_CODES, redirect } from "@/shared/config/i18n";
 import { decodeUrlParam, parseLanguage } from "@/shared/lib";
 import { QuestionDetailsView } from "@/views/question";
 
@@ -14,6 +16,10 @@ type Props = {
     questionSlug: string;
   }>;
 };
+
+function getBaseQuestionId(id: string) {
+  return id.slice(0, id.lastIndexOf("-"));
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const [{ domain, topic, questionSlug }, locale] = await Promise.all([
@@ -66,6 +72,34 @@ export default async function QuestionPage({ params }: Props) {
   );
 
   if (!questionDetails) {
+    const sourceQuestionLists = await Promise.all(
+      LOCALE_CODES.filter((code) => code !== locale).map((code) =>
+        getQuestions(domain, topic, parseLanguage(code)),
+      ),
+    );
+    const sourceQuestion = sourceQuestionLists
+      .flat()
+      .find((question) => question.slug === decodedQuestionSlug);
+
+    if (sourceQuestion) {
+      const translatedQuestions = await getQuestions(
+        domain,
+        topic,
+        parseLanguage(locale),
+      );
+      const sourceQuestionId = getBaseQuestionId(sourceQuestion.id);
+      const translatedQuestion = translatedQuestions.find(
+        (question) => getBaseQuestionId(question.id) === sourceQuestionId,
+      );
+
+      if (translatedQuestion) {
+        redirect({
+          href: ROUTES.question(domain, topic, translatedQuestion.slug),
+          locale,
+        });
+      }
+    }
+
     notFound();
   }
 
