@@ -7,8 +7,9 @@ import { Suspense, useState } from "react";
 import { LanguageSwitcher } from "@/features/language-switcher";
 import { ThemeSwitcher } from "@/features/theme-switcher";
 import { ROUTES } from "@/shared/config";
-import { getDrawerSide, Link } from "@/shared/config/i18n";
+import { getDrawerSide, Link, usePathname } from "@/shared/config/i18n";
 import { SITE } from "@/shared/constants";
+import { cn } from "@/shared/lib";
 import { GithubIcon } from "@/shared/ui/icons";
 import {
   Button,
@@ -29,7 +30,19 @@ type IconLinkProps = {
   children: React.ReactNode;
 };
 
+function isActiveRoute(pathname: string, href: string) {
+  return (
+    pathname === href ||
+    ((href === ROUTES.bookmarks || href === ROUTES.reports) &&
+      pathname.startsWith(`${href}/`))
+  );
+}
+
 function IconLink({ href, label, external, children }: IconLinkProps) {
+  const pathname = usePathname();
+
+  const isActive = !external && isActiveRoute(pathname, href);
+
   const linkProps = external
     ? { href, target: "_blank", rel: "noopener noreferrer" }
     : { href };
@@ -41,7 +54,13 @@ function IconLink({ href, label, external, children }: IconLinkProps) {
           <Link
             {...linkProps}
             aria-label={label}
-            className="text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:ring-ring inline-flex size-9 items-center justify-center rounded-lg transition-colors focus-visible:ring-3 focus-visible:outline-none"
+            aria-current={isActive ? "page" : undefined}
+            className={cn(
+              "focus-visible:ring-ring inline-flex size-9 items-center justify-center rounded-lg transition-colors focus-visible:ring-3 focus-visible:outline-none",
+              isActive
+                ? "bg-accent text-accent-foreground"
+                : "text-muted-foreground hover:bg-muted hover:text-foreground",
+            )}
           />
         }
       >
@@ -63,10 +82,17 @@ function MobileLink({
   onNavigate: () => void;
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+  const isActive = isActiveRoute(pathname, href);
+
   return (
     <Link
       href={href}
-      className="hover:bg-muted flex h-10 items-center gap-3 rounded-lg px-3 text-sm transition-colors"
+      aria-current={isActive ? "page" : undefined}
+      className={cn(
+        "flex h-10 items-center gap-3 rounded-lg px-3 text-sm transition-colors",
+        isActive ? "bg-accent text-accent-foreground" : "hover:bg-muted",
+      )}
       onClick={onNavigate}
     >
       {children}
