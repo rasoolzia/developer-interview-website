@@ -3,12 +3,7 @@ import "./../globals.css";
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
-import {
-  getLocale,
-  getMessages,
-  getTranslations,
-  setRequestLocale,
-} from "next-intl/server";
+import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
 import {
@@ -107,8 +102,6 @@ export default async function LocaleLayout({ children, params }: Props) {
   if (!isLocale(locale)) {
     notFound();
   }
-
-  setRequestLocale(locale);
 
   const direction = getDirection(locale);
 
