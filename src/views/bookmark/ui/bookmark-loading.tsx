@@ -21,7 +21,7 @@ export function BookmarkLoading({ detail = false }: { detail?: boolean }) {
             <Skeleton className="h-8 w-24" />
           </div>
         </div>
-        <QuestionListLoading count={5} />
+        <QuestionListLoading count={5} showDate />
       </div>
     );
   }
@@ -44,6 +44,8 @@ export function BookmarkLoading({ detail = false }: { detail?: boolean }) {
             <div className="min-w-0 flex-1 space-y-2">
               <Skeleton className="h-4 w-40 sm:h-5" />
               <Skeleton className="h-4 w-24" />
+              <Skeleton className="h-3 w-32" />
+              <Skeleton className="h-3 w-36" />
             </div>
             <Skeleton className="size-5" />
             <div className="flex shrink-0 items-center gap-1 border-s ps-3">

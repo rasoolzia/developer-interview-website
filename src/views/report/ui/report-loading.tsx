@@ -8,7 +8,7 @@ export function ReportLoading() {
         <Skeleton className="h-8 w-56 sm:h-9 sm:w-68" />
         <Skeleton className="h-8 w-16" />
       </div>
-      <QuestionListLoading count={5} />
+      <QuestionListLoading count={5} showDate />
     </div>
   );
 }
