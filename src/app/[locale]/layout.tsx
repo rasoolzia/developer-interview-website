@@ -11,7 +11,12 @@ import {
 } from "next-intl/server";
 import { Suspense } from "react";
 
-import { getDirection, isLocale, routing } from "@/shared/config/i18n";
+import {
+  getDirection,
+  isLocale,
+  type Locale,
+  routing,
+} from "@/shared/config/i18n";
 import { BRAND_COLORS } from "@/shared/constants";
 import { vazirmatn } from "@/shared/styles/fonts";
 import { Footer, FooterLoading } from "@/widgets/footer";
@@ -80,11 +85,17 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-async function IntlProvider({ children }: { children: React.ReactNode }) {
+async function IntlProvider({
+  children,
+  locale,
+}: {
+  children: React.ReactNode;
+  locale: Locale;
+}) {
   const messages = await getMessages();
 
   return (
-    <NextIntlClientProvider messages={messages}>
+    <NextIntlClientProvider key={locale} locale={locale} messages={messages}>
       {children}
     </NextIntlClientProvider>
   );
@@ -111,7 +122,7 @@ export default async function LocaleLayout({ children, params }: Props) {
       <body>
         <ThemeProvider>
           <Suspense fallback={null}>
-            <IntlProvider>
+            <IntlProvider locale={locale}>
               <Header />
               <main className="grow">{children}</main>
               <Suspense fallback={<FooterLoading />}>
