@@ -138,7 +138,6 @@ interface QuestionBase {
 // entities/question/model
 interface Question extends QuestionBase {
   markdown: string;
-  tags?: string[];
 }
 ```
 

@@ -10,5 +10,5 @@ export async function getTopicDetails(
   language: Language,
 ): Promise<TopicDetails> {
   const topicData = await fetchTopic(domain, topic, language);
-  return mapTopicDetails(topicData);
+  return mapTopicDetails(topicData, language);
 }

@@ -1,10 +1,8 @@
 import { z } from "zod";
 
-export const SUPPORTED_LANGUAGES = ["en", "fa"] as const;
+import { LOCALE_CODES } from "@/shared/config/i18n";
 
-export const DEFAULT_LANGUAGE = "en" as const;
-
-export const LanguageSchema = z.enum(SUPPORTED_LANGUAGES);
+export const LanguageSchema = z.enum(LOCALE_CODES);
 
 export const DifficultySchema = z.string();
 
@@ -14,7 +12,6 @@ export const QuestionBaseSchema = z.object({
   title: z.string(),
   domain: z.string(),
   topic: z.string(),
-  language: LanguageSchema,
   difficulty: DifficultySchema,
   categories: z.array(z.string()),
   readingTime: z.number(),

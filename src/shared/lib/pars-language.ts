@@ -1,4 +1,5 @@
-import { DEFAULT_LANGUAGE, LanguageSchema } from "../api/schemas";
+import { LanguageSchema } from "../api/schemas";
+import { defaultLocale } from "../config/i18n";
 import type { Language } from "../types";
 
 export function parseLanguage(
@@ -11,5 +12,5 @@ export function parseLanguage(
   }
 
   const fallback = LanguageSchema.safeParse(fallbackValue);
-  return fallback.success ? fallback.data : DEFAULT_LANGUAGE;
+  return fallback.success ? fallback.data : defaultLocale;
 }

@@ -1,14 +1,12 @@
 import { fetchSearchIndex } from "@/shared/api/repositories";
+import { mapQuestions } from "@/shared/mappers";
 import type { Language, QuestionBase } from "@/shared/types";
-
-import { mapSearchQuestions } from "../lib";
 
 export async function getSearchQuestions(
   language: Language,
 ): Promise<QuestionBase[]> {
-  const questions = await fetchSearchIndex();
-
-  return mapSearchQuestions(questions, language);
+  const questions = await fetchSearchIndex(language);
+  return mapQuestions(questions, language);
 }
 
 export async function getQuestionsByIds(
@@ -18,14 +16,9 @@ export async function getQuestionsByIds(
   if (questionIds.length === 0) return [];
 
   const requestedIds = new Set(questionIds);
-  const questions = await fetchSearchIndex();
+  const questions = await getSearchQuestions(language);
 
-  const matchingQuestions = mapSearchQuestions(
-    questions.filter((question) =>
-      requestedIds.has(`${question.id}-${question.language}`),
-    ),
-    language,
-  );
+  const matchingQuestions = questions.filter((q) => requestedIds.has(q.id));
 
   const questionsById = new Map(
     matchingQuestions.map((question) => [question.id, question]),

@@ -6,7 +6,7 @@ export const API = {
 
   MANIFEST: "manifest.json",
 
-  SEARCH_INDEX: "search-index.json",
+  SEARCH_INDEX: (language: Language) => `search/${language}.json`,
 
   TOPIC: (domain: string, topic: string, language: Language) =>
     `${domain}/${topic}/${language}.json`,

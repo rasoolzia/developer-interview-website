@@ -103,11 +103,9 @@ src/shared/api/schemas/common.schema.ts
 Current definition:
 
 ```ts
-export const SUPPORTED_LANGUAGES = ["en", "fa"] as const;
+import { LOCALE_CODES } from "@/shared/config/i18n";
 
-export const DEFAULT_LANGUAGE = SUPPORTED_LANGUAGES[0];
-
-export const LanguageSchema = z.enum(SUPPORTED_LANGUAGES);
+export const LanguageSchema = z.enum(LOCALE_CODES);
 ```
 
 The TypeScript type is derived from the schema:
