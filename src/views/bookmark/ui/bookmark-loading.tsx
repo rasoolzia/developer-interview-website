@@ -16,7 +16,7 @@ export function BookmarkLoading({ detail = false }: { detail?: boolean }) {
             </div>
             <Skeleton className="h-4 w-28" />
           </div>
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col items-end gap-3">
             <Skeleton className="h-6 w-24" />
             <Skeleton className="h-8 w-32" />
           </div>

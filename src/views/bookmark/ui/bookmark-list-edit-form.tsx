@@ -8,6 +8,7 @@ type Props = {
   saving: boolean;
   onSave: (name: string) => void;
   onCancel: () => void;
+  className?: string;
 };
 
 export function BookmarkListEditForm({
@@ -15,18 +16,23 @@ export function BookmarkListEditForm({
   saving,
   onSave,
   onCancel,
+  className = "flex flex-wrap gap-2 p-4",
 }: Props) {
   const t = useTranslations("management.bookmarks");
   const [name, setName] = useState(initialName);
 
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const trimmedName = name.trim();
+
+    if (trimmedName && !saving) {
+      onSave(trimmedName);
+    }
+  }
+
   return (
-    <form
-      onSubmit={(event) => {
-        event.preventDefault();
-        if (name.trim()) onSave(name);
-      }}
-      className="flex flex-wrap gap-2 p-4"
-    >
+    <form onSubmit={handleSubmit} className={className}>
       <Input
         value={name}
         onChange={(event) => setName(event.target.value)}
@@ -34,10 +40,18 @@ export function BookmarkListEditForm({
         aria-label={t("rename")}
         className="min-w-0 flex-1"
       />
-      <Button type="submit" size="sm" disabled={saving}>
+
+      <Button type="submit" size="sm" disabled={saving || !name.trim()}>
         {t("save")}
       </Button>
-      <Button type="button" size="sm" variant="outline" onClick={onCancel}>
+
+      <Button
+        type="button"
+        size="sm"
+        variant="outline"
+        onClick={onCancel}
+        disabled={saving}
+      >
         {t("cancel")}
       </Button>
     </form>

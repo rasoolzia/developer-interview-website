@@ -13,10 +13,11 @@ import { Link, useRouter } from "@/shared/config/i18n";
 import { useMutationState } from "@/shared/hooks";
 import { formatDate, parseLanguage } from "@/shared/lib";
 import { BackLink, ConfirmationDialog } from "@/shared/ui";
-import { Button, Input } from "@/shared/ui/shadcn";
+import { Button } from "@/shared/ui/shadcn";
 import { QuestionList } from "@/widgets/question-list";
 
 import { useBookmarkList } from "../model";
+import { BookmarkListEditForm } from "./bookmark-list-edit-form";
 import { BookmarkLoading } from "./bookmark-loading";
 
 export function BookmarkListView({ listId }: { listId: string }) {
@@ -49,7 +50,6 @@ export function BookmarkListView({ listId }: { listId: string }) {
     : null;
 
   const [editing, setEditing] = useState(false);
-  const [name, setName] = useState("");
   const [confirmAction, setConfirmAction] = useState<
     "delete" | "remove" | null
   >(null);
@@ -58,19 +58,16 @@ export function BookmarkListView({ listId }: { listId: string }) {
   );
 
   function startEditing() {
-    if (!list) return;
-    setName(list.name);
     setEditing(true);
   }
 
   function cancelEditing() {
-    if (!list) return;
-    setName(list.name);
     setEditing(false);
   }
 
-  async function rename() {
+  async function rename(name: string) {
     if (!list || !name.trim()) return;
+
     await runMutation(async () => {
       const updatedList = await bookmarkRepository.renameList(list.id, name);
 
@@ -114,19 +111,13 @@ export function BookmarkListView({ listId }: { listId: string }) {
       <div className="flex flex-wrap items-center justify-between gap-x-1 gap-y-3">
         <div className="flex min-w-0 flex-1 flex-col gap-2">
           {editing ? (
-            <div className="mb-1 flex gap-2">
-              <Input
-                value={name}
-                onChange={(event) => setName(event.target.value)}
-                autoFocus
-              />
-              <Button onClick={() => void rename()} disabled={saving}>
-                {t("save")}
-              </Button>
-              <Button variant="outline" onClick={cancelEditing}>
-                {t("cancel")}
-              </Button>
-            </div>
+            <BookmarkListEditForm
+              initialName={list.name}
+              saving={saving}
+              onSave={(name) => void rename(name)}
+              onCancel={cancelEditing}
+              className="mb-1 flex gap-2"
+            />
           ) : (
             <div className="flex min-w-0 items-center gap-4">
               <h1 className="min-w-0 truncate text-2xl font-bold sm:text-3xl">
@@ -157,7 +148,7 @@ export function BookmarkListView({ listId }: { listId: string }) {
           </p>
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col items-end">
           <BackLink href={ROUTES.bookmarks} className="mb-4">
             {t("title")}
           </BackLink>
