@@ -1,4 +1,4 @@
-import type { QuestionBase } from "@/shared/types";
+import type { SearchItem } from "@/entities/search/model";
 
 export type BookmarkList = {
   id: string;
@@ -13,7 +13,7 @@ export type BookmarkItem = {
   createdAt: number;
 };
 
-export type BookmarkedQuestion = QuestionBase & {
+export type BookmarkedQuestion = SearchItem & {
   savedAt: number;
 };
 

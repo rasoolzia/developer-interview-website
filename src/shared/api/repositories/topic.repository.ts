@@ -13,5 +13,8 @@ export async function fetchTopic(
 ): Promise<ApiTopic> {
   "use cache";
 
-  return apiClient.get(API.TOPIC(domain, topic, language), TopicSchema);
+  return apiClient.get<ApiTopic>(
+    API.TOPIC(domain, topic, language),
+    TopicSchema,
+  );
 }

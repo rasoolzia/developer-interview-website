@@ -123,23 +123,18 @@ type Language = "en" | "fa";
 ### Language is responsible for
 
 - API/content data
-- question language
+- selecting language-specific question content
 - language-specific content
 - search filters
 - language-keyed API structures
 - backend/content support
 - content repository languages
 
-For example, a question may have:
+The selected content language is passed to the topic and search file loaders; it is not a field on individual question objects. For example, a topic file carries its language in `meta`, while `search/en.json` implies English for every item.
 
-```ts
-{
-  id: "html-001",
-  language: "en"
-}
-```
+Question IDs from the API are language-neutral. Frontend mappers append the selected language so IDs are consistent across topic and search data.
 
-The `language` field describes the language of the content, not the language of the application's UI.
+`Language` identifies the selected content language, not the language of the application's UI.
 
 ---
 
@@ -673,7 +668,7 @@ Language;
 
 Examples:
 
-- question language
+- topic/search content language
 - search language
 - API language parameter
 - content language
@@ -684,20 +679,20 @@ Examples:
 
 # 18. Quick Reference
 
-| Concern                     | Type       |
-| --------------------------- | ---------- |
-| URL `/en/...`               | `Locale`   |
-| URL `/fa/...`               | `Locale`   |
-| next-intl                   | `Locale`   |
-| UI translations             | `Locale`   |
-| RTL/LTR                     | `Locale`   |
-| Language switcher           | `Locale`   |
-| API language                | `Language` |
-| Question language           | `Language` |
-| Search filter language      | `Language` |
-| Content repository language | `Language` |
-| API statistics by language  | `Language` |
-| Backend-supported languages | `Language` |
+| Concern                       | Type       |
+| ----------------------------- | ---------- |
+| URL `/en/...`                 | `Locale`   |
+| URL `/fa/...`                 | `Locale`   |
+| next-intl                     | `Locale`   |
+| UI translations               | `Locale`   |
+| RTL/LTR                       | `Locale`   |
+| Language switcher             | `Locale`   |
+| API language                  | `Language` |
+| Topic/search content language | `Language` |
+| Search filter language        | `Language` |
+| Content repository language   | `Language` |
+| API statistics by language    | `Language` |
+| Backend-supported languages   | `Language` |
 
 ---
 

@@ -1,8 +1,6 @@
-import type { QuestionBase } from "@/shared/types";
+import type { Question } from "@/shared/types";
 
-export interface Question extends QuestionBase {
-  markdown: string;
-}
+export type { Question };
 
 export type QuestionNavigation = {
   previousSlug?: string;
@@ -24,6 +22,8 @@ export type QuestionProgress = {
 
 export type QuestionDetails = {
   question: Question;
+  domain: string;
+  topic: string;
   navigation: QuestionNavigation;
   header?: QuestionDetailsHeader;
 };

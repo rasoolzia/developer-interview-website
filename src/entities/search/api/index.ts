@@ -1,1 +1,5 @@
-export { getSearchQuestions } from "./search.service";
+export {
+  getSearchItemById,
+  getSearchQuestions,
+  getSearchQuestionsByIds,
+} from "./search.service";

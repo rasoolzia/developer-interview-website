@@ -1,13 +1,18 @@
 import "server-only";
 
-import type { Language } from "@/shared/types";
+import type { ApiSearchIndex, Language } from "@/shared/types";
 
 import { apiClient } from "../client";
 import { API } from "../constants";
 import { SearchIndexSchema } from "../schemas";
 
-export async function fetchSearchIndex(language: Language) {
+export async function fetchSearchIndex(
+  language: Language,
+): Promise<ApiSearchIndex> {
   "use cache";
 
-  return apiClient.get(API.SEARCH_INDEX(language), SearchIndexSchema);
+  return apiClient.get<ApiSearchIndex>(
+    API.SEARCH_INDEX(language),
+    SearchIndexSchema,
+  );
 }

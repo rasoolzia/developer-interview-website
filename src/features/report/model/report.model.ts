@@ -1,4 +1,4 @@
-import type { QuestionBase } from "@/shared/types";
+import type { SearchItem } from "@/entities/search/model";
 
 export type ReportItem = {
   questionId: string;
@@ -15,6 +15,6 @@ export type ReportRepository = {
   removeReport(questionId: string): Promise<void>;
 };
 
-export type ReportedQuestion = QuestionBase & {
+export type ReportedQuestion = SearchItem & {
   reportedAt: number;
 };

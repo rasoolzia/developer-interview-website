@@ -1,5 +1,7 @@
 import type { Language } from "@/shared/types";
 
+export type { SearchItem } from "@/shared/types";
+
 export interface SearchFilters {
   query?: string;
   domain?: string;

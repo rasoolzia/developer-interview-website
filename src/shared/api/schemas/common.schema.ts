@@ -10,8 +10,6 @@ export const QuestionBaseSchema = z.object({
   id: z.string(),
   slug: z.string(),
   title: z.string(),
-  domain: z.string(),
-  topic: z.string(),
   difficulty: DifficultySchema,
   categories: z.array(z.string()),
   readingTime: z.number(),

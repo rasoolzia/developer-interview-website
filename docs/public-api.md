@@ -11,7 +11,9 @@ The generator repository is the single source of truth for the actual schema. If
 ```
 public/api/
     manifest.json
-    search-index.json
+    search/
+      en.json
+      fa.json
     <domain>/
         <topic>/
             en.json
@@ -51,35 +53,36 @@ Top-level index of every domain/topic/language combination that exists, plus per
 
 Consumed by: `entities/domain/api/manifest.service.ts`.
 
-### `search-index.json`
+### `search/{language}.json`
 
-A flat array of every question across every domain, topic, and language — the dataset the `/search` page filters, paginates, and facets client-of-server-side (see [`architecture.md`](./architecture.md) for the server-first rendering model).
+A flat array of search items for one language — the dataset the `/search` page filters, paginates, and facets (see [`architecture.md`](./architecture.md) for the server-first rendering model). The language is implied by the file name and is not repeated on each item.
 
 ```json
-{
-  "id": "css-001",
-  "slug": "what-is-the-css-box-model-and-what-are-its-components",
-  "title": "What is the CSS box model and what are its components?",
-  "domain": "frontend",
-  "topic": "css",
-  "language": "en",
-  "difficulty": "Easy",
-  "categories": ["Fundamentals"],
-  "readingTime": 1
-}
+[
+  {
+    "id": "css-001",
+    "slug": "what-is-the-box-model",
+    "title": "What is the box model?",
+    "domain": "frontend",
+    "topic": "css",
+    "difficulty": "easy",
+    "categories": ["layout"],
+    "readingTime": 2
+  }
+]
 ```
 
-Note: `label` (topic display name) and `path` (question URL) are **not** included — both are derivable from other fields (`topic` → `getTopicLabel()`; `language`/`domain`/`topic`/`slug` → `ROUTES.question()`), so they're computed on the frontend instead of duplicated in every one of the ~900+ search-index entries.
+Search items carry `domain` and `topic`. They do not carry `language` or `tags`. The language-specific file determines which content language these items represent.
 
 Consumed by: `entities/search/api/search.service.ts` → mapped by `views/search/lib/search.mapper.ts`.
 
-### `<domain>/<topic>/<lang>.json`
+### `<domain>/<topic>/<language>.json`
 
 The full record for one topic in one language.
 
 ```json
 {
-  "version": 1.6,
+  "version": 1,
   "meta": {
     "domain": "frontend",
     "topic": "css",
@@ -92,10 +95,6 @@ The full record for one topic in one language.
     "difficulties": ["Easy", "Medium", "Hard"]
   },
   "hash": "8af0f3a0fe",
-  "stats": {
-    "total": 37,
-    "byDifficulty": { "easy": 2, "medium": 15, "hard": 20 }
-  },
   "questions": [
     {
       "id": "css-001",
@@ -103,9 +102,6 @@ The full record for one topic in one language.
       "title": "What is the CSS box model and what are its components?",
       "difficulty": "Easy",
       "categories": ["Fundamentals"],
-      "domain": "frontend",
-      "topic": "css",
-      "language": "en",
       "markdown": "...",
       "readingTime": 1
     }
@@ -113,35 +109,37 @@ The full record for one topic in one language.
 }
 ```
 
+`domain`, `topic`, and `language` belong to `meta`; individual topic questions do not include them. Questions also have no `tags` field.
+
 Consumed by: `entities/question/api/question.service.ts` (topic list / question detail pages).
 
 ---
 
 ## Frontend Type Model
 
-Both `search-index.json` entries and per-question entries in a topic file share the same core fields. Rather than maintaining two independent, drift-prone interfaces, the frontend defines one base shape and extends it:
+The API question ID is language-neutral (for example, `css-001`). Search items add `domain` and `topic`; topic questions add `markdown`. The frontend derives these types from Zod schemas:
 
 ```ts
-// shared/types
-interface QuestionBase {
+type QuestionBase = {
   id: string;
   slug: string;
   title: string;
-  domain: string;
-  topic: string;
-  language: Language;
-  difficulty: string; // raw, language-native display text — see note below
+  difficulty: string;
   categories: string[];
   readingTime: number;
-}
+};
 
-// entities/question/model
-interface Question extends QuestionBase {
+type SearchItem = QuestionBase & {
+  domain: string;
+  topic: string;
+};
+
+type Question = QuestionBase & {
   markdown: string;
-}
+};
 ```
 
-A shared view-model, `QuestionCardItem` (`entities/question/model/question-card.model.ts`), is derived from `QuestionBase` via `Omit<QuestionBase, "slug" | "domain">` plus a computed `href` — this is what the single, reusable `QuestionCard` component actually renders, regardless of whether the data came from `search-index.json` or a topic file.
+Mapping appends the selected language to each ID. Therefore the app sees `css-001-en` (or the corresponding language suffix) for both search results and topic questions, while the API payload retains `css-001`.
 
 ---
 

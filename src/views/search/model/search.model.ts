@@ -1,9 +1,12 @@
-import type { SearchFacets, SearchFilters } from "@/entities/search/model";
-import type { QuestionBase } from "@/shared/types";
+import type {
+  SearchFacets,
+  SearchFilters,
+  SearchItem,
+} from "@/entities/search/model";
 
 export interface SearchViewModel {
   filters: SearchFilters;
-  results: QuestionBase[];
+  results: SearchItem[];
   total: number;
   page: number;
   totalPages: number;

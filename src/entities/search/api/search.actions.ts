@@ -1,12 +1,13 @@
 "use server";
 
-import type { Language, QuestionBase } from "@/shared/types";
+import type { Language } from "@/shared/types";
 
-import { getQuestionsByIds as getQuestionsByIdsFromService } from "./search.service";
+import type { SearchItem } from "../model";
+import { getSearchQuestionsByIds } from "./search.service";
 
-export async function getQuestionsByIds(
+export async function getQuestionsByIdsAction(
   questionIds: string[],
   language: Language,
-): Promise<QuestionBase[]> {
-  return getQuestionsByIdsFromService(questionIds, language);
+): Promise<SearchItem[]> {
+  return getSearchQuestionsByIds(questionIds, language);
 }

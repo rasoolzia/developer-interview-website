@@ -1,5 +1,6 @@
-import { getQuestionsByIds } from "@/entities/search/api/search.actions";
-import type { Language, QuestionBase } from "@/shared/types";
+import { getQuestionsByIdsAction } from "@/entities/search/api/search.actions";
+import type { SearchItem } from "@/entities/search/model";
+import type { Language } from "@/shared/types";
 
 import type { ReportedQuestion } from "../model";
 import { reportRepository } from "../storage";
@@ -11,7 +12,7 @@ export async function getReportedQuestions(
     (a, b) => b.createdAt - a.createdAt,
   );
 
-  const questions: QuestionBase[] = await getQuestionsByIds(
+  const questions: SearchItem[] = await getQuestionsByIdsAction(
     reports.map((report) => report.questionId),
     language,
   );

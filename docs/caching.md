@@ -7,7 +7,7 @@ The website uses **Next.js Cache Components** for server-side caching.
 Generated JSON resources are cached with `"use cache"` so stable server data can be reused across requests. The main cached resources are:
 
 - `manifest.json`
-- `search-index.json`
+- `search/{language}.json`
 - Per-topic JSON files
 
 Cache Components are enabled globally through:

@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 
-import type { QuestionBase } from "@/shared/types";
+import type { SearchItem } from "@/entities/search/model";
 import { QuestionList } from "@/widgets/question-list";
 
 import { SearchPagination } from "./search-pagination";
@@ -8,7 +8,7 @@ import { SearchPagination } from "./search-pagination";
 type Props = {
   query?: string;
   total: number;
-  results: QuestionBase[];
+  results: SearchItem[];
   page: number;
   totalPages: number;
 };

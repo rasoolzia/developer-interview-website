@@ -122,7 +122,7 @@ public/api/*.json  (manifest, search-index, per-topic files)
 shared/api  (fetch client + Zod schemas)
         │
         ▼
-entities/*  (typed domain models: Question, QuestionBase, ...)
+entities/*  (typed domain models: Question, SearchItem, ...)
         │
         ▼
 views/*  (server-rendered pages, e.g. /search)
@@ -141,7 +141,7 @@ Generated JSON resources are cached with `"use cache"` at the service/repository
 The main generated resources are:
 
 - `manifest.json`
-- `search-index.json`
+- `search/{language}.json`
 - Per-topic JSON files
 
 Caching is configured through `cacheComponents: true` in `next.config.ts`.

@@ -1,4 +1,4 @@
-import { getQuestionsByIds } from "@/entities/search/api/search.actions";
+import { getQuestionsByIdsAction } from "@/entities/search/api/search.actions";
 import type { Language } from "@/shared/types";
 
 import type {
@@ -26,7 +26,7 @@ export async function getBookmarkListSummaries(
   }
 
   const questionIds = [...new Set(items.map((item) => item.questionId))];
-  const questions = await getQuestionsByIds(questionIds, language);
+  const questions = await getQuestionsByIdsAction(questionIds, language);
   const availableQuestionIds = new Set(
     questions.map((question) => question.id),
   );
@@ -72,7 +72,7 @@ export async function getBookmarkListQuestionCounts(
 
   const questionIds = [...new Set(items.map((item) => item.questionId))];
 
-  const questions = await getQuestionsByIds(questionIds, language);
+  const questions = await getQuestionsByIdsAction(questionIds, language);
   const availableQuestionIds = new Set(
     questions.map((question) => question.id),
   );
@@ -110,7 +110,7 @@ export async function resolveBookmarkListContext(
     return { list, items, questions: [] };
   }
 
-  const questionRecords = await getQuestionsByIds(
+  const questionRecords = await getQuestionsByIdsAction(
     items.map((item) => item.questionId),
     language,
   );

@@ -5,7 +5,6 @@ export * from "./card";
 export * from "./command";
 export * from "./dialog";
 export * from "./dropdown-menu";
-export * from "./index";
 export * from "./input";
 export * from "./input-group";
 export * from "./pagination";

@@ -1,7 +1,8 @@
 import type { Question, QuestionDetails } from "@/entities/question/model";
-import { getQuestionsByIds } from "@/entities/search/api/search.service";
+import { getSearchQuestionsByIds } from "@/entities/search/api";
+import type { SearchItem } from "@/entities/search/model";
 import { getTopicDetails } from "@/entities/topic/api";
-import type { Language, QuestionBase } from "@/shared/types";
+import type { Language } from "@/shared/types";
 
 export async function getQuestions(
   domain: string,
@@ -16,10 +17,10 @@ export async function getQuestions(
 export async function getQuestionById(
   language: Language,
   questionId: string,
-  base?: QuestionBase,
+  base?: SearchItem,
 ): Promise<Question | undefined> {
   const resolvedBase =
-    base ?? (await getQuestionsByIds([questionId], language))[0];
+    base ?? (await getSearchQuestionsByIds([questionId], language))[0];
   if (!resolvedBase) {
     return undefined;
   }
@@ -48,6 +49,8 @@ export async function getQuestionDetails(
 
   return {
     question: questions[index],
+    domain,
+    topic,
     navigation: {
       previousSlug: questions[index - 1]?.slug,
       nextSlug: questions[index + 1]?.slug,
