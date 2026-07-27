@@ -20,3 +20,19 @@ Impact:
 
 Status:
 Deferred.
+
+## Commit Convention
+
+We follow the Conventional Commits specification.
+
+Examples:
+
+- feat:
+- fix:
+- docs:
+- refactor:
+- test:
+- build:
+- chore:
+- ci:
+- perf:
