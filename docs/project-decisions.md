@@ -36,3 +36,15 @@ Examples:
 - chore:
 - ci:
 - perf:
+
+## Continuous Integration
+
+### Decision
+
+GitHub Actions is used to verify every push and pull request.
+
+### Why
+
+- Prevent broken builds
+- Ensure reproducible installs
+- Keep the main branch stable
