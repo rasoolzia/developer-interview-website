@@ -111,35 +111,27 @@ Static generation provides:
 
 ## Data Flow
 
-Generator
+Content Repository
 
-↓
+        ↓
 
-manifest.json
+Generator Pipeline
 
-↓
+        ↓
 
-getManifest()
+Public JSON API
 
-↓
+        ↓
 
-Domain
+API Client
 
-↓
+        ↓
 
-Topic
+Entity Services
 
-↓
+        ↓
 
-getTopic()
-
-↓
-
-Question List
-
-↓
-
-Question View
+Views
 
 ---
 
