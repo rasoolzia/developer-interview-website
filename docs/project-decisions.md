@@ -48,3 +48,12 @@ GitHub Actions is used to verify every push and pull request.
 - Prevent broken builds
 - Ensure reproducible installs
 - Keep the main branch stable
+
+# Pending Refactors
+
+- Replace DTOs with Domain Models in Services.
+- Add Mapper Layer.
+- Add Repository Layer.
+- Add Cache Layer.
+- Add Domain Errors.
+- Add React Query only if needed.
