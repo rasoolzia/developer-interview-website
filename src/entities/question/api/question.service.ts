@@ -1,11 +1,11 @@
 import { getTopic } from "@/entities/topic/api";
-import { GeneratedQuestion } from "@/shared/types/api.types";
+import type { Question } from "@/shared/api/schemas";
 
 export async function getQuestions(
   domain: string,
   topic: string,
   language: string,
-): Promise<GeneratedQuestion[]> {
+): Promise<Question[]> {
   const data = await getTopic(domain, topic, language);
 
   return data.questions;
@@ -16,7 +16,7 @@ export async function getQuestionBySlug(
   topic: string,
   language: string,
   slug: string,
-): Promise<GeneratedQuestion | undefined> {
+): Promise<Question | undefined> {
   const questions = await getQuestions(domain, topic, language);
 
   return questions.find((question) => question.slug === slug);

@@ -1,4 +1,4 @@
-import type { Difficulty, Language } from "@/shared/types";
+import type { Difficulty, Language } from "@/shared/api/schemas";
 
 export interface Question {
   id: string;
