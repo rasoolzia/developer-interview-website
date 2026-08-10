@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { LanguageSchema } from "./common.schema";
 import { QuestionSchema } from "./question.schema";
 
 export const TopicSchema = z.object({
@@ -8,7 +9,7 @@ export const TopicSchema = z.object({
   meta: z.object({
     domain: z.string(),
     topic: z.string(),
-    language: z.enum(["en", "fa"]),
+    language: LanguageSchema,
     label: z.string(),
   }),
 

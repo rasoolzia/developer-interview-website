@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const DifficultySchema = z.enum(["easy", "medium", "hard"]);
+import { DifficultySchema, LanguageSchema } from "./common.schema";
 
 export const QuestionSchema = z.object({
   id: z.string(),
@@ -17,7 +17,7 @@ export const QuestionSchema = z.object({
 
   topic: z.string(),
 
-  language: z.string(),
+  language: LanguageSchema,
 
   tags: z.array(z.string()).optional(),
 

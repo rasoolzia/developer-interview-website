@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { LanguageSchema } from "./common.schema";
+
 export const ManifestSchema = z.object({
   generatorVersion: z.string(),
 
@@ -7,7 +9,7 @@ export const ManifestSchema = z.object({
 
   generatedAt: z.string(),
 
-  languages: z.array(z.enum(["en", "fa"])),
+  languages: z.array(LanguageSchema),
 
   domains: z.record(
     z.string(),

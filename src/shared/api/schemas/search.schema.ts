@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { DifficultySchema, LanguageSchema } from "./common.schema";
+
 export const SearchItemSchema = z.object({
   id: z.string(),
 
@@ -13,11 +15,11 @@ export const SearchItemSchema = z.object({
 
   label: z.string(),
 
-  language: z.enum(["en", "fa"]),
+  language: LanguageSchema,
 
   path: z.string(),
 
-  difficulty: z.enum(["easy", "medium", "hard"]),
+  difficulty: DifficultySchema,
 
   categories: z.array(z.string()),
 
