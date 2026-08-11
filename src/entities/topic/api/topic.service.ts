@@ -1,10 +1,18 @@
 import { topicRepository } from "@/shared/api/repositories";
-import type { Topic } from "@/shared/api/schemas";
+import { mapQuestions, mapTopic } from "@/shared/mappers";
 
-export async function getTopic(
+import { TopicDetails } from "../model";
+
+export async function getTopicDetails(
   domain: string,
   topic: string,
   language: string,
-): Promise<Topic> {
-  return topicRepository.getTopic(domain, topic, language);
+): Promise<TopicDetails> {
+  const topicData = await topicRepository.getTopic(domain, topic, language);
+
+  return {
+    topic: mapTopic(topicData),
+
+    questions: mapQuestions(topicData),
+  };
 }

@@ -1,6 +1,10 @@
 import { manifestRepository } from "@/shared/api/repositories";
-import type { Manifest } from "@/shared/api/schemas";
+import { mapManifestToDomains } from "@/shared/mappers";
 
-export async function getManifest(): Promise<Manifest> {
-  return manifestRepository.getManifest();
+import type { Domain } from "../model";
+
+export async function getManifest(): Promise<Domain[]> {
+  const manifest = await manifestRepository.getManifest();
+
+  return mapManifestToDomains(manifest);
 }

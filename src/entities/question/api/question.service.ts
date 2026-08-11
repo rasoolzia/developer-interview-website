@@ -1,12 +1,12 @@
-import { getTopic } from "@/entities/topic/api";
-import type { Question } from "@/shared/api/schemas";
+import type { Question } from "@/entities/question/model";
+import { getTopicDetails } from "@/entities/topic/api";
 
 export async function getQuestions(
   domain: string,
   topic: string,
   language: string,
 ): Promise<Question[]> {
-  const data = await getTopic(domain, topic, language);
+  const data = await getTopicDetails(domain, topic, language);
 
   return data.questions;
 }

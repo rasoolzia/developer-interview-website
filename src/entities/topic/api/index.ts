@@ -1,1 +1,1 @@
-export { getTopic } from "./topic.service";
+export { getTopicDetails } from "./topic.service";

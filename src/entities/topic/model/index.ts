@@ -1,3 +1,4 @@
+import type { Question } from "@/entities/question/model";
 import type { Language } from "@/shared/api/schemas";
 
 export interface Topic {
@@ -17,4 +18,10 @@ export interface Topic {
       }
     >
   >;
+}
+
+export interface TopicDetails {
+  topic: Topic;
+
+  questions: Question[];
 }
