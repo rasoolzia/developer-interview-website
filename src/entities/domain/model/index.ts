@@ -1,5 +1,1 @@
-export interface Domain {
-  slug: string;
-
-  label: string;
-}
+export * from "./domain.model";
