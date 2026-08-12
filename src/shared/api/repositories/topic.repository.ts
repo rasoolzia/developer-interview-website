@@ -1,6 +1,7 @@
+import type { Topic } from "@/shared/types";
+
 import { cacheKeys, CacheManager } from "../cache";
 import { apiClient } from "../client";
-import type { Topic } from "../schemas";
 
 export class TopicRepository {
   async getTopic(

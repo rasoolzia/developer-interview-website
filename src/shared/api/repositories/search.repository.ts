@@ -1,5 +1,6 @@
+import type { SearchItem } from "@/shared/types";
+
 import { apiClient } from "../client";
-import type { SearchItem } from "../schemas";
 
 export class SearchRepository {
   async getSearchIndex(): Promise<SearchItem[]> {

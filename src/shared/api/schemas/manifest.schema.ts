@@ -37,5 +37,3 @@ export const ManifestSchema = z.object({
     }),
   ),
 });
-
-export type Manifest = z.infer<typeof ManifestSchema>;

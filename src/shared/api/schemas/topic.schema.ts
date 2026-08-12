@@ -33,5 +33,3 @@ export const TopicSchema = z.object({
 
   questions: z.array(QuestionSchema),
 });
-
-export type Topic = z.infer<typeof TopicSchema>;

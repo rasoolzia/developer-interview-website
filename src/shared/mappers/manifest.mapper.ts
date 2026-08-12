@@ -1,5 +1,5 @@
 import type { Domain } from "@/entities/domain/model";
-import type { Manifest } from "@/shared/api/schemas";
+import type { Manifest } from "@/shared/types";
 
 export function mapManifestToDomains(manifest: Manifest): Domain[] {
   return Object.entries(manifest.domains).map(([slug, domain]) => ({

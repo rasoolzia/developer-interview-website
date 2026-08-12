@@ -27,5 +27,3 @@ export const QuestionSchema = z.object({
     readingTime: z.number(),
   }),
 });
-
-export type Question = z.infer<typeof QuestionSchema>;

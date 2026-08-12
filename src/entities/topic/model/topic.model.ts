@@ -1,5 +1,5 @@
 import type { Question } from "@/entities/question/model";
-import type { Language } from "@/shared/api/schemas";
+import type { Language } from "@/shared/types";
 
 export interface Topic {
   domain: string;

@@ -29,5 +29,3 @@ export const SearchItemSchema = z.object({
 });
 
 export const SearchIndexSchema = z.array(SearchItemSchema);
-
-export type SearchItem = z.infer<typeof SearchItemSchema>;
