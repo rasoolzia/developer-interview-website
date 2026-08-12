@@ -13,10 +13,10 @@ export type Language = z.infer<typeof LanguageSchema>;
 
 export type Difficulty = z.infer<typeof DifficultySchema>;
 
-export type Manifest = z.infer<typeof ManifestSchema>;
+export type ApiManifest = z.infer<typeof ManifestSchema>;
 
-export type Topic = z.infer<typeof TopicSchema>;
+export type ApiTopic = z.infer<typeof TopicSchema>;
 
-export type Question = z.infer<typeof QuestionSchema>;
+export type ApiQuestion = z.infer<typeof QuestionSchema>;
 
-export type SearchItem = z.infer<typeof SearchItemSchema>;
+export type ApiSearchItem = z.infer<typeof SearchItemSchema>;

@@ -1,7 +1,7 @@
 import type { Domain } from "@/entities/domain/model";
-import type { Manifest } from "@/shared/types";
+import type { ApiManifest } from "@/shared/types";
 
-export function mapManifestToDomains(manifest: Manifest): Domain[] {
+export function mapManifestToDomains(manifest: ApiManifest): Domain[] {
   return Object.entries(manifest.domains).map(([slug, domain]) => ({
     slug,
 

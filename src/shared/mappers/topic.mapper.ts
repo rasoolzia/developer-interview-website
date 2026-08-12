@@ -1,6 +1,6 @@
 import type { Question } from "@/entities/question/model";
 import type { Topic } from "@/entities/topic/model";
-import type { Topic as ApiTopic } from "@/shared/types";
+import type { ApiTopic } from "@/shared/types";
 
 export function mapTopic(api: ApiTopic): Topic {
   return {

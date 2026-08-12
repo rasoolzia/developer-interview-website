@@ -1,4 +1,4 @@
-import type { Topic } from "@/shared/types";
+import type { ApiTopic } from "@/shared/types";
 
 import { cacheKeys, CacheManager } from "../cache";
 import { apiClient } from "../client";
@@ -9,18 +9,18 @@ export class TopicRepository {
     topic: string,
     language: string,
     hash?: string,
-  ): Promise<Topic> {
+  ): Promise<ApiTopic> {
     const key = cacheKeys.topic(domain, topic, language);
 
     if (hash) {
-      const cached = CacheManager.get<Topic>(key, hash);
+      const cached = CacheManager.get<ApiTopic>(key, hash);
 
       if (cached) {
         return cached;
       }
     }
 
-    const data = await apiClient.get<Topic>(
+    const data = await apiClient.get<ApiTopic>(
       `${domain}/${topic}/${language}.json`,
     );
 
