@@ -3,8 +3,7 @@
 import { type LucideIcon, MoonIcon, SunIcon, SunMoonIcon } from "lucide-react";
 
 import { DEFAULT_THEME, Theme, THEMES } from "@/shared/constants/theme";
-import { useMounted } from "@/shared/hooks/use-mounted";
-import { useTheme } from "@/shared/hooks/use-theme";
+import { useMounted, useTheme } from "@/shared/hooks";
 
 const ICONS: Record<Theme, LucideIcon> = {
   system: SunMoonIcon,
