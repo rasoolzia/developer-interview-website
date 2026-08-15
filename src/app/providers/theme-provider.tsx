@@ -3,7 +3,7 @@
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import type { PropsWithChildren } from "react";
 
-import { DEFAULT_THEME } from "@/shared/constants/theme";
+import { DEFAULT_THEME } from "@/shared/constants";
 
 export function ThemeProvider({ children }: PropsWithChildren) {
   return (

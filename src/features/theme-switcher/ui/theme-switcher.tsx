@@ -1,9 +1,10 @@
 "use client";
 
 import { type LucideIcon, MoonIcon, SunIcon, SunMoonIcon } from "lucide-react";
+import { useTheme } from "next-themes";
 
-import { DEFAULT_THEME, Theme, THEMES } from "@/shared/constants/theme";
-import { useMounted, useTheme } from "@/shared/hooks";
+import { DEFAULT_THEME, Theme, THEMES } from "@/shared/constants";
+import { useMounted } from "@/shared/hooks";
 
 const ICONS: Record<Theme, LucideIcon> = {
   system: SunMoonIcon,
