@@ -3,4 +3,3 @@ node_modules
 coverage
 dist
 public/api
-pnpm-lock.yaml
