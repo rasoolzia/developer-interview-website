@@ -3,6 +3,7 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 
 import { routing } from "@/shared/config/i18n";
+import { LocaleProvider } from "@/shared/ui/locale-provider";
 import { Footer } from "@/widgets/footer";
 import { Header } from "@/widgets/header";
 
@@ -28,9 +29,13 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <NextIntlClientProvider messages={messages}>
-      <Header />
-      <main>{children}</main>
-      <Footer />
+      <LocaleProvider>
+        <Header />
+
+        <main>{children}</main>
+
+        <Footer />
+      </LocaleProvider>
     </NextIntlClientProvider>
   );
 }

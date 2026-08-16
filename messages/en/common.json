@@ -1,1 +1,6 @@
-{}
+{
+  "notFound": {
+    "title": "page not found",
+    "description": "go to site home with button below"
+  }
+}
