@@ -7,6 +7,9 @@ settings:
 importers:
   .:
     dependencies:
+      "@teispace/next-themes":
+        specifier: ^2.0.4
+        version: 2.0.4(next@16.2.10(@babel/core@7.29.7)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       lucide-react:
         specifier: ^1.24.0
         version: 1.24.0(react@19.2.4)
@@ -16,9 +19,6 @@ importers:
       next-intl:
         specifier: ^4.13.2
         version: 4.13.2(next@16.2.10(@babel/core@7.29.7)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(typescript@5.9.3)
-      next-themes:
-        specifier: ^0.4.6
-        version: 0.4.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react:
         specifier: 19.2.4
         version: 19.2.4
@@ -1311,6 +1311,20 @@ packages:
       {
         integrity: sha512-rjVWYCa7Ngbi5AarT6k8TkxUG3Wl1QKzHdIZVsjZSzf36Jmo2IKZt/NHRAwly8oDkbBOH0YTu+CHuf9jPxMc+g==,
       }
+
+  "@teispace/next-themes@2.0.4":
+    resolution:
+      {
+        integrity: sha512-Vyu1b4oARmGf6/WC83nqyrfX7ZrYWRueY55DakwkXhizgXDgOOIo0lCroNvbLpR+TxN1dquoZ2DnHN2PifsRnQ==,
+      }
+    engines: { node: ">=24.0.0" }
+    peerDependencies:
+      next: ">=13.0.0"
+      react: ">=18.0.0"
+      react-dom: ">=18.0.0"
+    peerDependenciesMeta:
+      next:
+        optional: true
 
   "@tybys/wasm-util@0.10.3":
     resolution:
@@ -3376,15 +3390,6 @@ packages:
       typescript:
         optional: true
 
-  next-themes@0.4.6:
-    resolution:
-      {
-        integrity: sha512-pZvgD5L0IEvX5/9GWyHMf3m8BKiVQwsCMHfoFosXtXBMnaS0ZnIJ9ST4b4NqLVKDEm8QBxoNNGNaBv2JNF6XNA==,
-      }
-    peerDependencies:
-      react: ^16.8 || ^17 || ^18 || ^19 || ^19.0.0-rc
-      react-dom: ^16.8 || ^17 || ^18 || ^19 || ^19.0.0-rc
-
   next@16.2.10:
     resolution:
       {
@@ -5006,6 +5011,13 @@ snapshots:
       postcss: 8.5.16
       tailwindcss: 4.3.2
 
+  "@teispace/next-themes@2.0.4(next@16.2.10(@babel/core@7.29.7)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)":
+    dependencies:
+      react: 19.2.4
+      react-dom: 19.2.4(react@19.2.4)
+    optionalDependencies:
+      next: 16.2.10(@babel/core@7.29.7)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+
   "@tybys/wasm-util@0.10.3":
     dependencies:
       tslib: 2.8.1
@@ -6348,11 +6360,6 @@ snapshots:
       typescript: 5.9.3
     transitivePeerDependencies:
       - "@swc/helpers"
-
-  next-themes@0.4.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
-    dependencies:
-      react: 19.2.4
-      react-dom: 19.2.4(react@19.2.4)
 
   next@16.2.10(@babel/core@7.29.7)(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
     dependencies:
