@@ -3,7 +3,11 @@ import "./../globals.css";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { getMessages, setRequestLocale } from "next-intl/server";
+import {
+  getMessages,
+  getTranslations,
+  setRequestLocale,
+} from "next-intl/server";
 
 import { routing } from "@/shared/config/i18n";
 import { Footer } from "@/widgets/footer";
@@ -16,10 +20,23 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
-export const metadata: Metadata = {
-  title: "Developer Interview Handbook",
-  description: "Open source developer interview questions handbook",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+
+  const t = await getTranslations({
+    locale,
+    namespace: "common.Metadata",
+  });
+
+  return {
+    title: t("title"),
+    description: t("description"),
+  };
+}
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));

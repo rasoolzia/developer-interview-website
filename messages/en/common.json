@@ -2,5 +2,9 @@
   "notFound": {
     "title": "page not found",
     "description": "go to site home with button below"
+  },
+  "Metadata": {
+    "title": "Developer Interview Handbook",
+    "description": "Open source developer interview questions handbook"
   }
 }
