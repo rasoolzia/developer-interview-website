@@ -1,4 +1,8 @@
 {
   "title": "Developer Interview Handbook",
-  "description": "The best interview questions collection."
+  "description": "The best interview questions collection.",
+  "hero": {
+    "title": "Developer Interview Handbook",
+    "description": "Practice real interview questions for Frontend, Backend and Full Stack Engineering."
+  }
 }
