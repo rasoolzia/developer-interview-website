@@ -1,4 +1,4 @@
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "/api";
+const BASE_URL = process.env.NEXT_PUBLIC_CONTENT_API_URL ?? "/api";
 
 interface RequestOptions extends RequestInit {
   next?: NextFetchRequestConfig;
@@ -6,7 +6,7 @@ interface RequestOptions extends RequestInit {
 
 class ApiClient {
   async get<T>(path: string, options?: RequestOptions): Promise<T> {
-    const response = await fetch(`${BASE_URL}${path}`, options);
+    const response = await fetch(`${BASE_URL}/${path}`, options);
 
     if (!response.ok) {
       throw new Error(`Request failed: ${response.status}`);
