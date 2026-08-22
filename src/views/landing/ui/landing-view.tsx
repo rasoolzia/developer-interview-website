@@ -1,20 +1,23 @@
+import { getLanding } from "../api";
 import { CTASection } from "./sections/cta";
 import { DomainsSection } from "./sections/domains";
-import { HeroSection } from "./sections/here";
+import { HeroSection } from "./sections/hero";
 import { OpenSourceSection } from "./sections/open-source";
 import { SearchSection } from "./sections/search";
 import { StatsSection } from "./sections/stats";
 
-export function LandingView() {
+export async function LandingView() {
+  const landing = await getLanding();
+
   return (
     <div className="flex flex-col">
       <HeroSection />
 
       <SearchSection />
 
-      <StatsSection />
+      <StatsSection stats={landing.stats} />
 
-      <DomainsSection />
+      <DomainsSection domains={landing.domains} />
 
       <OpenSourceSection />
 
