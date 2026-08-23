@@ -6,5 +6,10 @@
   "Metadata": {
     "title": "Developer Interview Handbook",
     "description": "Open source developer interview questions handbook"
+  },
+  "site": {
+    "name": "Developer Interview Handbook",
+    "shortName": "Interview Handbook",
+    "copyright": "All rights reserved"
   }
 }
