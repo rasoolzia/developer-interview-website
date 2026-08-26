@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 
-export default async function NotFoundPage() {
+import { ROUTES } from "@/shared/config";
+
+export async function NotFoundPage() {
   const t = await getTranslations("common");
 
   return (
@@ -9,7 +11,7 @@ export default async function NotFoundPage() {
       <h1 className="text-6xl font-bold">404</h1>
       <p>{t("notFound.title")}</p>
       <p>{t("notFound.description")}</p>
-      <Link href="/" className="underline">
+      <Link href={ROUTES.home} className="underline">
         Go home
       </Link>
     </div>
