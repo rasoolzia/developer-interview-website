@@ -3,7 +3,7 @@
 import { useTheme } from "@teispace/next-themes";
 import { type LucideIcon, MoonIcon, SunIcon, SunMoonIcon } from "lucide-react";
 
-import { DEFAULT_THEME, Theme, THEMES } from "@/shared/constants";
+import { DEFAULT_THEME, type Theme, THEMES } from "@/shared/constants";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/shadcn";
 
 const ICONS: Record<Theme, LucideIcon> = {

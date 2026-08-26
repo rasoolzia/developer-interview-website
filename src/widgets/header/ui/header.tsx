@@ -3,7 +3,8 @@ import Link from "next/link";
 
 import { LanguageSwitcher } from "@/features/language-switcher/ui/language-switcher";
 import { ThemeSwitcher } from "@/features/theme-switcher/ui/theme-switcher";
-import { SITE } from "@/shared/constants/site";
+import { ROUTES } from "@/shared/config";
+import { SITE } from "@/shared/constants";
 import { GithubIcon } from "@/shared/ui/icons/github-icon";
 import { Logo } from "@/shared/ui/logo";
 
@@ -16,7 +17,7 @@ export function Header() {
         <div className="flex items-center gap-4">
           <LanguageSwitcher />
 
-          <Link href="/search" rel="noopener noreferrer">
+          <Link href={ROUTES.search} rel="noopener noreferrer">
             <SearchIcon className="size-5" />
           </Link>
 

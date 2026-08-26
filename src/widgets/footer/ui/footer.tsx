@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 
-import { SITE } from "@/shared/constants/site";
+import { SITE } from "@/shared/constants";
 import { GithubIcon } from "@/shared/ui/icons/github-icon";
 
 import { getFooter } from "../api/footer.service";
