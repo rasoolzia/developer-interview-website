@@ -1,11 +1,11 @@
 import { SearchIcon } from "lucide-react";
 import Link from "next/link";
 
-import { LanguageSwitcher } from "@/features/language-switcher/ui/language-switcher";
-import { ThemeSwitcher } from "@/features/theme-switcher/ui/theme-switcher";
+import { LanguageSwitcher } from "@/features/language-switcher";
+import { ThemeSwitcher } from "@/features/theme-switcher";
 import { ROUTES } from "@/shared/config";
 import { SITE } from "@/shared/constants";
-import { GithubIcon } from "@/shared/ui/icons/github-icon";
+import { GithubIcon } from "@/shared/ui/icons";
 import { Logo } from "@/shared/ui/logo";
 
 export function Header() {
