@@ -1,1 +1,13 @@
-{}
+{
+  "placeholder": "Search interview questions...",
+  "button": "Search",
+  "results": "results",
+  "empty": {
+    "title": "Search interview questions",
+    "description": "Search by question title, topic, category or technology."
+  },
+  "notFound": {
+    "title": "Nothing found",
+    "description": "No questions matched \"{query}\"."
+  }
+}
