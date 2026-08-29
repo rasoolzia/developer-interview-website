@@ -4,11 +4,6 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-html,
-body {
-  min-height: 100%;
-}
-
 @theme inline {
   --font-heading: var(--font-sans);
   --font-sans: var(--font-sans);
@@ -126,9 +121,9 @@ body {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground min-h-full flex flex-col;
   }
   html {
-    @apply font-sans;
+    @apply h-full font-sans;
   }
 }

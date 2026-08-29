@@ -60,7 +60,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
             <Header />
-            <main>{children}</main>
+            <main className="grow">{children}</main>
             <Footer />
           </NextIntlClientProvider>
         </ThemeProvider>
