@@ -18,4 +18,6 @@ export interface SearchViewModel {
   filters: SearchFilters;
 
   results: SearchItem[];
+
+  total: number;
 }
