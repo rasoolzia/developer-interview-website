@@ -1,9 +1,10 @@
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 import type { SearchItem } from "@/entities/search/model";
 
 type Props = {
-  query: string;
+  query?: string;
 
   total: number;
 
@@ -11,12 +12,16 @@ type Props = {
 };
 
 export function SearchResults({ query, total, results }: Props) {
+  const t = useTranslations("search");
+
   return (
     <section className="space-y-8">
       <div>
-        <h1 className="text-3xl font-bold">{total} results</h1>
+        <h1 className="text-3xl font-bold">
+          {total} {t("results")}
+        </h1>
 
-        <p className="text-muted-foreground">{query}</p>
+        {query && <p className="text-muted-foreground">{query}</p>}
       </div>
 
       <div className="space-y-4">

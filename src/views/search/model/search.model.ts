@@ -1,7 +1,7 @@
 import type { SearchItem } from "@/entities/search/model";
 
 export interface SearchFilters {
-  query: string;
+  query?: string;
 
   domain?: string;
 
