@@ -5,15 +5,28 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { SubmitEvent, useState } from "react";
 
-import { ROUTES } from "@/shared/config";
+import { ROUTES, SEARCH_PARAMS } from "@/shared/config";
+import { cn } from "@/shared/lib/utils";
 import { Button, Input } from "@/shared/ui/shadcn";
 
-export function SearchInput() {
+type Props = {
+  defaultValue?: string;
+
+  autoFocus?: boolean;
+
+  className?: string;
+};
+
+export function SearchInput({
+  defaultValue = "",
+  autoFocus,
+  className,
+}: Props) {
   const t = useTranslations("search");
 
   const router = useRouter();
 
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(defaultValue);
 
   function onSubmit(e: SubmitEvent) {
     e.preventDefault();
@@ -22,15 +35,21 @@ export function SearchInput() {
 
     if (!value) return;
 
-    router.push(`${ROUTES.search}?query=${encodeURIComponent(value)}`);
+    router.push(
+      `${ROUTES.search}?${SEARCH_PARAMS.query}=${encodeURIComponent(value)}`,
+    );
   }
 
   return (
-    <form onSubmit={onSubmit} className="mx-auto flex max-w-3xl gap-3">
+    <form
+      onSubmit={onSubmit}
+      className={cn("mx-auto flex max-w-3xl gap-3", className)}
+    >
       <Input
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder={t("placeholder")}
+        autoFocus={autoFocus}
       />
 
       <Button type="submit">
