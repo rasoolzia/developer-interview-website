@@ -6,19 +6,55 @@ export function mapSearch(
   items: SearchItem[],
   filters: SearchFilters,
 ): SearchViewModel {
-  const query = normalize(filters.query);
+  const query = normalize(filters.query ?? "");
 
-  if (!query) {
-    return {
-      filters,
+  const results = items.filter((item) => {
+    // Language filter
+    if (
+      filters.language &&
+      normalize(item.language) !== normalize(filters.language)
+    ) {
+      return false;
+    }
 
-      results: [],
+    // Domain filter
+    if (
+      filters.domain &&
+      normalize(item.domain) !== normalize(filters.domain)
+    ) {
+      return false;
+    }
 
-      total: 0,
-    };
-  }
+    // Topic filter
+    if (filters.topic && normalize(item.topic) !== normalize(filters.topic)) {
+      return false;
+    }
 
-  const results = items.filter((item) => matches(item, query));
+    // Difficulty filter
+    if (
+      filters.difficulty &&
+      normalize(item.difficulty) !== normalize(filters.difficulty)
+    ) {
+      return false;
+    }
+
+    // Category filter
+    if (
+      filters.category &&
+      !item.categories.some(
+        (c) => normalize(c) === normalize(filters.category!),
+      )
+    ) {
+      return false;
+    }
+
+    // Search query filter
+    if (query && !matches(item, query)) {
+      return false;
+    }
+
+    return true;
+  });
 
   return {
     filters,
@@ -32,10 +68,6 @@ export function mapSearch(
 function matches(item: SearchItem, query: string): boolean {
   return (
     normalize(item.title).includes(query) ||
-    normalize(item.label).includes(query) ||
-    normalize(item.topic).includes(query) ||
-    normalize(item.domain).includes(query) ||
-    normalize(item.difficulty).includes(query) ||
     item.categories.some((category) => normalize(category).includes(query))
   );
 }
