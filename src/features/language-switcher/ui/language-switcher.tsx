@@ -1,8 +1,16 @@
 "use client";
 
+import { Check, Languages } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 import { useLocale } from "next-intl";
 
 import { usePathname, useRouter } from "@/shared/config/i18n/navigation";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/shared/ui/shadcn/dropdown-menu";
 
 export function LanguageSwitcher() {
   const locale = useLocale();
@@ -11,20 +19,44 @@ export function LanguageSwitcher() {
 
   const pathname = usePathname();
 
+  const searchParams = useSearchParams();
+
   const changeLanguage = (value: string) => {
-    router.replace(pathname, {
-      locale: value,
+    const params: Record<string, string> = {};
+    searchParams.forEach((value, key) => {
+      params[key] = value;
     });
+
+    router.replace(
+      {
+        pathname,
+        query: params,
+      },
+      {
+        locale: value,
+      },
+    );
   };
 
   return (
-    <select
-      value={locale}
-      onChange={(event) => changeLanguage(event.target.value)}
-    >
-      <option value="en">English</option>
-
-      <option value="fa">فارسی</option>
-    </select>
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <Languages className="size-5" />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem
+          onClick={() => changeLanguage("en")}
+          className={locale === "en" ? "bg-accent" : ""}
+        >
+          English {locale === "en" && <Check />}
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => changeLanguage("fa")}
+          className={locale === "fa" ? "bg-accent" : ""}
+        >
+          فارسی {locale === "fa" && <Check />}
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
