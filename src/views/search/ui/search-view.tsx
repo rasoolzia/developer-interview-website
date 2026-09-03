@@ -17,13 +17,8 @@ export async function SearchView({ filters }: Props) {
   const showEmpty = !hasQuery || !hasResults;
 
   return (
-    <div className="container mx-auto py-12">
-      <SearchInput
-        key={filters.query}
-        defaultValue={filters.query}
-        autoFocus
-        className="mb-8"
-      />
+    <>
+      <SearchInput key={filters.query} defaultValue={filters.query} autoFocus />
 
       {showEmpty ? (
         <SearchEmpty query={hasQuery ? filters.query : undefined} />
@@ -34,6 +29,6 @@ export async function SearchView({ filters }: Props) {
           results={data.results}
         />
       )}
-    </div>
+    </>
   );
 }
