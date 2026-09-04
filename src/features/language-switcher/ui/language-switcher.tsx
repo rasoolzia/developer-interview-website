@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useLocale } from "next-intl";
 
 import { usePathname, useRouter } from "@/shared/config/i18n/navigation";
+import { Button } from "@/shared/ui/shadcn";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -40,9 +41,17 @@ export function LanguageSwitcher() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <Languages className="size-5" />
-      </DropdownMenuTrigger>
+      <DropdownMenuTrigger
+        render={
+          <Button
+            variant="outline"
+            className="h-8 w-9"
+            aria-label="Language switcher"
+          >
+            <Languages className="size-5" />
+          </Button>
+        }
+      />
       <DropdownMenuContent align="end">
         <DropdownMenuItem
           onClick={() => changeLanguage("en")}
