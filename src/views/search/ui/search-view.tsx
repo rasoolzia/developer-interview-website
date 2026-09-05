@@ -1,9 +1,11 @@
 import { SearchInput } from "@/features/search";
 
 import { getSearch } from "../api";
-import { SearchFilters } from "../model";
+import type { SearchFilters } from "../model";
 import { SearchEmpty } from "./search-empty";
+import { SearchNavigationProvider } from "./search-navigation";
 import { SearchResults } from "./search-results";
+import { SearchResultsPending } from "./search-results-pending";
 
 type Props = {
   filters: SearchFilters;
@@ -11,24 +13,26 @@ type Props = {
 
 export async function SearchView({ filters }: Props) {
   const data = await getSearch(filters);
-  const hasQuery = Boolean(filters.query?.trim());
   const hasResults = data.results.length > 0;
-
-  const showEmpty = !hasQuery || !hasResults;
+  const trimmedQuery = filters.query?.trim();
 
   return (
-    <>
-      <SearchInput key={filters.query} defaultValue={filters.query} autoFocus />
+    <SearchNavigationProvider>
+      <SearchInput key={trimmedQuery} defaultValue={trimmedQuery} autoFocus />
 
-      {showEmpty ? (
-        <SearchEmpty query={hasQuery ? filters.query : undefined} />
-      ) : (
-        <SearchResults
-          query={filters.query}
-          total={data.total}
-          results={data.results}
-        />
-      )}
-    </>
+      <SearchResultsPending>
+        {!hasResults ? (
+          <SearchEmpty query={trimmedQuery} />
+        ) : (
+          <SearchResults
+            query={trimmedQuery}
+            total={data.total}
+            results={data.results}
+            page={data.page}
+            totalPages={data.totalPages}
+          />
+        )}
+      </SearchResultsPending>
+    </SearchNavigationProvider>
   );
 }

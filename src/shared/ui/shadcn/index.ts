@@ -8,6 +8,7 @@ export * from "./dropdown-menu";
 export * from "./index";
 export * from "./input";
 export * from "./input-group";
+export * from "./pagination";
 export * from "./scroll-area";
 export * from "./separator";
 export * from "./sheet";

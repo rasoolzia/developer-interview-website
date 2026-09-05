@@ -12,6 +12,8 @@ export interface SearchFilters {
   category?: string;
 
   language?: string;
+
+  page?: number;
 }
 
 export interface SearchViewModel {
@@ -20,4 +22,8 @@ export interface SearchViewModel {
   results: SearchItem[];
 
   total: number;
+
+  page: number;
+
+  totalPages: number;
 }

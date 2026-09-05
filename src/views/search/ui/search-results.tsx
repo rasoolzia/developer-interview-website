@@ -3,15 +3,27 @@ import { useTranslations } from "next-intl";
 
 import type { SearchItem } from "@/entities/search/model";
 
+import { SearchPagination } from "./search-pagination";
+
 type Props = {
   query?: string;
 
   total: number;
 
   results: SearchItem[];
+
+  page: number;
+
+  totalPages: number;
 };
 
-export function SearchResults({ query, total, results }: Props) {
+export function SearchResults({
+  query,
+  total,
+  results,
+  page,
+  totalPages,
+}: Props) {
   const t = useTranslations("search");
 
   return (
@@ -33,13 +45,9 @@ export function SearchResults({ query, total, results }: Props) {
           >
             <div className="mb-2 flex gap-2 text-sm">
               <span>{item.label}</span>
-
               <span>•</span>
-
               <span>{item.topic}</span>
-
               <span>•</span>
-
               <span>{item.difficulty}</span>
             </div>
 
@@ -47,6 +55,8 @@ export function SearchResults({ query, total, results }: Props) {
           </Link>
         ))}
       </div>
+
+      <SearchPagination page={page} totalPages={totalPages} />
     </section>
   );
 }

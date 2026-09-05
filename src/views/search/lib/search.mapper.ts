@@ -1,4 +1,5 @@
 import type { SearchItem } from "@/entities/search/model";
+import { SEARCH_PAGE_SIZE } from "@/shared/config";
 
 import type { SearchFilters, SearchViewModel } from "../model";
 
@@ -8,8 +9,7 @@ export function mapSearch(
 ): SearchViewModel {
   const query = normalize(filters.query ?? "");
 
-  const results = items.filter((item) => {
-    // Language filter
+  const filtered = items.filter((item) => {
     if (
       filters.language &&
       normalize(item.language) !== normalize(filters.language)
@@ -17,7 +17,6 @@ export function mapSearch(
       return false;
     }
 
-    // Domain filter
     if (
       filters.domain &&
       normalize(item.domain) !== normalize(filters.domain)
@@ -25,12 +24,10 @@ export function mapSearch(
       return false;
     }
 
-    // Topic filter
     if (filters.topic && normalize(item.topic) !== normalize(filters.topic)) {
       return false;
     }
 
-    // Difficulty filter
     if (
       filters.difficulty &&
       normalize(item.difficulty) !== normalize(filters.difficulty)
@@ -38,7 +35,6 @@ export function mapSearch(
       return false;
     }
 
-    // Category filter
     if (
       filters.category &&
       !item.categories.some(
@@ -48,7 +44,6 @@ export function mapSearch(
       return false;
     }
 
-    // Search query filter
     if (query && !matches(item, query)) {
       return false;
     }
@@ -56,13 +51,14 @@ export function mapSearch(
     return true;
   });
 
-  return {
-    filters,
+  const total = filtered.length;
+  const totalPages = Math.max(1, Math.ceil(total / SEARCH_PAGE_SIZE));
+  const page = clamp(filters.page ?? 1, 1, totalPages);
 
-    results,
+  const start = (page - 1) * SEARCH_PAGE_SIZE;
+  const results = filtered.slice(start, start + SEARCH_PAGE_SIZE);
 
-    total: results.length,
-  };
+  return { filters, results, total, page, totalPages };
 }
 
 function matches(item: SearchItem, query: string): boolean {
@@ -74,4 +70,8 @@ function matches(item: SearchItem, query: string): boolean {
 
 function normalize(value: string): string {
   return value.trim().toLowerCase();
+}
+
+function clamp(value: number, min: number, max: number): number {
+  return Math.min(Math.max(value, min), max);
 }

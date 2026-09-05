@@ -10,4 +10,8 @@ export const SEARCH_PARAMS = {
   category: "category",
 
   language: "language",
+
+  page: "page",
 } as const;
+
+export const SEARCH_PAGE_SIZE = 10;
