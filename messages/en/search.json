@@ -1,7 +1,7 @@
 {
   "placeholder": "Search interview questions...",
   "button": "Search",
-  "results": "results",
+  "results": "question",
   "empty": {
     "title": "Search interview questions",
     "description": "Search by question title, topic, category or technology."
@@ -9,5 +9,13 @@
   "notFound": {
     "title": "Nothing found",
     "description": "No questions matched \"{query}\"."
+  },
+  "filters": {
+    "title": "Filters",
+    "domain": "Domain",
+    "topic": "Topic",
+    "difficulty": "Difficulty",
+    "category": "Category",
+    "empty": "No filters available for this search."
   }
 }
