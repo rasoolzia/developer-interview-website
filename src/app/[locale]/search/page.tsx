@@ -1,7 +1,7 @@
 import { getLocale } from "next-intl/server";
 
 import { SEARCH_PARAMS } from "@/shared/config";
-import { toSingleParam } from "@/shared/lib/utils";
+import { toSingleParam } from "@/shared/lib";
 import { SearchView } from "@/views/search";
 
 export default async function SearchPage({

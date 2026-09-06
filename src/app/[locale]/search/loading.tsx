@@ -1,4 +1,4 @@
-import { SearchLoading } from "@/views/search/ui/search-loading";
+import { SearchLoading } from "@/views/search";
 
 export default function Loading() {
   return <SearchLoading />;
