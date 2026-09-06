@@ -1,7 +1,12 @@
-import type { SearchItem } from "@/entities/search/model";
+import type {
+  FacetOption,
+  SearchFilters,
+  SearchItem,
+} from "@/entities/search/model";
 import { SEARCH_PAGE_SIZE } from "@/shared/config";
+import { formatLabel, normalize } from "@/shared/lib";
 
-import type { SearchFilters, SearchViewModel } from "../model";
+import type { SearchViewModel } from "../model";
 
 export function mapSearch(
   items: SearchItem[],
@@ -9,47 +14,61 @@ export function mapSearch(
 ): SearchViewModel {
   const query = normalize(filters.query ?? "");
 
-  const filtered = items.filter((item) => {
-    if (
-      filters.language &&
-      normalize(item.language) !== normalize(filters.language)
-    ) {
-      return false;
-    }
+  const byLanguage = items.filter(
+    (item) =>
+      !filters.language ||
+      normalize(item.language) === normalize(filters.language),
+  );
 
-    if (
-      filters.domain &&
-      normalize(item.domain) !== normalize(filters.domain)
-    ) {
-      return false;
-    }
+  const byQuery = byLanguage.filter(
+    (item) => !query || matchesQuery(item, query),
+  );
 
-    if (filters.topic && normalize(item.topic) !== normalize(filters.topic)) {
-      return false;
-    }
+  const domains = toOptions(
+    byQuery,
+    (item) => item.domain,
+    (item) => formatLabel(item.domain),
+  );
 
-    if (
-      filters.difficulty &&
-      normalize(item.difficulty) !== normalize(filters.difficulty)
-    ) {
-      return false;
-    }
-
-    if (
-      filters.category &&
-      !item.categories.some(
-        (c) => normalize(c) === normalize(filters.category!),
+  const byDomain = filters.domain
+    ? byQuery.filter(
+        (item) => normalize(item.domain) === normalize(filters.domain!),
       )
-    ) {
-      return false;
-    }
+    : byQuery;
 
-    if (query && !matches(item, query)) {
-      return false;
-    }
+  const topics = toOptions(
+    byDomain,
+    (item) => item.topic,
+    (item) => item.label,
+  );
 
-    return true;
-  });
+  const byTopic = filters.topic
+    ? byDomain.filter(
+        (item) => normalize(item.topic) === normalize(filters.topic!),
+      )
+    : byDomain;
+
+  const difficulties = toOptions(
+    byTopic,
+    (item) => item.difficulty,
+    (item) => formatLabel(item.difficulty),
+  );
+
+  const byDifficulty = filters.difficulty
+    ? byTopic.filter(
+        (item) => normalize(item.difficulty) === normalize(filters.difficulty!),
+      )
+    : byTopic;
+
+  const categories = toCategoryOptions(byDifficulty);
+
+  const filtered = filters.category
+    ? byDifficulty.filter((item) =>
+        item.categories.some(
+          (category) => normalize(category) === normalize(filters.category!),
+        ),
+      )
+    : byDifficulty;
 
   const total = filtered.length;
   const totalPages = Math.max(1, Math.ceil(total / SEARCH_PAGE_SIZE));
@@ -58,18 +77,50 @@ export function mapSearch(
   const start = (page - 1) * SEARCH_PAGE_SIZE;
   const results = filtered.slice(start, start + SEARCH_PAGE_SIZE);
 
-  return { filters, results, total, page, totalPages };
+  return {
+    filters,
+    results,
+    total,
+    page,
+    totalPages,
+    facets: { domains, topics, difficulties, categories },
+  };
 }
 
-function matches(item: SearchItem, query: string): boolean {
+function matchesQuery(item: SearchItem, query: string): boolean {
   return (
     normalize(item.title).includes(query) ||
     item.categories.some((category) => normalize(category).includes(query))
   );
 }
 
-function normalize(value: string): string {
-  return value.trim().toLowerCase();
+function toOptions(
+  items: SearchItem[],
+  getValue: (item: SearchItem) => string,
+  getLabel: (item: SearchItem) => string,
+): FacetOption[] {
+  const seen = new Map<string, FacetOption>();
+
+  for (const item of items) {
+    const value = getValue(item);
+    const key = normalize(value);
+    if (!seen.has(key)) seen.set(key, { value, label: getLabel(item) });
+  }
+
+  return [...seen.values()].sort((a, b) => a.label.localeCompare(b.label));
+}
+
+function toCategoryOptions(items: SearchItem[]): FacetOption[] {
+  const seen = new Map<string, FacetOption>();
+
+  for (const item of items) {
+    for (const category of item.categories) {
+      const key = normalize(category);
+      if (!seen.has(key)) seen.set(key, { value: category, label: category });
+    }
+  }
+
+  return [...seen.values()].sort((a, b) => a.label.localeCompare(b.label));
 }
 
 function clamp(value: number, min: number, max: number): number {
