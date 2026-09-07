@@ -1,9 +1,10 @@
+import { SearchFilters } from "@/entities/search/model";
+import { FiltersSheet, FiltersSidebar } from "@/features/filters";
 import { SearchInput } from "@/features/search";
+import { QueryStateProvider } from "@/shared/hooks";
 
 import { getSearch } from "../api";
-import type { SearchFilters } from "../model";
 import { SearchEmpty } from "./search-empty";
-import { SearchNavigationProvider } from "./search-navigation";
 import { SearchResults } from "./search-results";
 import { SearchResultsPending } from "./search-results-pending";
 
@@ -17,22 +18,34 @@ export async function SearchView({ filters }: Props) {
   const trimmedQuery = filters.query?.trim();
 
   return (
-    <SearchNavigationProvider>
-      <SearchInput key={trimmedQuery} defaultValue={trimmedQuery} autoFocus />
+    <QueryStateProvider>
+      <div className="flex gap-8">
+        <FiltersSidebar facets={data.facets} filters={data.filters} />
 
-      <SearchResultsPending>
-        {!hasResults ? (
-          <SearchEmpty query={trimmedQuery} />
-        ) : (
-          <SearchResults
-            query={trimmedQuery}
-            total={data.total}
-            results={data.results}
-            page={data.page}
-            totalPages={data.totalPages}
+        <div className="min-w-0 flex-1 space-y-6 py-8">
+          <SearchInput
+            key={trimmedQuery}
+            defaultValue={trimmedQuery}
+            autoFocus
           />
-        )}
-      </SearchResultsPending>
-    </SearchNavigationProvider>
+
+          <FiltersSheet facets={data.facets} filters={data.filters} />
+
+          <SearchResultsPending>
+            {!hasResults ? (
+              <SearchEmpty query={trimmedQuery} />
+            ) : (
+              <SearchResults
+                query={trimmedQuery}
+                total={data.total}
+                results={data.results}
+                page={data.page}
+                totalPages={data.totalPages}
+              />
+            )}
+          </SearchResultsPending>
+        </div>
+      </div>
+    </QueryStateProvider>
   );
 }

@@ -2,16 +2,15 @@
 
 import { Loader2Icon } from "lucide-react";
 
+import { useQueryState } from "@/shared/hooks";
 import { cn } from "@/shared/lib/utils";
-
-import { useSearchNavigation } from "./search-navigation";
 
 export function SearchResultsPending({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { isPending } = useSearchNavigation();
+  const { isPending } = useQueryState();
 
   return (
     <div className="relative">

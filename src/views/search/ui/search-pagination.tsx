@@ -1,6 +1,7 @@
 "use client";
 
 import { SEARCH_PARAMS } from "@/shared/config";
+import { useQueryState } from "@/shared/hooks";
 import {
   Pagination,
   PaginationContent,
@@ -10,8 +11,6 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/shared/ui/shadcn";
-
-import { useSearchNavigation } from "./search-navigation";
 
 type Props = {
   page: number;
@@ -37,7 +36,7 @@ function getPageRange(current: number, total: number): (number | "ellipsis")[] {
 }
 
 export function SearchPagination({ page, totalPages }: Props) {
-  const { updateParams } = useSearchNavigation();
+  const { updateParams } = useQueryState();
 
   if (totalPages <= 1) return null;
 

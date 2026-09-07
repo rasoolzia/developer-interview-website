@@ -12,19 +12,14 @@ import { usePathname, useRouter } from "@/shared/config/i18n/navigation";
 
 type ParamUpdates = Record<string, string | undefined>;
 
-type SearchNavigationContextValue = {
+type QueryStateContextValue = {
   isPending: boolean;
   updateParams: (updates: ParamUpdates) => void;
 };
 
-const SearchNavigationContext =
-  createContext<SearchNavigationContextValue | null>(null);
+const QueryStateContext = createContext<QueryStateContextValue | null>(null);
 
-export function SearchNavigationProvider({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export function QueryStateProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -47,19 +42,17 @@ export function SearchNavigationProvider({
   }
 
   return (
-    <SearchNavigationContext.Provider value={{ isPending, updateParams }}>
+    <QueryStateContext.Provider value={{ isPending, updateParams }}>
       {children}
-    </SearchNavigationContext.Provider>
+    </QueryStateContext.Provider>
   );
 }
 
-export function useSearchNavigation() {
-  const ctx = useContext(SearchNavigationContext);
+export function useQueryState() {
+  const ctx = useContext(QueryStateContext);
 
   if (!ctx) {
-    throw new Error(
-      "useSearchNavigation must be used within SearchNavigationProvider",
-    );
+    throw new Error("useQueryState must be used within QueryStateProvider");
   }
 
   return ctx;
