@@ -8,7 +8,7 @@ import {
   useTransition,
 } from "react";
 
-import { usePathname, useRouter } from "@/shared/config/i18n/navigation";
+import { usePathname, useRouter } from "@/shared/config/i18n";
 
 type ParamUpdates = Record<string, string | undefined>;
 

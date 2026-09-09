@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { SubmitEvent, useState } from "react";
 
 import { ROUTES, SEARCH_PARAMS } from "@/shared/config";
-import { useRouter } from "@/shared/config/i18n/navigation";
+import { useRouter } from "@/shared/config/i18n";
 import { cn } from "@/shared/lib";
 import { Button, Input } from "@/shared/ui/shadcn";
 

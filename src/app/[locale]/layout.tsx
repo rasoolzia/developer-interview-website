@@ -9,7 +9,7 @@ import {
   setRequestLocale,
 } from "next-intl/server";
 
-import { routing } from "@/shared/config/i18n";
+import { getDirection, routing } from "@/shared/config/i18n";
 import { Footer } from "@/widgets/footer";
 import { Header } from "@/widgets/header";
 
@@ -52,7 +52,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   setRequestLocale(locale);
 
   const messages = await getMessages();
-  const direction = locale === "fa" ? "rtl" : "ltr";
+  const direction = getDirection(locale);
 
   return (
     <html lang={locale} dir={direction} suppressHydrationWarning>

@@ -4,6 +4,7 @@ import { SlidersHorizontalIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
 import type { SearchFacets, SearchFilters } from "@/entities/search/model";
+import { getDrawerSide } from "@/shared/config/i18n";
 import {
   Button,
   Sheet,
@@ -26,8 +27,7 @@ export function FiltersSheet({ facets, filters }: Props) {
   const locale = useLocale();
   const activeCount = countActiveFilters(filters);
 
-  const isRTL = locale === "fa";
-  const side = isRTL ? "right" : "left";
+  const side = getDrawerSide(locale);
 
   return (
     <Sheet>
