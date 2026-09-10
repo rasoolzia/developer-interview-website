@@ -2,6 +2,7 @@
   "placeholder": "Search interview questions...",
   "button": "Search",
   "results": "question",
+  "resultsFor": "search for",
   "empty": {
     "title": "Search interview questions",
     "description": "Search by question title, topic, category or technology."
