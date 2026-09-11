@@ -1,18 +1,6 @@
-import type { Difficulty, Language } from "@/shared/types";
+import type { QuestionBase } from "@/shared/types";
 
-export interface SearchItem {
-  id: string;
-  slug: string;
-  title: string;
-  domain: string;
-  topic: string;
-  label: string;
-  language: Language;
-  difficulty: Difficulty;
-  categories: string[];
-  path: string;
-  readingTime: number;
-}
+export type SearchItem = QuestionBase;
 
 export interface SearchFilters {
   query?: string;
@@ -23,6 +11,8 @@ export interface SearchFilters {
   language?: string;
   page?: number;
 }
+
+export type SearchParams = Record<string, string | string[] | undefined>;
 
 export interface FacetOption {
   value: string;
