@@ -1,25 +1,6 @@
-import type { Difficulty, Language } from "@/shared/types";
+import type { QuestionBase } from "@/shared/types";
 
-export interface Question {
-  id: string;
-
-  slug: string;
-
-  title: string;
-
-  difficulty: Difficulty;
-
-  categories: string[];
-
-  domain: string;
-
-  topic: string;
-
-  language: Language;
-
+export interface Question extends QuestionBase {
   markdown: string;
-
-  readingTime: number;
-
   tags?: string[];
 }
