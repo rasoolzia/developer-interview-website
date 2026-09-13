@@ -1,3 +1,4 @@
+import { toCanonicalDifficulty } from "@/entities/question/lib";
 import type {
   FacetOption,
   SearchFilters,
@@ -39,7 +40,7 @@ export function mapSearch(
   const topics = toOptions(
     byDomain,
     (item) => item.topic,
-    (item) => item.label,
+    (item) => formatLabel(item.topic),
   );
 
   const byTopic = filters.topic
@@ -50,13 +51,15 @@ export function mapSearch(
 
   const difficulties = toOptions(
     byTopic,
-    (item) => item.difficulty,
+    (item) => toCanonicalDifficulty(item.difficulty),
     (item) => formatLabel(item.difficulty),
   );
 
   const byDifficulty = filters.difficulty
     ? byTopic.filter(
-        (item) => normalize(item.difficulty) === normalize(filters.difficulty!),
+        (item) =>
+          toCanonicalDifficulty(item.difficulty) ===
+          normalize(filters.difficulty!),
       )
     : byTopic;
 
