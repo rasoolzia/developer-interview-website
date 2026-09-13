@@ -1,3 +1,4 @@
+import { SearchXIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 type Props = {
@@ -7,25 +8,21 @@ type Props = {
 export function SearchEmpty({ query }: Props) {
   const t = useTranslations("search");
 
-  if (!query) {
-    return (
-      <div className="text-center">
-        <h2 className="text-2xl font-semibold">{t("empty.title")}</h2>
-
-        <p className="text-muted-foreground mt-2">{t("empty.description")}</p>
-      </div>
-    );
-  }
+  const title = query ? t("notFound.title") : t("empty.title");
+  const description = query
+    ? t("notFound.description", { query })
+    : t("empty.description");
 
   return (
-    <div className="text-center">
-      <h2 className="text-2xl font-semibold">{t("notFound.title")}</h2>
+    <div className="flex flex-col items-center gap-4 py-16 text-center">
+      <div className="bg-primary/10 text-primary flex size-14 items-center justify-center rounded-full">
+        <SearchXIcon className="size-6" />
+      </div>
 
-      <p className="text-muted-foreground mt-2">
-        {t("notFound.description", {
-          query,
-        })}
-      </p>
+      <div>
+        <h2 className="text-2xl font-semibold">{title}</h2>
+        <p className="text-muted-foreground mt-2">{description}</p>
+      </div>
     </div>
   );
 }
