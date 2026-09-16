@@ -75,7 +75,7 @@ Consumed by: `entities/search/api/search.service.ts` → mapped by `views/search
 
 ### `<domain>/<topic>/<lang>.json`
 
-The full record for one topic in one language, including answer content.
+The full record for one topic in one language.
 
 ```json
 {
@@ -106,7 +106,8 @@ The full record for one topic in one language, including answer content.
       "domain": "frontend",
       "topic": "css",
       "language": "en",
-      "answer": { "markdown": "...", "readingTime": 1 }
+      "markdown": "...",
+      "readingTime": 1
     }
   ]
 }

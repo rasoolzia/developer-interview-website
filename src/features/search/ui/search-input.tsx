@@ -1,6 +1,6 @@
 "use client";
 
-import { SearchIcon } from "lucide-react";
+import { SearchIcon, XCircleIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { SubmitEvent, useState } from "react";
 
@@ -11,16 +11,18 @@ import { Button, Input } from "@/shared/ui/shadcn";
 
 type Props = {
   defaultValue?: string;
-
   autoFocus?: boolean;
-
   className?: string;
+  searchOnEmptyInput?: boolean;
+  clearable?: boolean;
 };
 
 export function SearchInput({
   defaultValue = "",
   autoFocus,
   className,
+  searchOnEmptyInput = false,
+  clearable = false,
 }: Props) {
   const t = useTranslations("search");
 
@@ -33,7 +35,12 @@ export function SearchInput({
 
     const value = query.trim();
 
-    if (!value) return;
+    if (!value && !searchOnEmptyInput) return;
+
+    if (!value) {
+      router.push(ROUTES.search);
+      return;
+    }
 
     router.push(
       `${ROUTES.search}?${SEARCH_PARAMS.query}=${encodeURIComponent(value)}`,
@@ -45,12 +52,25 @@ export function SearchInput({
       onSubmit={onSubmit}
       className={cn("mx-auto flex max-w-3xl gap-3", className)}
     >
-      <Input
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder={t("placeholder")}
-        autoFocus={autoFocus}
-      />
+      <div className="relative flex flex-1 items-center">
+        <Input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder={t("placeholder")}
+          autoFocus={autoFocus}
+          className={cn(clearable && query && "pe-8")}
+        />
+
+        {clearable && query && (
+          <button
+            type="button"
+            onClick={() => setQuery("")}
+            className="text-muted-foreground hover:text-foreground absolute inset-e-2 transition-colors"
+          >
+            <XCircleIcon className="size-5" />
+          </button>
+        )}
+      </div>
 
       <Button type="submit">
         <SearchIcon className="size-4" />
