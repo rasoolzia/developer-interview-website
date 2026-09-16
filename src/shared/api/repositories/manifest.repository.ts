@@ -1,10 +1,9 @@
-import type { ApiManifest } from "@/shared/types";
-
 import { apiClient } from "../client";
+import { ManifestSchema } from "../schemas";
 
 export class ManifestRepository {
-  async getManifest(): Promise<ApiManifest> {
-    return apiClient.get<ApiManifest>("manifest.json");
+  async getManifest() {
+    return apiClient.get("manifest.json", ManifestSchema);
   }
 }
 

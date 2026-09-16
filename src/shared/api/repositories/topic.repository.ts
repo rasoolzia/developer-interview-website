@@ -2,6 +2,7 @@ import type { ApiTopic } from "@/shared/types";
 
 import { cacheKeys, CacheManager } from "../cache";
 import { apiClient } from "../client";
+import { TopicSchema } from "../schemas";
 
 export class TopicRepository {
   async getTopic(
@@ -20,8 +21,9 @@ export class TopicRepository {
       }
     }
 
-    const data = await apiClient.get<ApiTopic>(
+    const data = await apiClient.get(
       `${domain}/${topic}/${language}.json`,
+      TopicSchema,
     );
 
     CacheManager.set(key, data.hash, data);
