@@ -4,6 +4,7 @@ import {
   DifficultySchema,
   LanguageSchema,
   ManifestSchema,
+  QuestionBaseSchema,
   QuestionSchema,
   SearchItemSchema,
   TopicSchema,
@@ -17,6 +18,8 @@ export type Difficulty = z.infer<typeof DifficultySchema>;
 export type ApiManifest = z.infer<typeof ManifestSchema>;
 
 export type ApiTopic = z.infer<typeof TopicSchema>;
+
+export type QuestionBase = z.infer<typeof QuestionBaseSchema>;
 
 export type ApiQuestion = z.infer<typeof QuestionSchema>;
 

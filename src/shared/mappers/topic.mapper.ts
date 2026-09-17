@@ -5,15 +5,11 @@ import type { ApiTopic } from "@/shared/types";
 export function mapTopic(api: ApiTopic): Topic {
   return {
     domain: api.meta.domain,
-
     slug: api.meta.topic,
-
     label: api.meta.label,
-
     languages: {
       [api.meta.language]: {
         total: api.stats.total,
-
         hash: api.hash,
       },
     },
@@ -23,25 +19,15 @@ export function mapTopic(api: ApiTopic): Topic {
 export function mapQuestions(api: ApiTopic): Question[] {
   return api.questions.map((question) => ({
     id: question.id,
-
     slug: question.slug,
-
     title: question.title,
-
     difficulty: question.difficulty,
-
     categories: question.categories,
-
     domain: question.domain,
-
     topic: question.topic,
-
     language: question.language,
-
-    markdown: question.answer.markdown,
-
-    readingTime: question.answer.readingTime,
-
+    markdown: question.markdown,
+    readingTime: question.readingTime,
     tags: question.tags,
   }));
 }
