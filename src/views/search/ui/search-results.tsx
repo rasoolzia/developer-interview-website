@@ -1,8 +1,7 @@
 import { useTranslations } from "next-intl";
 
-import { toQuestionCard } from "@/entities/question/lib";
-import { QuestionCard } from "@/entities/question/ui";
 import type { SearchItem } from "@/entities/search/model";
+import { QuestionList } from "@/widgets/question-list";
 
 import { SearchPagination } from "./search-pagination";
 
@@ -39,14 +38,7 @@ export function SearchResults({
         )}
       </div>
 
-      <div className="space-y-4">
-        {results.map((item) => (
-          <QuestionCard
-            key={`${item.id}-${item.language}`}
-            item={toQuestionCard(item)}
-          />
-        ))}
-      </div>
+      <QuestionList questions={results} />
 
       <SearchPagination page={page} totalPages={totalPages} />
     </section>
