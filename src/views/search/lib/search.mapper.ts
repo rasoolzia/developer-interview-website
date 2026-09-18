@@ -59,7 +59,7 @@ export function mapSearch(
     ? byTopic.filter(
         (item) =>
           toCanonicalDifficulty(item.difficulty) ===
-          normalize(filters.difficulty!),
+          toCanonicalDifficulty(filters.difficulty!),
       )
     : byTopic;
 

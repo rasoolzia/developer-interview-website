@@ -12,5 +12,13 @@ const ALIASES: Record<Difficulty, CanonicalDifficulty> = {
 };
 
 export function toCanonicalDifficulty(raw: Difficulty): CanonicalDifficulty {
-  return ALIASES[raw.trim().toLowerCase()] ?? "easy";
+  const normalized = raw.trim().toLowerCase();
+
+  const canonical = ALIASES[normalized];
+
+  if (!canonical) {
+    throw new Error(`Unknown difficulty: ${raw}`);
+  }
+
+  return canonical;
 }

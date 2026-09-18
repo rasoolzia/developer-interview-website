@@ -73,7 +73,7 @@ export function SearchPagination({ page, totalPages }: Props) {
                 isActive={p === page}
                 onClick={(e) => {
                   e.preventDefault();
-                  goToPage(p);
+                  if (p !== page) goToPage(p);
                 }}
               >
                 {p}

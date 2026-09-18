@@ -27,6 +27,8 @@ export async function SearchView({ filters }: Props) {
             key={trimmedQuery}
             defaultValue={trimmedQuery}
             autoFocus
+            searchOnEmptyInput
+            clearable
           />
 
           <FiltersSheet facets={data.facets} filters={data.filters} />
