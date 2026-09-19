@@ -60,13 +60,6 @@ GitHub Actions is used to verify every push and pull request.
 
 ## Cache Strategy
 
-The application currently uses an in-memory request cache.
+Generated JSON responses are retained in server memory after their first successful request. The same Promise is returned for later requests with the same key, while failed requests are removed so they can be retried.
 
-Goals:
-
-- Deduplicate concurrent requests.
-- Avoid multiple downloads of the same static resources during a single server render.
-- Keep repositories responsible only for data fetching.
-- Keep caching logic outside repositories.
-
-Future versions may extend this layer with persistent caching (IndexedDB, LocalStorage, Service Worker) using content hashes from the API responses without changing repository implementations.
+Repositories only fetch data. Services own cache keys and orchestration. See [Caching](caching.md) for the resource flow and the recipe for adding another API file.

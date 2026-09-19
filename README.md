@@ -131,6 +131,14 @@ Content is never authored or parsed in this repository — it's entirely owned b
 
 ---
 
+## Caching
+
+Generated JSON is cached in server memory after its first successful request. A page can reuse the manifest, search index, and topic files without another API download while the current Next.js server process is alive. Failed requests are not cached and can be retried.
+
+Repositories only fetch JSON. Services decide which cache key applies. See [the cache guide](docs/caching.md) before adding a new API resource.
+
+---
+
 ## Internationalization
 
 The site supports English (`en`) and Persian (`fa`), with `fa` rendered right-to-left. Locale-aware routing, navigation, and `<html lang / dir>` attributes are handled via `next-intl` (`shared/config/i18n`). UI code uses logical CSS properties (`ps-*`, `pe-*`, `border-s-*`, etc.) rather than physical `left`/`right`, so components render correctly in both directions without per-locale overrides.
