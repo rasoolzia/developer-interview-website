@@ -1,6 +1,5 @@
 import type { ApiTopic } from "@/shared/types";
 
-import { cacheKeys, CacheManager } from "../cache";
 import { apiClient } from "../client";
 import { TopicSchema } from "../schemas";
 
@@ -9,26 +8,11 @@ export class TopicRepository {
     domain: string,
     topic: string,
     language: string,
-    hash?: string,
   ): Promise<ApiTopic> {
-    const key = cacheKeys.topic(domain, topic, language);
-
-    if (hash) {
-      const cached = CacheManager.get<ApiTopic>(key, hash);
-
-      if (cached) {
-        return cached;
-      }
-    }
-
-    const data = await apiClient.get(
+    return apiClient.get(
       `${domain}/${topic}/${language}.json`,
       TopicSchema,
     );
-
-    CacheManager.set(key, data.hash, data);
-
-    return data;
   }
 }
 

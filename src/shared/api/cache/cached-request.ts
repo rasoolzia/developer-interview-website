@@ -1,20 +1,23 @@
-const pendingRequests = new Map<string, Promise<unknown>>();
+const cache = new Map<string, Promise<unknown>>();
 
 export async function cachedRequest<T>(
   key: string,
   loader: () => Promise<T>,
 ): Promise<T> {
-  const pending = pendingRequests.get(key);
+  const cached = cache.get(key);
 
-  if (pending) {
-    return pending as Promise<T>;
+  if (cached) {
+    return cached as Promise<T>;
   }
 
-  const promise = loader().finally(() => {
-    pendingRequests.delete(key);
-  });
+  const promise = loader();
 
-  pendingRequests.set(key, promise);
+  cache.set(key, promise);
 
-  return promise;
+  try {
+    return await promise;
+  } catch (error) {
+    cache.delete(key);
+    throw error;
+  }
 }
