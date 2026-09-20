@@ -2,7 +2,35 @@
   "title": "Developer Interview Handbook",
   "description": "The best interview questions collection.",
   "hero": {
+    "eyebrow": "Your interview preparation companion",
     "title": "Developer Interview Handbook",
-    "description": "Practice real interview questions for Frontend, Backend and Full Stack Engineering."
+    "description": "Practice real interview questions for Frontend, Backend and Full Stack Engineering.",
+    "primaryAction": "Explore questions",
+    "secondaryAction": "View on GitHub"
+  },
+  "stats": {
+    "title": "Built for focused preparation",
+    "description": "A growing, structured collection for your next technical interview.",
+    "questions": "Questions",
+    "topics": "Topics",
+    "domains": "Domains",
+    "languages": "Languages"
+  },
+  "domains": {
+    "eyebrow": "Browse by discipline",
+    "title": "Find the topics that matter to you",
+    "description": "Start with a domain, then focus on the skills and questions you want to practice.",
+    "topics": "{count} topics"
+  },
+  "openSource": {
+    "eyebrow": "Open source",
+    "title": "Built in public for developers everywhere",
+    "description": "The questions and website are open source. Review the content, suggest improvements, or contribute your own expertise.",
+    "action": "Explore the project"
+  },
+  "cta": {
+    "title": "Ready to sharpen your interview skills?",
+    "description": "Search the handbook and start practicing the questions that match your next role.",
+    "action": "Start practicing"
   }
 }
