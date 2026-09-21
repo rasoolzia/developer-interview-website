@@ -1,4 +1,5 @@
 import { Code2Icon } from "lucide-react";
+import Link from "next/link";
 import { useTranslations } from "next-intl";
 
 import type { LandingDomain } from "../../../model";
@@ -26,22 +27,21 @@ export function DomainsSection({ domains }: Props) {
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {domains.map((domain) => (
-          <article
-            key={domain.slug}
-            className="group bg-card rounded-xl border p-6 shadow-sm transition-colors hover:bg-muted/40"
-          >
-            <div className="bg-primary/10 text-primary mb-5 flex size-10 items-center justify-center rounded-lg">
-              <Code2Icon className="size-5" />
-            </div>
+          <Link href={domain.slug} key={domain.slug}>
+            <article className="group bg-card hover:bg-muted/40 rounded-xl border p-6 shadow-sm transition-colors">
+              <div className="bg-primary/10 text-primary mb-5 flex size-10 items-center justify-center rounded-lg">
+                <Code2Icon className="size-5" />
+              </div>
 
-            <h3 className="font-heading text-start text-lg font-semibold">
-              {domain.label}
-            </h3>
+              <h3 className="font-heading text-start text-lg font-semibold">
+                {domain.label}
+              </h3>
 
-            <p className="text-muted-foreground mt-2 text-start text-sm">
-              {t("topics", { count: domain.topics })}
-            </p>
-          </article>
+              <p className="text-muted-foreground mt-2 text-start text-sm">
+                {t("topics", { count: domain.topics })}
+              </p>
+            </article>
+          </Link>
         ))}
       </div>
     </section>

@@ -10,7 +10,7 @@ export function StatsSection({ stats }: Props) {
   const t = useTranslations("landing.stats");
 
   return (
-    <section className="border-y bg-muted/30 py-16 sm:py-20">
+    <section className="bg-muted/30 border-y py-16 sm:py-20">
       <div className="container mx-auto px-4">
         <div className="mx-auto mb-10 max-w-2xl space-y-3 text-center">
           <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
