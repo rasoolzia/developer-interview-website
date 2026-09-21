@@ -10,6 +10,7 @@ import {
 } from "next-intl/server";
 
 import { getDirection, routing } from "@/shared/config/i18n";
+import { vazirmatn } from "@/shared/styles/fonts";
 import { Footer } from "@/widgets/footer";
 import { Header } from "@/widgets/header";
 
@@ -55,7 +56,12 @@ export default async function LocaleLayout({ children, params }: Props) {
   const direction = getDirection(locale);
 
   return (
-    <html lang={locale} dir={direction} suppressHydrationWarning>
+    <html
+      lang={locale}
+      dir={direction}
+      className={vazirmatn.variable}
+      suppressHydrationWarning
+    >
       <body>
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
