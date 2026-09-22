@@ -1,4 +1,3 @@
-import { cachedRequest, cacheKeys } from "@/shared/api/cache";
 import { topicRepository } from "@/shared/api/repositories";
 import { mapQuestions, mapTopic } from "@/shared/mappers";
 
@@ -9,10 +8,7 @@ export async function getTopicDetails(
   topic: string,
   language: string,
 ): Promise<TopicDetails> {
-  const topicData = await cachedRequest(
-    cacheKeys.topic(domain, topic, language),
-    () => topicRepository.getTopic(domain, topic, language),
-  );
+  const topicData = await topicRepository.getTopic(domain, topic, language);
 
   return {
     topic: mapTopic(topicData),

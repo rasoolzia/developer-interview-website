@@ -13,7 +13,7 @@ class ApiClient {
     options?: RequestOptions,
   ): Promise<T> {
     const response = await fetch(`${BASE_URL}/${path}`, {
-      cache: "no-store",
+      cache: "force-cache",
       ...options,
     });
 
