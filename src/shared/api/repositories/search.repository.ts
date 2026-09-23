@@ -1,10 +1,10 @@
+import "server-only";
+
 import { apiClient } from "../client";
 import { SearchIndexSchema } from "../schemas";
 
-export class SearchRepository {
-  async getSearchIndex() {
-    return apiClient.get("search-index.json", SearchIndexSchema);
-  }
-}
+export async function fetchSearchIndex() {
+  "use cache";
 
-export const searchRepository = new SearchRepository();
+  return apiClient.get("search-index.json", SearchIndexSchema);
+}
