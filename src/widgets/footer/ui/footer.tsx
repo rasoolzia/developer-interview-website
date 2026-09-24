@@ -14,7 +14,7 @@ export async function Footer() {
     <footer className="border-t">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <p className="text-muted-foreground text-sm">
-          © {new Date().getFullYear()} {t("site.name")}. {t("site.copyright")}.
+          © {SITE.copyrightYear} {t("site.name")}. {t("site.copyright")}.
         </p>
 
         <div className="flex items-center gap-4">

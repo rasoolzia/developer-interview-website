@@ -1,5 +1,6 @@
 import { SearchIcon } from "lucide-react";
 import Link from "next/link";
+import { Suspense } from "react";
 
 import { LanguageSwitcher } from "@/features/language-switcher";
 import { ThemeSwitcher } from "@/features/theme-switcher";
@@ -15,7 +16,9 @@ export function Header() {
         <Logo />
 
         <div className="flex items-center gap-4">
-          <LanguageSwitcher />
+          <Suspense fallback={null}>
+            <LanguageSwitcher />
+          </Suspense>
 
           <Link href={ROUTES.search} rel="noopener noreferrer">
             <SearchIcon className="size-5" />

@@ -12,7 +12,7 @@ export async function NotFoundPage() {
       <p>{t("notFound.title")}</p>
       <p>{t("notFound.description")}</p>
       <Link href={ROUTES.home} className="underline">
-        Go home
+        {t("notFound.goHome")}
       </Link>
     </div>
   );

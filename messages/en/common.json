@@ -1,7 +1,8 @@
 {
   "notFound": {
     "title": "page not found",
-    "description": "go to site home with button below"
+    "description": "go to site home with button below",
+    "goHome": "Go home"
   },
   "Metadata": {
     "title": "Developer Interview Handbook",

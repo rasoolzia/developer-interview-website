@@ -1,16 +1,16 @@
-import { getLocale } from "next-intl/server";
-
 import type { SearchParams } from "@/entities/search/model";
 import { SearchView } from "@/views/search";
 import { toSearchFilters } from "@/views/search/lib";
 
 export default async function SearchPage({
   searchParams,
+  params,
 }: {
   searchParams?: Promise<SearchParams>;
+  params: Promise<{ locale: string }>;
 }) {
-  const locale = await getLocale();
-  const params = (await searchParams) ?? {};
+  const { locale } = await params;
+  const paramsValue = (await searchParams) ?? {};
 
-  return <SearchView filters={toSearchFilters(params, locale)} />;
+  return <SearchView filters={toSearchFilters(paramsValue, locale)} />;
 }

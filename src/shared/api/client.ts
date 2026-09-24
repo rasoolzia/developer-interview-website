@@ -12,10 +12,7 @@ class ApiClient {
     schema: z.ZodType<T>,
     options?: RequestOptions,
   ): Promise<T> {
-    const response = await fetch(`${BASE_URL}/${path}`, {
-      cache: "force-cache",
-      ...options,
-    });
+    const response = await fetch(`${BASE_URL}/${path}`, options);
 
     if (!response.ok) {
       throw new Error(`Request failed: ${response.status}`);
