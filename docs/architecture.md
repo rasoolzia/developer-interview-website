@@ -61,9 +61,9 @@ App Router enables:
 - React Server Components
 - Streaming
 - Nested layouts
-- Better caching
+- Better server-side caching
 - Better metadata handling
-- Partial prerendering
+- Cache Components and Partial Prerendering
 
 ---
 
@@ -79,6 +79,25 @@ Benefits:
 - Improved performance
 
 Client Components are only used when interactivity is required.
+
+---
+
+## Why Cache Components?
+
+The content API consists of generated static JSON resources that are safe to share between visitors.
+
+Next.js Cache Components allow stable server-side data to be cached while request-specific data remains dynamic.
+
+This provides:
+
+- Reuse of stable generated JSON across requests
+- Partial Prerendering
+- Clear separation between stable data and runtime request data
+- Server-first rendering without introducing a separate caching library
+
+The application enables Cache Components through `cacheComponents: true` in `next.config.ts`.
+
+See [`caching.md`](./caching.md) for the implementation rules.
 
 ---
 
@@ -127,6 +146,10 @@ API Client
 
         ↓
 
+Cached Server Data
+
+        ↓
+
 Entity Services
 
         ↓
@@ -144,6 +167,7 @@ The generator project is the single source of truth.
 Website responsibilities:
 
 - Fetch
+- Validate
 - Cache
 - Render
 - Search
@@ -188,3 +212,5 @@ Complete pages.
 - No deep imports
 - Clear public APIs
 - Composition over duplication
+- Stable data should be cached
+- Request-specific runtime data should remain outside cache boundaries

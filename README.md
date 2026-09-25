@@ -19,6 +19,7 @@ The site is a pure presentation layer. It consumes a generated, static JSON API 
 - Light/dark theme with flash-free hydration
 - Feature-Sliced Design architecture with strict, one-directional layer dependencies
 - Server Components by default; Client Components only where interactivity is required
+- Next.js Cache Components for server-side caching and Partial Prerendering
 - No backend of its own — the entire content layer is a static, CDN-friendly JSON API
 
 ---
@@ -133,9 +134,19 @@ Content is never authored or parsed in this repository — it's entirely owned b
 
 ## Caching
 
-Generated JSON is cached in server memory after its first successful request. A page can reuse the manifest, search index, and topic files without another API download while the current Next.js server process is alive. Failed requests are not cached and can be retried.
+This project uses **Next.js Cache Components** for server-side caching and Partial Prerendering.
 
-Repositories only fetch JSON. Services decide which cache key applies. See [the cache guide](docs/caching.md) before adding a new API resource.
+Generated JSON resources are cached with `"use cache"` at the service/repository boundary. Cache Components allow stable server data to be reused across requests while keeping request-specific data such as locale, search parameters, and other runtime values outside the cached functions.
+
+The main generated resources are:
+
+- `manifest.json`
+- `search-index.json`
+- Per-topic JSON files
+
+Caching is configured through `cacheComponents: true` in `next.config.ts`.
+
+When adding a new cached server function, follow the rules in `docs/caching.md`. In particular, cached functions must not directly depend on request-specific runtime data such as `cookies()`, `headers()`, `params`, or `searchParams`.
 
 ---
 

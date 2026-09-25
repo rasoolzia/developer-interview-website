@@ -54,12 +54,28 @@ GitHub Actions is used to verify every push and pull request.
 - Replace DTOs with Domain Models in Services.
 - Add Mapper Layer.
 - Add Repository Layer.
-- Add Cache Layer.
 - Add Domain Errors.
 - Add React Query only if needed.
 
 ## Cache Strategy
 
-Generated JSON responses are retained in server memory after their first successful request. The same Promise is returned for later requests with the same key, while failed requests are removed so they can be retried.
+### Decision
 
-Repositories only fetch data. Services own cache keys and orchestration. See [Caching](caching.md) for the resource flow and the recipe for adding another API file.
+The project uses **Next.js Cache Components** for server-side caching.
+
+`cacheComponents: true` is enabled in `next.config.ts`, and stable generated JSON resources use `"use cache"` at their server-side caching boundaries.
+
+### Why
+
+The content API consists of generated static JSON files that are safe to share between visitors. Caching these resources avoids unnecessary repeated downloads while keeping the application server-first.
+
+### Rules
+
+- Cache only stable, shared data.
+- Do not access `cookies()`, `headers()`, `params`, or `searchParams` inside cached functions.
+- Do not access request-specific runtime data from a cached function.
+- Do not use inline `"use cache"` annotations inside regular class instance methods.
+- Keep Zod validation at the API boundary.
+- Keep request-specific rendering outside the cache boundary.
+
+See [`caching.md`](caching.md) for the complete caching policy and implementation guidance.
