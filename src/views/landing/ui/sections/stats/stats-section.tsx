@@ -1,14 +1,12 @@
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-import type { LandingStats } from "../../../model";
+import { getLanding } from "../../../api";
 
-type Props = {
-  stats: LandingStats;
-};
-
-export function StatsSection({ stats }: Props) {
-  const t = useTranslations("landing.stats");
-
+export async function StatsSection() {
+  const [{ stats }, t] = await Promise.all([
+    getLanding(),
+    getTranslations("landing.stats"),
+  ]);
   return (
     <section className="bg-muted/30 border-y py-16 sm:py-20">
       <div className="container mx-auto px-4">

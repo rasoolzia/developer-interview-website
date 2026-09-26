@@ -1,15 +1,14 @@
 import { Code2Icon } from "lucide-react";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-import type { LandingDomain } from "../../../model";
+import { getLanding } from "../../../api";
 
-type Props = {
-  domains: LandingDomain[];
-};
-
-export function DomainsSection({ domains }: Props) {
-  const t = useTranslations("landing.domains");
+export async function DomainsSection() {
+  const [{ domains }, t] = await Promise.all([
+    getLanding(),
+    getTranslations("landing.domains"),
+  ]);
 
   return (
     <section className="container mx-auto px-4 py-16 sm:py-24">
