@@ -11,7 +11,7 @@ export function OpenSourceSection() {
 
   return (
     <section className="container mx-auto px-4 py-16 sm:py-24">
-      <div className="bg-muted/50 rounded-2xl border px-6 py-12 text-center sm:px-12">
+      <div className="bg-muted/50 rounded-2xl border px-5 py-10 text-center sm:px-12 sm:py-12">
         <div className="bg-background mx-auto mb-6 flex size-12 items-center justify-center rounded-xl border shadow-sm">
           <GithubIcon className="size-6" />
         </div>

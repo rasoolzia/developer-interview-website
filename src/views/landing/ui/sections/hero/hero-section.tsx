@@ -11,7 +11,7 @@ export function HeroSection() {
   const t = useTranslations("landing.hero");
 
   return (
-    <section className="container mx-auto px-4 py-20 sm:py-28">
+    <section className="container mx-auto px-4 py-16 sm:px-6 sm:py-28">
       <div className="mx-auto max-w-4xl space-y-7 text-center">
         <p className="text-primary text-sm font-semibold tracking-wide uppercase">
           {t("eyebrow")}

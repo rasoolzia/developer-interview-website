@@ -1,1 +1,1 @@
-export * from "./search-section";
+export { SearchSection } from "./search-section";

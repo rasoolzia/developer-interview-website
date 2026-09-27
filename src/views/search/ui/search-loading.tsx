@@ -2,7 +2,7 @@ import { Skeleton } from "@/shared/ui/shadcn";
 
 export function SearchLoading() {
   return (
-    <div className="flex gap-8">
+    <div className="flex gap-6 lg:gap-8">
       <aside className="hidden w-64 shrink-0 lg:block">
         <div className="sticky top-20 space-y-6">
           <FilterSectionSkeleton rows={3} />

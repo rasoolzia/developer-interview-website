@@ -12,19 +12,24 @@ import { Logo } from "@/shared/ui/logo";
 export function Header() {
   return (
     <header className="bg-background/80 sticky top-0 z-50 border-b backdrop-blur">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
+      <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6">
         <Logo />
 
-        <div className="flex items-center gap-4">
+        <div className="flex shrink-0 items-center gap-2 sm:gap-4">
           <Suspense fallback={null}>
             <LanguageSwitcher />
           </Suspense>
 
-          <Link href={ROUTES.search} rel="noopener noreferrer">
+          <Link href={ROUTES.search} aria-label="Search">
             <SearchIcon className="size-5" />
           </Link>
 
-          <Link href={SITE.github} target="_blank" rel="noopener noreferrer">
+          <Link
+            href={SITE.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+          >
             <GithubIcon className="size-6" />
           </Link>
 

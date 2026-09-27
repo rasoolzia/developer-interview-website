@@ -1,13 +1,11 @@
 import { Suspense } from "react";
 
 import { CTASection } from "./sections/cta";
-import { DomainsSection } from "./sections/domains";
-import { DomainsSectionSkeleton } from "./sections/domains/domains-section-skeleton";
+import { DomainsSection, DomainsSectionSkeleton } from "./sections/domains";
 import { HeroSection } from "./sections/hero";
 import { OpenSourceSection } from "./sections/open-source";
 import { SearchSection } from "./sections/search";
-import { StatsSection } from "./sections/stats";
-import { StatsSectionSkeleton } from "./sections/stats/stats-section-skeleton";
+import { StatsSection, StatsSectionSkeleton } from "./sections/stats";
 
 export function LandingView() {
   return (

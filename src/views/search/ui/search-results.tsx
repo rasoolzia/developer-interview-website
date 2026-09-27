@@ -23,9 +23,9 @@ export function SearchResults({
   const t = useTranslations("search");
 
   return (
-    <section className="space-y-8">
+    <section className="space-y-6 sm:space-y-8">
       <div>
-        <h1 className="text-3xl font-bold">
+        <h1 className="text-2xl font-bold sm:text-3xl">
           <span className="text-primary">{total}</span>{" "}
           <span>{t("results")}</span>
         </h1>

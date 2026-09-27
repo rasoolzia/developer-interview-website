@@ -19,10 +19,10 @@ export async function SearchView({ filters }: Props) {
 
   return (
     <QueryStateProvider>
-      <div className="flex gap-8">
+      <div className="flex gap-6 lg:gap-8">
         <FiltersSidebar facets={data.facets} filters={data.filters} />
 
-        <div className="min-w-0 flex-1 space-y-6 py-8">
+        <div className="min-w-0 flex-1 space-y-6 py-6 sm:py-8">
           <SearchInput
             key={trimmedQuery}
             defaultValue={trimmedQuery}

@@ -1,1 +1,1 @@
-export * from "./open-source-section";
+export { OpenSourceSection } from "./open-source-section";

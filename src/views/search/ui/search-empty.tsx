@@ -14,7 +14,7 @@ export function SearchEmpty({ query }: Props) {
     : t("empty.description");
 
   return (
-    <div className="flex flex-col items-center gap-4 py-16 text-center">
+    <div className="flex flex-col items-center gap-4 px-4 py-12 text-center sm:py-16">
       <div className="bg-primary/10 text-primary flex size-14 items-center justify-center rounded-full">
         <SearchXIcon className="size-6" />
       </div>

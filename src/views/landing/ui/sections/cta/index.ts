@@ -1,1 +1,1 @@
-export * from "./cta-section";
+export { CTASection } from "./cta-section";

@@ -2,7 +2,7 @@
 
 import { SearchIcon, XCircleIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { SubmitEvent, useState } from "react";
+import { SubmitEvent, useRef, useState } from "react";
 
 import { ROUTES, SEARCH_PARAMS } from "@/shared/config";
 import { useRouter } from "@/shared/config/i18n";
@@ -28,6 +28,8 @@ export function SearchInput({
 
   const router = useRouter();
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const [query, setQuery] = useState(defaultValue);
 
   function onSubmit(e: SubmitEvent<HTMLFormElement>) {
@@ -35,7 +37,10 @@ export function SearchInput({
 
     const value = query.trim();
 
-    if (!value && !searchOnEmptyInput) return;
+    if (!value && !searchOnEmptyInput) {
+      inputRef.current?.focus();
+      return;
+    }
 
     if (!value) {
       router.push(ROUTES.search);
@@ -47,24 +52,30 @@ export function SearchInput({
     );
   }
 
+  function handleClear() {
+    setQuery("");
+    inputRef.current?.focus();
+  }
+
   return (
     <form
       onSubmit={onSubmit}
-      className={cn("mx-auto flex max-w-3xl gap-3", className)}
+      className={cn("mx-auto flex h-10 max-w-3xl gap-3", className)}
     >
       <div className="relative flex flex-1 items-center">
         <Input
+          ref={inputRef}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={t("placeholder")}
           autoFocus={autoFocus}
-          className={cn(clearable && query && "pe-8")}
+          className={cn("h-full", clearable && query && "pe-8")}
         />
 
         {clearable && query && (
           <button
             type="button"
-            onClick={() => setQuery("")}
+            onClick={handleClear}
             className="text-muted-foreground hover:text-foreground absolute inset-e-2 transition-colors"
           >
             <XCircleIcon className="size-5" />
@@ -72,7 +83,7 @@ export function SearchInput({
         )}
       </div>
 
-      <Button type="submit">
+      <Button type="submit" className="h-full">
         <SearchIcon className="size-4" />
         {t("button")}
       </Button>

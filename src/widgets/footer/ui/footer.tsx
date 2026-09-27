@@ -12,8 +12,8 @@ export async function Footer() {
 
   return (
     <footer className="border-t">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <p className="text-muted-foreground text-sm">
+      <div className="container mx-auto flex min-h-16 flex-col items-center justify-between gap-3 px-4 py-4 sm:flex-row sm:px-6 sm:py-0">
+        <p className="text-muted-foreground text-center text-sm sm:text-start">
           © {SITE.copyrightYear} {t("site.name")}. {t("site.copyright")}.
         </p>
 
@@ -22,7 +22,12 @@ export async function Footer() {
             v{footer.version}
           </span>
 
-          <Link href={SITE.github} target="_blank" rel="noopener noreferrer">
+          <Link
+            href={SITE.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+          >
             <GithubIcon className="size-6" />
           </Link>
         </div>

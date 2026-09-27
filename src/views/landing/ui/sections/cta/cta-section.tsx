@@ -10,7 +10,7 @@ export function CTASection() {
 
   return (
     <section className="container mx-auto px-4 py-16 sm:py-24">
-      <div className="bg-primary text-primary-foreground rounded-2xl px-6 py-12 text-center sm:px-12">
+      <div className="bg-primary text-primary-foreground rounded-2xl px-5 py-10 text-center sm:px-12 sm:py-12">
         <h2 className="font-heading mx-auto max-w-2xl text-2xl font-semibold tracking-tight sm:text-3xl">
           {t("title")}
         </h2>
