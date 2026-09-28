@@ -1,6 +1,6 @@
 import "./../globals.css";
 
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import {
@@ -11,6 +11,7 @@ import {
 import { Suspense } from "react";
 
 import { getDirection, routing } from "@/shared/config/i18n";
+import { BRAND_COLORS } from "@/shared/constants";
 import { vazirmatn } from "@/shared/styles/fonts";
 import { Footer } from "@/widgets/footer";
 import { Header } from "@/widgets/header";
@@ -35,10 +36,49 @@ export async function generateMetadata({
   });
 
   return {
-    title: t("title"),
+    title: {
+      default: t("title"),
+      template: `%s | ${t("title")}`,
+    },
     description: t("description"),
+    applicationName: t("title"),
+    generator: "Next.js",
+    authors: [{ name: "MohammadRasool Ziaaddini" }],
+    creator: "MohammadRasool Ziaaddini",
+    metadataBase: new URL("https://interview.mrzd.ir"),
+    alternates: {
+      languages: {
+        en: "/en",
+        fa: "/fa",
+      },
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+    openGraph: {
+      type: "website",
+      siteName: t("title"),
+      title: t("title"),
+      description: t("description"),
+      url: `/${locale}`,
+      locale: locale === "fa" ? "fa_IR" : "en_US",
+    },
+    twitter: {
+      card: "summary",
+      title: t("title"),
+      description: t("description"),
+    },
   };
 }
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: BRAND_COLORS.light },
+    { media: "(prefers-color-scheme: dark)", color: BRAND_COLORS.dark },
+  ],
+  colorScheme: "light dark",
+};
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
