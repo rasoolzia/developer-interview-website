@@ -1,9 +1,10 @@
 import { SearchInput } from "@/features/search";
+import { Container } from "@/shared/ui";
 
 export function SearchSection() {
   return (
-    <section className="container mx-auto px-4 py-10 sm:px-6 sm:py-12">
+    <Container className="py-10 sm:py-12" as="section">
       <SearchInput />
-    </section>
+    </Container>
   );
 }

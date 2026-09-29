@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 
 import { SITE } from "@/shared/constants";
+import { Container } from "@/shared/ui";
 import { GithubIcon } from "@/shared/ui/icons/github-icon";
 
 import { getFooter } from "../api/footer.service";
@@ -12,7 +13,7 @@ export async function Footer() {
 
   return (
     <footer className="border-t">
-      <div className="container mx-auto flex min-h-16 flex-col items-center justify-between gap-3 px-4 py-4 sm:flex-row sm:px-6 sm:py-0">
+      <Container className="flex min-h-16 flex-col items-center justify-between gap-3 py-4 sm:flex-row sm:py-0">
         <p className="text-muted-foreground text-center text-sm sm:text-start">
           © {SITE.copyrightYear} {t("site.name")}. {t("site.copyright")}.
         </p>
@@ -31,7 +32,7 @@ export async function Footer() {
             <GithubIcon className="size-6" />
           </Link>
         </div>
-      </div>
+      </Container>
     </footer>
   );
 }

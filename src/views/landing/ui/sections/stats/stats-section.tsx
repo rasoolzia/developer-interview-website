@@ -1,5 +1,7 @@
 import { getTranslations } from "next-intl/server";
 
+import { Container } from "@/shared/ui";
+
 import { getLanding } from "../../../api";
 
 export async function StatsSection() {
@@ -8,8 +10,8 @@ export async function StatsSection() {
     getTranslations("landing.stats"),
   ]);
   return (
-    <section className="bg-muted/30 border-y py-16 sm:py-20">
-      <div className="container mx-auto px-4">
+    <section className="bg-muted/30 border-y">
+      <Container className="py-16 sm:py-20">
         <div className="mx-auto mb-10 max-w-2xl space-y-3 text-center">
           <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
             {t("title")}
@@ -27,7 +29,7 @@ export async function StatsSection() {
 
           <StatCard title={t("languages")} value={stats.languages} />
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 
 import { SITE } from "@/shared/constants";
+import { Container } from "@/shared/ui";
 import { GithubIcon } from "@/shared/ui/icons";
 import { buttonVariants } from "@/shared/ui/shadcn";
 
@@ -10,7 +11,7 @@ export function OpenSourceSection() {
   const t = useTranslations("landing.openSource");
 
   return (
-    <section className="container mx-auto px-4 py-16 sm:py-24">
+    <Container className="py-16 sm:py-24" as="section">
       <div className="bg-muted/50 rounded-2xl border px-5 py-10 text-center sm:px-12 sm:py-12">
         <div className="bg-background mx-auto mb-6 flex size-12 items-center justify-center rounded-xl border shadow-sm">
           <GithubIcon className="size-6" />
@@ -38,6 +39,6 @@ export function OpenSourceSection() {
           <ArrowRightIcon className="rtl:rotate-180" />
         </Link>
       </div>
-    </section>
+    </Container>
   );
 }

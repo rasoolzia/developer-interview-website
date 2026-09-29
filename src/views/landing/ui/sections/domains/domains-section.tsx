@@ -2,6 +2,8 @@ import { Code2Icon } from "lucide-react";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 
+import { Container } from "@/shared/ui";
+
 import { getLanding } from "../../../api";
 
 export async function DomainsSection() {
@@ -11,7 +13,7 @@ export async function DomainsSection() {
   ]);
 
   return (
-    <section className="container mx-auto px-4 py-16 sm:py-24">
+    <Container className="py-16 sm:py-24" as="section">
       <div className="mx-auto mb-10 max-w-2xl space-y-3 text-center">
         <p className="text-primary text-sm font-semibold tracking-wide uppercase">
           {t("eyebrow")}
@@ -43,6 +45,6 @@ export async function DomainsSection() {
           </Link>
         ))}
       </div>
-    </section>
+    </Container>
   );
 }

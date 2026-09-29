@@ -6,13 +6,13 @@ import { LanguageSwitcher } from "@/features/language-switcher";
 import { ThemeSwitcher } from "@/features/theme-switcher";
 import { ROUTES } from "@/shared/config";
 import { SITE } from "@/shared/constants";
+import { Container, Logo } from "@/shared/ui";
 import { GithubIcon } from "@/shared/ui/icons";
-import { Logo } from "@/shared/ui/logo";
 
 export function Header() {
   return (
     <header className="bg-background/80 sticky top-0 z-50 border-b backdrop-blur">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6">
+      <Container className="flex h-16 items-center justify-between">
         <Logo />
 
         <div className="flex shrink-0 items-center gap-2 sm:gap-4">
@@ -35,7 +35,7 @@ export function Header() {
 
           <ThemeSwitcher />
         </div>
-      </div>
+      </Container>
     </header>
   );
 }

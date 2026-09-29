@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 
 import { ROUTES } from "@/shared/config";
 import { SITE } from "@/shared/constants";
+import { Container } from "@/shared/ui";
 import { GithubIcon } from "@/shared/ui/icons";
 import { buttonVariants } from "@/shared/ui/shadcn";
 
@@ -11,7 +12,7 @@ export function HeroSection() {
   const t = useTranslations("landing.hero");
 
   return (
-    <section className="container mx-auto px-4 py-16 sm:px-6 sm:py-28">
+    <Container className="py-16 sm:py-28" as="section">
       <div className="mx-auto max-w-4xl space-y-7 text-center">
         <p className="text-primary text-sm font-semibold tracking-wide uppercase">
           {t("eyebrow")}
@@ -42,6 +43,6 @@ export function HeroSection() {
           </Link>
         </div>
       </div>
-    </section>
+    </Container>
   );
 }

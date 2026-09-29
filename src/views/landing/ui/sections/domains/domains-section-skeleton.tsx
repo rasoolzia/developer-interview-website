@@ -1,8 +1,9 @@
+import { Container } from "@/shared/ui";
 import { Skeleton } from "@/shared/ui/shadcn";
 
 export function DomainsSectionSkeleton() {
   return (
-    <section className="container mx-auto px-4 py-16 sm:py-24">
+    <Container className="py-16 sm:py-24" as="section">
       <div className="mx-auto mb-10 max-w-2xl space-y-3 text-center">
         <Skeleton className="mx-auto h-4 w-24" />
         <Skeleton className="mx-auto h-8 w-56" />
@@ -18,6 +19,6 @@ export function DomainsSectionSkeleton() {
           </div>
         ))}
       </div>
-    </section>
+    </Container>
   );
 }
