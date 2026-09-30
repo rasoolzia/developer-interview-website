@@ -6,6 +6,7 @@ export function mapManifestToDomains(manifest: ApiManifest): Domain[] {
     slug,
     label: domain.label,
     topics: Object.entries(domain.topics).map(([topicSlug, topic]) => ({
+      domain: slug,
       slug: topicSlug,
       label: topic.label,
       languages: topic.languages,

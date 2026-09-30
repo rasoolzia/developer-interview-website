@@ -27,7 +27,7 @@ export function HeroSection() {
         </p>
 
         <div className="flex flex-col justify-center gap-3 pt-2 sm:flex-row">
-          <Link href={ROUTES.search} className={buttonVariants({ size: "lg" })}>
+          <Link href={ROUTES.topics} className={buttonVariants({ size: "lg" })}>
             {t("primaryAction")}
             <ArrowRightIcon className="rtl:rotate-180" />
           </Link>

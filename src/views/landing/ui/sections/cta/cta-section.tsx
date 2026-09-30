@@ -21,7 +21,7 @@ export function CTASection() {
         </p>
 
         <Link
-          href={ROUTES.search}
+          href={ROUTES.topics}
           className={`${buttonVariants({ variant: "secondary", size: "lg" })} mt-7`}
         >
           {t("action")}
