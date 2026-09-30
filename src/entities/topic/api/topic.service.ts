@@ -1,7 +1,7 @@
 import { fetchTopic } from "@/shared/api/repositories";
 import { mapQuestions, mapTopic } from "@/shared/mappers";
 
-import { TopicDetails } from "../model";
+import type { TopicDetails } from "../model";
 
 export async function getTopicDetails(
   domain: string,

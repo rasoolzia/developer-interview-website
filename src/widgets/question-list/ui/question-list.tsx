@@ -10,10 +10,7 @@ export function QuestionList({ questions }: Props) {
   return (
     <div className="space-y-4">
       {questions.map((question) => (
-        <QuestionCard
-          key={`${question.id}-${question.language}`}
-          item={toQuestionCard(question)}
-        />
+        <QuestionCard key={question.id} item={toQuestionCard(question)} />
       ))}
     </div>
   );

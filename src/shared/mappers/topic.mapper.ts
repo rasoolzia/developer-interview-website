@@ -18,7 +18,7 @@ export function mapTopic(api: ApiTopic): Topic {
 
 export function mapQuestions(api: ApiTopic): Question[] {
   return api.questions.map((question) => ({
-    id: question.id,
+    id: `${question.id}-${question.language}`,
     slug: question.slug,
     title: question.title,
     difficulty: question.difficulty,
