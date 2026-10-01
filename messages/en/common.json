@@ -11,6 +11,11 @@
   "site": {
     "name": "Developer Interview Handbook",
     "shortName": "Interview Handbook",
-    "copyright": "All rights reserved"
+    "copyright": "All rights reserved",
+    "description": "Open source developer interview questions handbook",
+    "pages": {
+      "search": "Search",
+      "topics": "Topics"
+    }
   }
 }

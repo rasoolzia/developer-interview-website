@@ -1,1 +1,4 @@
-{}
+{
+  "topicsCount": "{count} topic",
+  "questionsCount": "{count} question"
+}
