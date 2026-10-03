@@ -6,11 +6,11 @@ import { SearchView } from "@/views/search";
 import { toSearchFilters } from "@/views/search/lib";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("common");
+  const t = await getTranslations("common.site");
 
   return {
-    title: t("site.pages.search"),
-    description: t("site.description"),
+    title: t("pages.search"),
+    description: t("description"),
   };
 }
 

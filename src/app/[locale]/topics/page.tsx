@@ -10,11 +10,11 @@ type Props = {
 };
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("common");
+  const t = await getTranslations("common.site");
 
   return {
-    title: t("site.pages.topics"),
-    description: t("site.description"),
+    title: t("pages.topics"),
+    description: t("description"),
   };
 }
 

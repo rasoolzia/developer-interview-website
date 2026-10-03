@@ -13,7 +13,7 @@ import { Suspense } from "react";
 import { getDirection, routing } from "@/shared/config/i18n";
 import { BRAND_COLORS } from "@/shared/constants";
 import { vazirmatn } from "@/shared/styles/fonts";
-import { Footer } from "@/widgets/footer";
+import { Footer, FooterLoading } from "@/widgets/footer";
 import { Header } from "@/widgets/header";
 
 import { ThemeProvider } from "../providers/theme-provider";
@@ -118,7 +118,9 @@ export default async function LocaleLayout({ children, params }: Props) {
             <IntlProvider>
               <Header />
               <main className="grow">{children}</main>
-              <Footer />
+              <Suspense fallback={<FooterLoading />}>
+                <Footer />
+              </Suspense>
             </IntlProvider>
           </Suspense>
         </ThemeProvider>
