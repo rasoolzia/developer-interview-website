@@ -1,4 +1,4 @@
 {
-  "topicsCount": "{count} topic",
-  "questionsCount": "{count} question"
+  "topicsCount": "{count, plural, =1 {# topic} other {# topics}}",
+  "questionsCount": "{count, plural, =1 {# question} other {# questions}}"
 }

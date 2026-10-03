@@ -15,7 +15,8 @@
     "description": "Open source developer interview questions handbook",
     "pages": {
       "search": "Search",
-      "topics": "Topics"
+      "topics": "Topics",
+      "domains": "Domains"
     }
   }
 }

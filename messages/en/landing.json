@@ -20,7 +20,8 @@
     "eyebrow": "Browse by discipline",
     "title": "Find the topics that matter to you",
     "description": "Start with a domain, then focus on the skills and questions you want to practice.",
-    "topics": "{count} topics"
+    "topics": "{count} topics",
+    "viewAll": "View all domains"
   },
   "openSource": {
     "eyebrow": "Open source",
