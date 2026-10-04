@@ -1,20 +1,22 @@
-import { Code2Icon } from "lucide-react";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 
+import { getDomains } from "@/entities/domain/api";
+import { ROUTES } from "@/shared/config";
 import { Container } from "@/shared/ui";
-
-import { getLanding } from "../../../api";
+import { DomainGrid } from "@/widgets/domain-grid";
 
 export async function DomainsSection() {
-  const [{ domains }, t] = await Promise.all([
-    getLanding(),
+  const [domains, t] = await Promise.all([
+    getDomains(),
     getTranslations("landing.domains"),
   ]);
 
+  const visibleDomains = domains.slice(0, 3);
+
   return (
-    <Container className="py-16 sm:py-24" as="section">
-      <div className="mx-auto mb-10 max-w-2xl space-y-3 text-center">
+    <Container className="space-y-10 py-16 sm:py-24" as="section">
+      <div className="mx-auto max-w-2xl space-y-3 text-center">
         <p className="text-primary text-sm font-semibold tracking-wide uppercase">
           {t("eyebrow")}
         </p>
@@ -26,24 +28,15 @@ export async function DomainsSection() {
         <p className="text-muted-foreground text-pretty">{t("description")}</p>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {domains.map((domain) => (
-          <Link href={domain.slug} key={domain.slug}>
-            <article className="group bg-card hover:bg-muted/40 rounded-xl border p-6 shadow-sm transition-colors">
-              <div className="bg-primary/10 text-primary mb-5 flex size-10 items-center justify-center rounded-lg">
-                <Code2Icon className="size-5" />
-              </div>
+      <DomainGrid domains={visibleDomains} />
 
-              <h3 className="font-heading text-start text-lg font-semibold">
-                {domain.label}
-              </h3>
-
-              <p className="text-muted-foreground mt-2 text-start text-sm">
-                {t("topics", { count: domain.topics })}
-              </p>
-            </article>
-          </Link>
-        ))}
+      <div className="flex justify-center">
+        <Link
+          href={ROUTES.domains}
+          className="text-primary hover:text-primary/80 text-sm font-medium underline-offset-4 hover:underline"
+        >
+          {t("viewAll")}
+        </Link>
       </div>
     </Container>
   );
