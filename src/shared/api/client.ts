@@ -1,6 +1,10 @@
 import type { z } from "zod";
 
-const BASE_URL = process.env.NEXT_PUBLIC_CONTENT_API_URL ?? "/api";
+const BASE_URL = process.env.NEXT_PUBLIC_CONTENT_API_URL;
+
+if (!BASE_URL) {
+  throw new Error("NEXT_PUBLIC_CONTENT_API_URL is not configured");
+}
 
 interface RequestOptions extends RequestInit {
   next?: NextFetchRequestConfig;
