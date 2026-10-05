@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 
 import { SITE } from "@/shared/constants";
@@ -23,14 +22,14 @@ export async function Footer() {
             v{footer.version}
           </span>
 
-          <Link
+          <a
             href={SITE.github}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"
           >
             <GithubIcon className="size-6" />
-          </Link>
+          </a>
         </div>
       </Container>
     </footer>

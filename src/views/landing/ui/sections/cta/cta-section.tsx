@@ -1,8 +1,8 @@
 import { ArrowRightIcon } from "lucide-react";
-import Link from "next/link";
 import { useTranslations } from "next-intl";
 
 import { ROUTES } from "@/shared/config";
+import { Link } from "@/shared/config/i18n";
 import { Container } from "@/shared/ui";
 import { buttonVariants } from "@/shared/ui/shadcn";
 

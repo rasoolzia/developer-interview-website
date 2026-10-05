@@ -1,8 +1,8 @@
 import { ArrowRightIcon } from "lucide-react";
-import Link from "next/link";
 import { useTranslations } from "next-intl";
 
 import { ROUTES } from "@/shared/config";
+import { Link } from "@/shared/config/i18n";
 import { SITE } from "@/shared/constants";
 import { Container } from "@/shared/ui";
 import { GithubIcon } from "@/shared/ui/icons";
@@ -32,7 +32,7 @@ export function HeroSection() {
             <ArrowRightIcon className="rtl:rotate-180" />
           </Link>
 
-          <Link
+          <a
             href={SITE.github}
             target="_blank"
             rel="noopener noreferrer"
@@ -40,7 +40,7 @@ export function HeroSection() {
           >
             <GithubIcon />
             {t("secondaryAction")}
-          </Link>
+          </a>
         </div>
       </div>
     </Container>

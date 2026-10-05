@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 
 import { getDomains } from "@/entities/domain/api";
 import { ROUTES } from "@/shared/config";
+import { Link } from "@/shared/config/i18n";
 import { Container } from "@/shared/ui";
 import { DomainGrid } from "@/widgets/domain-grid";
 

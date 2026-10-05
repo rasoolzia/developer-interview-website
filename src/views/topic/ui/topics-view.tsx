@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { useTranslations } from "next-intl";
 
 import type { Domain } from "@/entities/domain/model";
-import { Language } from "@/shared/types";
+import { ROUTES } from "@/shared/config";
+import { Link, type Locale } from "@/shared/config/i18n";
 
 type Props = {
   groups: Domain[];
@@ -18,7 +18,7 @@ export function TopicsView({ groups, locale }: Props) {
         <section key={item.slug} className="py-8">
           <div className="mb-6">
             <Link
-              href={`/${item.slug}`}
+              href={ROUTES.domain(item.slug)}
               className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl"
             >
               {item.label}
@@ -31,12 +31,12 @@ export function TopicsView({ groups, locale }: Props) {
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {item.topics.map((topic) => {
               const totalQuestions =
-                topic.languages[locale as Language]?.total ?? 0;
+                topic.languages[locale as Locale]?.total ?? 0;
 
               return (
                 <Link
                   key={topic.slug}
-                  href={`/${item.slug}/${topic.slug}`}
+                  href={ROUTES.topic(item.slug, topic.slug)}
                   className="group block"
                 >
                   <article className="bg-card hover:bg-muted/40 rounded-xl border p-6 shadow-sm transition-colors">

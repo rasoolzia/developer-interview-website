@@ -1,5 +1,4 @@
 import { ArrowRightIcon } from "lucide-react";
-import Link from "next/link";
 import { useTranslations } from "next-intl";
 
 import { SITE } from "@/shared/constants";
@@ -29,7 +28,7 @@ export function OpenSourceSection() {
           {t("description")}
         </p>
 
-        <Link
+        <a
           href={SITE.github}
           target="_blank"
           rel="noopener noreferrer"
@@ -37,7 +36,7 @@ export function OpenSourceSection() {
         >
           {t("action")}
           <ArrowRightIcon className="rtl:rotate-180" />
-        </Link>
+        </a>
       </div>
     </Container>
   );

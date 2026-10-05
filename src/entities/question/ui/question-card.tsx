@@ -1,7 +1,7 @@
 import { ArrowRightIcon, ClockIcon } from "lucide-react";
-import Link from "next/link";
 import { useTranslations } from "next-intl";
 
+import { Link } from "@/shared/config/i18n";
 import { formatLabel } from "@/shared/lib";
 import { Badge } from "@/shared/ui/shadcn";
 

@@ -1,10 +1,10 @@
 import { SearchIcon } from "lucide-react";
-import Link from "next/link";
 import { Suspense } from "react";
 
 import { LanguageSwitcher } from "@/features/language-switcher";
 import { ThemeSwitcher } from "@/features/theme-switcher";
 import { ROUTES } from "@/shared/config";
+import { Link } from "@/shared/config/i18n";
 import { SITE } from "@/shared/constants";
 import { Container, Logo } from "@/shared/ui";
 import { GithubIcon } from "@/shared/ui/icons";
@@ -24,14 +24,14 @@ export function Header() {
             <SearchIcon className="size-5" />
           </Link>
 
-          <Link
+          <a
             href={SITE.github}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"
           >
             <GithubIcon className="size-6" />
-          </Link>
+          </a>
 
           <ThemeSwitcher />
         </div>

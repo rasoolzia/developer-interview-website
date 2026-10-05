@@ -1,9 +1,9 @@
 import { Code2Icon } from "lucide-react";
-import Link from "next/link";
 import { useTranslations } from "next-intl";
 
 import { Domain } from "@/entities/domain/model";
 import { ROUTES } from "@/shared/config";
+import { Link } from "@/shared/config/i18n";
 
 type Props = {
   domain: Domain;

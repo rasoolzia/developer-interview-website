@@ -1,7 +1,7 @@
-import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 
 import { ROUTES } from "@/shared/config";
+import { Link } from "@/shared/config/i18n";
 
 export async function NotFoundPage() {
   const t = await getTranslations("common");
