@@ -1,1 +1,1 @@
-export { getManifest } from "./manifest.service";
+export { getDomains } from "./domain.service";

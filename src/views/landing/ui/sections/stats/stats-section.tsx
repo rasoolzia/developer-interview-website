@@ -1,14 +1,17 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
+import { Locale } from "@/shared/config/i18n";
 import { Container } from "@/shared/ui";
 
-import { getLanding } from "../../../api";
+import { getLandingStats } from "../../../api";
 
 export async function StatsSection() {
-  const [{ stats }, t] = await Promise.all([
-    getLanding(),
+  const [locale, stats, t] = await Promise.all([
+    getLocale(),
+    getLandingStats(),
     getTranslations("landing.stats"),
   ]);
+
   return (
     <section className="bg-muted/30 border-y">
       <Container className="py-16 sm:py-20">
@@ -21,7 +24,10 @@ export async function StatsSection() {
         </div>
 
         <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
-          <StatCard title={t("questions")} value={stats.questions} />
+          <StatCard
+            title={t("questions")}
+            value={stats.questions[locale as Locale]}
+          />
 
           <StatCard title={t("topics")} value={stats.topics} />
 

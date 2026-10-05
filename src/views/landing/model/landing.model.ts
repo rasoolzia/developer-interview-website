@@ -1,23 +1,8 @@
+import { Locale } from "@/shared/config/i18n";
+
 export interface LandingStats {
-  questions: number;
-
+  questions: Record<Locale, number>;
   topics: number;
-
   domains: number;
-
   languages: number;
-}
-
-export interface LandingDomain {
-  slug: string;
-
-  label: string;
-
-  topics: number;
-}
-
-export interface LandingViewModel {
-  stats: LandingStats;
-
-  domains: LandingDomain[];
 }

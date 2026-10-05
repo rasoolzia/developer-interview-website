@@ -1,10 +1,10 @@
 import { fetchManifest } from "@/shared/api/repositories";
 
-import { mapLanding } from "../lib";
-import type { LandingViewModel } from "../model";
+import { mapLandingStats } from "../lib";
+import type { LandingStats } from "../model";
 
-export async function getLanding(): Promise<LandingViewModel> {
+export async function getLandingStats(): Promise<LandingStats> {
   const manifest = await fetchManifest();
 
-  return mapLanding(manifest);
+  return mapLandingStats(manifest);
 }

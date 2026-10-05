@@ -1,44 +1,36 @@
+import { Locale } from "@/shared/config/i18n";
 import type { ApiManifest } from "@/shared/types";
 
-import type { LandingViewModel } from "../model";
+import type { LandingStats } from "../model";
 
-export function mapLanding(manifest: ApiManifest): LandingViewModel {
-  const domains = Object.entries(manifest.domains);
+export function mapLandingStats(manifest: ApiManifest): LandingStats {
+  const domains = Object.values(manifest.domains);
 
   const topics = domains.reduce(
-    (count, [, domain]) => count + Object.keys(domain.topics).length,
+    (total, domain) => total + Object.keys(domain.topics).length,
     0,
   );
 
-  const questions = domains.reduce(
-    (count, [, domain]) =>
-      count +
-      Object.values(domain.topics).reduce(
-        (topicCount, topic) =>
-          topicCount +
-          Object.values(topic.languages).reduce(
-            (sum, language) => sum + language.total,
+  const questions = Object.fromEntries(
+    manifest.languages.map((language) => [
+      language,
+      domains.reduce(
+        (total, domain) =>
+          total +
+          Object.values(domain.topics).reduce(
+            (topicTotal, topic) =>
+              topicTotal + (topic.languages[language]?.total ?? 0),
             0,
           ),
         0,
       ),
-    0,
-  );
+    ]),
+  ) as Record<Locale, number>;
 
   return {
-    stats: {
-      questions,
-      topics,
-      domains: domains.length,
-      languages: manifest.languages.length,
-    },
-
-    domains: domains.map(([slug, domain]) => ({
-      slug,
-
-      label: domain.label,
-
-      topics: Object.keys(domain.topics).length,
-    })),
+    questions,
+    topics,
+    domains: domains.length,
+    languages: manifest.languages.length,
   };
 }

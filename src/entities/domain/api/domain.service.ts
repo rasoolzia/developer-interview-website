@@ -3,7 +3,7 @@ import { mapManifestToDomains } from "@/shared/mappers";
 
 import type { Domain } from "../model";
 
-export async function getManifest(): Promise<Domain[]> {
+export async function getDomains(): Promise<Domain[]> {
   const manifest = await fetchManifest();
 
   return mapManifestToDomains(manifest);

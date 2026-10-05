@@ -1,7 +1,9 @@
 import { Suspense } from "react";
 
+import { DomainsLoading } from "@/views/domain";
+
 import { CTASection } from "./sections/cta";
-import { DomainsSection, DomainsSectionSkeleton } from "./sections/domains";
+import { DomainsSection } from "./sections/domains";
 import { HeroSection } from "./sections/hero";
 import { OpenSourceSection } from "./sections/open-source";
 import { SearchSection } from "./sections/search";
@@ -18,7 +20,7 @@ export function LandingView() {
         <StatsSection />
       </Suspense>
 
-      <Suspense fallback={<DomainsSectionSkeleton />}>
+      <Suspense fallback={<DomainsLoading />}>
         <DomainsSection />
       </Suspense>
 
