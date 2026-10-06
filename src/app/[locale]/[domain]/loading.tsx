@@ -1,5 +1,5 @@
 import { TopicsLoading } from "@/views/topic";
 
 export default function DomainPageLoading() {
-  return <TopicsLoading />;
+  return <TopicsLoading domainsCount={1} />;
 }

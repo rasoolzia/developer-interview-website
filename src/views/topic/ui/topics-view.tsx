@@ -7,9 +7,10 @@ import { Link, type Locale } from "@/shared/config/i18n";
 type Props = {
   groups: Domain[];
   locale: string;
+  isSingleDomain?: boolean;
 };
 
-export function TopicsView({ groups, locale }: Props) {
+export function TopicsView({ groups, locale, isSingleDomain = false }: Props) {
   const t = useTranslations("topic");
 
   return (
@@ -17,12 +18,18 @@ export function TopicsView({ groups, locale }: Props) {
       {groups.map((item) => (
         <section key={item.slug} className="py-8">
           <div className="mb-6">
-            <Link
-              href={ROUTES.domain(item.slug)}
-              className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl"
-            >
-              {item.label}
-            </Link>
+            {isSingleDomain ? (
+              <h1 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
+                {item.label}
+              </h1>
+            ) : (
+              <Link
+                href={ROUTES.domain(item.slug)}
+                className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl"
+              >
+                {item.label}
+              </Link>
+            )}
             <p className="text-muted-foreground mt-2">
               {t("topicsCount", { count: item.topics.length })}
             </p>

@@ -30,5 +30,5 @@ export default async function DomainPage({ params }: Props) {
     notFound();
   }
 
-  return <TopicsView groups={[data]} locale={locale} />;
+  return <TopicsView groups={[data]} locale={locale} isSingleDomain />;
 }
