@@ -19,8 +19,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function TopicsPage({ params }: Props) {
-  const { locale } = await params;
-  const topicsByDomain = await getAllDomains();
+  const [{ locale }, topicsByDomain] = await Promise.all([
+    params,
+    getAllDomains(),
+  ]);
 
   if (!topicsByDomain.length) {
     notFound();

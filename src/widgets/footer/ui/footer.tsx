@@ -7,8 +7,10 @@ import { GithubIcon } from "@/shared/ui/icons/github-icon";
 import { getFooter } from "../api/footer.service";
 
 export async function Footer() {
-  const footer = await getFooter();
-  const t = await getTranslations("common");
+  const [footer, t] = await Promise.all([
+    getFooter(),
+    getTranslations("common"),
+  ]);
 
   return (
     <footer className="border-t">

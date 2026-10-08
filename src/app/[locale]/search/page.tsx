@@ -21,8 +21,7 @@ export default async function SearchPage({
   searchParams?: Promise<SearchParams>;
   params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
-  const paramsValue = (await searchParams) ?? {};
+  const [{ locale }, paramsValue] = await Promise.all([params, searchParams]);
 
-  return <SearchView filters={toSearchFilters(paramsValue, locale)} />;
+  return <SearchView filters={toSearchFilters(paramsValue ?? {}, locale)} />;
 }
