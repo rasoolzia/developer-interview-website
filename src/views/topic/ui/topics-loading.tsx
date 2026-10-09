@@ -6,25 +6,21 @@ type Props = {
 };
 
 export function TopicsLoading({ domainsCount = 2, topicsCount = 5 }: Props) {
-  return (
-    <div className="space-y-12">
-      {Array.from({ length: domainsCount }).map((_, domainIdx) => (
-        <div key={domainIdx} className="py-8">
-          <div className="mb-6">
-            <Skeleton className="h-9 w-48" />
-            <Skeleton className="mt-2 h-5 w-24" />
-          </div>
+  return Array.from({ length: domainsCount }).map((_, domainIdx) => (
+    <div key={domainIdx} className="py-8">
+      <div className="mb-6">
+        <Skeleton className="h-9 w-48" />
+        <Skeleton className="mt-2 h-5 w-24" />
+      </div>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {Array.from({ length: topicsCount }).map((_, topicIdx) => (
-              <div key={topicIdx} className="rounded-xl border p-6 shadow-sm">
-                <Skeleton className="h-6 w-32" />
-                <Skeleton className="mt-2 h-4 w-20" />
-              </div>
-            ))}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {Array.from({ length: topicsCount }).map((_, topicIdx) => (
+          <div key={topicIdx} className="rounded-xl border p-6 shadow-sm">
+            <Skeleton className="h-7 w-32" />
+            <Skeleton className="mt-2 h-5 w-20" />
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
-  );
+  ));
 }

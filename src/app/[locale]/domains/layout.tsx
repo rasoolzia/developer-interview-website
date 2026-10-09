@@ -6,7 +6,7 @@ type Props = {
 
 export default function DomainsLayout({ children }: Props) {
   return (
-    <Container className="py-8 sm:py-12" as="section">
+    <Container className="py-6" as="section">
       {children}
     </Container>
   );
