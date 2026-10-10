@@ -1,4 +1,6 @@
 {
   "topicsCount": "{count} موضوع",
-  "questionsCount": "{count} سوال"
+  "questionsCount": "{count} سوال",
+  "backToDomain": "بازگشت به دامنه",
+  "noQuestions": "هیچ سوالی برای این موضوع موجود نیست"
 }

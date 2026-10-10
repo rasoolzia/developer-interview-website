@@ -19,11 +19,7 @@ export const TopicSchema = z.object({
   hash: z.string(),
   stats: z.object({
     total: z.number(),
-    byDifficulty: z.object({
-      easy: z.number(),
-      medium: z.number(),
-      hard: z.number(),
-    }),
+    byDifficulty: z.record(z.string(), z.number()),
   }),
   questions: z.array(QuestionSchema),
 });
