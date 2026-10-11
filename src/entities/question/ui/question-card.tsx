@@ -1,8 +1,8 @@
-import { ArrowRightIcon, ClockIcon } from "lucide-react";
+import { ClockIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { Link } from "@/shared/config/i18n";
 import { formatLabel } from "@/shared/lib";
+import { BaseCard } from "@/shared/ui/base-card";
 import { Badge } from "@/shared/ui/shadcn";
 
 import type { QuestionCardItem } from "../model";
@@ -20,10 +20,7 @@ export function QuestionCard({ item }: Props) {
   const hiddenCount = item.categories.length - visibleCategories.length;
 
   return (
-    <Link
-      href={item.href}
-      className="group hover:border-primary/50 hover:bg-accent/30 relative block rounded-xl border p-5 transition-all hover:shadow-md"
-    >
+    <BaseCard href={item.href}>
       <div className="mb-3 flex flex-wrap items-center gap-1.5">
         <Badge>{formatLabel(item.topic)}</Badge>
 
@@ -57,8 +54,6 @@ export function QuestionCard({ item }: Props) {
         <ClockIcon className="size-3.5" />
         <span>{t("readingTime", { minutes: item.readingTime })}</span>
       </div>
-
-      <ArrowRightIcon className="text-muted-foreground group-hover:text-primary absolute inset-e-5 top-5 size-4 opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100 rtl:rotate-180 rtl:group-hover:-translate-x-0.5" />
-    </Link>
+    </BaseCard>
   );
 }

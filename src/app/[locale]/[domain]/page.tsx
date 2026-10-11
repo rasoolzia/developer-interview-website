@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import type { Locale } from "@/shared/config/i18n";
 import { TopicsView } from "@/views/topic";
 import { getDomainBySlug } from "@/views/topic/api";
 
@@ -30,5 +31,7 @@ export default async function DomainPage({ params }: Props) {
     notFound();
   }
 
-  return <TopicsView groups={[data]} locale={locale} isSingleDomain />;
+  return (
+    <TopicsView groups={[data]} locale={locale as Locale} isSingleDomain />
+  );
 }

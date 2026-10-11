@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 
+import type { Locale } from "@/shared/config/i18n";
 import { TopicsView } from "@/views/topic";
 import { getAllDomains } from "@/views/topic/api";
 
@@ -28,5 +29,5 @@ export default async function TopicsPage({ params }: Props) {
     notFound();
   }
 
-  return <TopicsView groups={topicsByDomain} locale={locale} />;
+  return <TopicsView groups={topicsByDomain} locale={locale as Locale} />;
 }
