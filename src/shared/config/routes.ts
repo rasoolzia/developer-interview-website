@@ -11,6 +11,6 @@ export const ROUTES = {
 
   topic: (domain: string, topic: string) => `/${domain}/${topic}`,
 
-  question: (language: string, domain: string, topic: string, slug: string) =>
-    `/${language}/${domain}/${topic}/${slug}`,
+  question: (domain: string, topic: string, slug: string) =>
+    `/${domain}/${topic}/${slug}`,
 } as const;

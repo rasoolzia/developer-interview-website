@@ -9,7 +9,7 @@
 | Hooks                      | camelCase, `use` prefix       | `useMounted`, `useQueryState`            |
 | Types & interfaces         | PascalCase                    | `SearchFilters`, `QuestionCardItem`      |
 | Model files                | `<name>.model.ts`             | `question.model.ts`, `search.model.ts`   |
-| Mapper / adapter functions | `to<Target>` / `from<Source>` | `toQuestionCard`, `toSearchFilters`      |
+| Mapper / adapter functions | `to<Target>` / `from<Source>` | `toSearchFilters`                        |
 | Functions & variables      | camelCase                     | `getSearch`, `trimmedQuery`              |
 | Constants                  | SCREAMING_SNAKE_CASE          | `SEARCH_PARAMS`, `SEARCH_PAGE_SIZE`      |
 | Zod schemas                | `<Name>Schema`                | `DifficultySchema`, `SearchItemSchema`   |
