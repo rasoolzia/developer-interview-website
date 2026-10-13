@@ -7,7 +7,7 @@ export async function getAllDomains(): Promise<Domain[]> {
 }
 
 export async function getDomainBySlug(slug: string): Promise<Domain | null> {
-  const domains = await getDomains();
+  const domains = await getAllDomains();
   const domain = domains.find((d) => d.slug === slug);
   return domain || null;
 }

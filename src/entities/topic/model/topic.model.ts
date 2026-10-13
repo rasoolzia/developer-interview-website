@@ -16,8 +16,28 @@ export interface Topic {
   >;
 }
 
-export interface TopicDetails {
-  topic: Topic;
+export interface TopicMeta {
+  domain: string;
+  topic: string;
+  language: Language;
+  label: string;
+}
 
+export interface TopicStats {
+  total: number;
+  byDifficulty: Record<string, number>;
+}
+
+export interface TopicContent {
+  title: string;
+  categories: string[];
+  difficulties: string[];
+}
+
+export interface TopicDetails {
+  version: number;
+  meta: TopicMeta;
+  content: TopicContent;
+  stats: TopicStats;
   questions: Question[];
 }

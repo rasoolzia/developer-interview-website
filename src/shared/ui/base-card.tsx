@@ -17,7 +17,7 @@ export function BaseCard({
   showArrow = true,
 }: BaseCardProps) {
   const baseClassName = cn(
-    "group hover:border-primary/50 hover:bg-accent/30 relative block rounded-xl border p-5 transition-all hover:shadow-md",
+    "group hover:border-primary/50 hover:bg-accent/30 relative block rounded-xl border p-5 transition-all hover:shadow-md [content-visibility:auto] [contain-intrinsic-size:auto_140px]",
     className,
   );
 

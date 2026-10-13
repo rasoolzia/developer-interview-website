@@ -1,33 +1,20 @@
 import type { Question } from "@/entities/question/model";
-import type { Topic } from "@/entities/topic/model";
+import type { TopicDetails } from "@/entities/topic/model";
 import type { ApiTopic } from "@/shared/types";
 
-export function mapTopic(api: ApiTopic): Topic {
+export function mapTopicDetails(api: ApiTopic): TopicDetails {
   return {
-    domain: api.meta.domain,
-    slug: api.meta.topic,
-    label: api.meta.label,
-    languages: {
-      [api.meta.language]: {
-        total: api.stats.total,
-        hash: api.hash,
-      },
-    },
+    version: api.version,
+    meta: api.meta,
+    content: api.content,
+    stats: api.stats,
+    questions: mapQuestions(api),
   };
 }
 
-export function mapQuestions(api: ApiTopic): Question[] {
+function mapQuestions(api: ApiTopic): Question[] {
   return api.questions.map((question) => ({
+    ...question,
     id: `${question.id}-${question.language}`,
-    slug: question.slug,
-    title: question.title,
-    difficulty: question.difficulty,
-    categories: question.categories,
-    domain: question.domain,
-    topic: question.topic,
-    language: question.language,
-    markdown: question.markdown,
-    readingTime: question.readingTime,
-    tags: question.tags,
   }));
 }
