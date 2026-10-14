@@ -31,7 +31,7 @@ export function TopicDetailsView({ data, questions, filters }: Props) {
             </h1>
             <Link
               href={ROUTES.domain(data.meta.domain)}
-              className="text-muted-foreground hover:text-foreground flex items-center gap-1 text-sm transition-colors"
+              className="text-muted-foreground hover:text-foreground flex items-center gap-1 text-sm transition-colors select-none"
             >
               <ArrowLeftIcon className="rtl:rotate-180" />
               {t("backToDomain", { domain: formatLabel(data.meta.domain) })}

@@ -1,3 +1,4 @@
+import { QuestionCardSkeleton } from "@/entities/question/ui";
 import { Skeleton } from "@/shared/ui/shadcn";
 
 export function SearchLoading() {
@@ -24,9 +25,7 @@ export function SearchLoading() {
         </div>
 
         <div className="space-y-4">
-          {Array.from({ length: 10 }).map((_, i) => (
-            <QuestionCardSkeleton key={i} />
-          ))}
+          <QuestionCardSkeleton count={10} />
         </div>
       </div>
     </div>
@@ -40,22 +39,6 @@ function FilterSectionSkeleton({ rows }: { rows: number }) {
       {Array.from({ length: rows }).map((_, i) => (
         <Skeleton key={i} className="h-8 w-full rounded-md" />
       ))}
-    </div>
-  );
-}
-
-function QuestionCardSkeleton() {
-  return (
-    <div className="space-y-3 rounded-xl border p-5">
-      <div className="flex gap-1.5">
-        <Skeleton className="h-5 w-14 rounded-full" />
-        <Skeleton className="h-5 w-16 rounded-full" />
-        <Skeleton className="h-5 w-20 rounded-full" />
-      </div>
-
-      <Skeleton className="h-5 w-full max-w-md rounded-md" />
-
-      <Skeleton className="h-3 w-24 rounded-md" />
     </div>
   );
 }

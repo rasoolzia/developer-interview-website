@@ -1,11 +1,14 @@
+import { QuestionCardSkeleton } from "@/entities/question/ui";
 import { Skeleton } from "@/shared/ui/shadcn";
 
 export function TopicDetailsLoading() {
   return (
     <div className="space-y-8">
       <div className="space-y-3">
-        <Skeleton className="h-4 w-24 rounded-md" />
-        <Skeleton className="h-10 w-64 rounded-md" />
+        <div className="flex flex-col-reverse flex-wrap gap-y-3 sm:flex-row sm:items-center sm:justify-between">
+          <Skeleton className="h-10 w-64 rounded-md" />
+          <Skeleton className="h-6 w-36 rounded-md" />
+        </div>
         <Skeleton className="h-4 w-40 rounded-md" />
         <div className="mt-4 flex flex-wrap gap-2">
           <Skeleton className="h-6 w-16 rounded-full" />
@@ -24,9 +27,7 @@ export function TopicDetailsLoading() {
       </div>
 
       <div className="space-y-4">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <Skeleton key={i} className="h-24 rounded-xl" />
-        ))}
+        <QuestionCardSkeleton count={6} />
       </div>
     </div>
   );
