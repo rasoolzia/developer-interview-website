@@ -2,7 +2,7 @@
 
 import { toCanonicalDifficulty } from "@/entities/question/lib";
 import { SEARCH_PARAMS } from "@/shared/config";
-import { useQueryState } from "@/shared/hooks";
+import { useHorizontalDragScroll, useQueryState } from "@/shared/hooks";
 import { Badge } from "@/shared/ui/shadcn";
 
 type Props = {
@@ -22,9 +22,15 @@ export function TopicFilters({
 }: Props) {
   const { updateParams } = useQueryState();
 
+  const difficultyScrollRef = useHorizontalDragScroll<HTMLDivElement>();
+  const categoryScrollRef = useHorizontalDragScroll<HTMLDivElement>();
+
   return (
-    <div className="mt-4 space-y-3">
-      <div className="flex scrollbar-none items-center gap-2 overflow-auto">
+    <div className="mt-4 space-y-3 select-none">
+      <div
+        ref={difficultyScrollRef}
+        className="flex scrollbar-none items-center gap-2 overflow-auto"
+      >
         {difficulties.map((difficulty) => {
           const canonical = toCanonicalDifficulty(difficulty);
           const isActive = canonical === activeDifficulty;
@@ -38,7 +44,7 @@ export function TopicFilters({
                   [SEARCH_PARAMS.difficulty]: isActive ? undefined : canonical,
                 })
               }
-              className="cursor-pointer"
+              className="shrink-0 cursor-pointer"
             >
               <Badge
                 className="font-normal"
@@ -52,7 +58,10 @@ export function TopicFilters({
       </div>
 
       {categories.length > 0 && (
-        <div className="flex scrollbar-none gap-1.5 overflow-auto">
+        <div
+          ref={categoryScrollRef}
+          className="flex scrollbar-none gap-1.5 overflow-auto"
+        >
           {categories.map((category) => {
             const isActive = category === activeCategory;
 
@@ -65,7 +74,7 @@ export function TopicFilters({
                     [SEARCH_PARAMS.category]: isActive ? undefined : category,
                   })
                 }
-                className="cursor-pointer"
+                className="shrink-0 cursor-pointer"
               >
                 <Badge
                   className="font-normal"
