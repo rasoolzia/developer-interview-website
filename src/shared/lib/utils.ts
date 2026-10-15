@@ -10,3 +10,11 @@ export function toSingleParam(
 ): string | undefined {
   return Array.isArray(value) ? value[0] : value;
 }
+
+export function decodeUrlParam(value: string): string {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
+}

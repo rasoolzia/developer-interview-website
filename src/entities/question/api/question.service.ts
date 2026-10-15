@@ -1,6 +1,6 @@
 import type { Question } from "@/entities/question/model";
 import { getTopicDetails } from "@/entities/topic/api";
-import { Language } from "@/shared/types";
+import type { Language } from "@/shared/types";
 
 export async function getQuestions(
   domain: string,
