@@ -34,7 +34,7 @@ export function TopicDetailsView({ data, questions, filters }: Props) {
               className="text-muted-foreground hover:text-foreground flex items-center gap-1 text-sm transition-colors select-none"
             >
               <ArrowLeftIcon className="rtl:rotate-180" />
-              {t("backToDomain", { domain: formatLabel(data.meta.domain) })}
+              {t("backToPage", { page: formatLabel(data.meta.domain) })}
             </Link>
           </div>
 

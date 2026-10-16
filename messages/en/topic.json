@@ -1,7 +1,7 @@
 {
   "topicsCount": "{count, plural, =1 {# topic} other {# topics}}",
   "questionsCount": "{count, plural, =1 {# question} other {# questions}}",
-  "backToDomain": "Back to {domain}",
+  "backToPage": "Back to {page}",
   "version": "version {version}",
   "noQuestions": "No questions available for {topic}",
   "noFilteredQuestions": "No questions match this filter."

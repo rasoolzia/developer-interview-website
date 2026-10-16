@@ -1,3 +1,4 @@
+import { normalize } from "@/shared/lib";
 import { Difficulty } from "@/shared/types";
 
 export type CanonicalDifficulty = "easy" | "medium" | "hard";
@@ -12,7 +13,7 @@ const ALIASES: Record<Difficulty, CanonicalDifficulty> = {
 };
 
 export function toCanonicalDifficulty(raw: Difficulty): CanonicalDifficulty {
-  const normalized = raw.trim().toLowerCase();
+  const normalized = normalize(raw);
 
   const canonical = ALIASES[normalized];
 
