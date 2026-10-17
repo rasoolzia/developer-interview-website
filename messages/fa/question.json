@@ -1,3 +1,15 @@
 {
-  "readingTime": "{minutes} دقیقه مطالعه"
+  "previous": "قبلی",
+  "next": "بعدی",
+  "info": "اطلاعات سوال",
+  "topic": "موضوع",
+  "difficulty": "سطح دشواری",
+  "categories": "دسته‌بندی‌ها",
+  "readingTimeLabel": "زمان مطالعه",
+  "readingTime": "{minutes} دقیقه مطالعه",
+  "actions": "عملیات",
+  "save": "ذخیره سوال",
+  "copyLink": "کپی لینک",
+  "linkCopied": "لینک کپی شد",
+  "report": "گزارش مشکل"
 }

@@ -1,3 +1,15 @@
 {
-  "readingTime": "{minutes} min read"
+  "previous": "Previous",
+  "next": "Next",
+  "info": "Question info",
+  "topic": "Topic",
+  "difficulty": "Difficulty",
+  "categories": "Categories",
+  "readingTimeLabel": "Reading time",
+  "readingTime": "{minutes} min read",
+  "actions": "Actions",
+  "save": "Save question",
+  "copyLink": "Copy link",
+  "linkCopied": "Link copied",
+  "report": "Report issue"
 }
