@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { getQuestionBySlug } from "@/entities/question/api";
+import { getQuestionDetails } from "@/entities/question/api";
 import { decodeUrlParam } from "@/shared/lib";
 import type { Language } from "@/shared/types";
 import { QuestionDetailsView } from "@/views/question";
@@ -20,12 +20,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const decodedQuestionSlug = decodeUrlParam(questionSlug);
 
-  const question = await getQuestionBySlug(
+  const questionDetails = await getQuestionDetails(
     domain,
     topic,
     locale as Language,
     decodedQuestionSlug,
   );
+
+  const question = questionDetails?.question;
 
   if (!question) {
     return {
@@ -50,16 +52,16 @@ export default async function QuestionPage({ params }: Props) {
 
   const decodedQuestionSlug = decodeUrlParam(questionSlug);
 
-  const question = await getQuestionBySlug(
+  const questionDetails = await getQuestionDetails(
     domain,
     topic,
     locale as Language,
     decodedQuestionSlug,
   );
 
-  if (!question) {
+  if (!questionDetails) {
     notFound();
   }
 
-  return <QuestionDetailsView question={question} />;
+  return <QuestionDetailsView {...questionDetails} />;
 }

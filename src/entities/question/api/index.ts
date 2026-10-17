@@ -1,1 +1,1 @@
-export { getQuestionBySlug, getQuestions } from "./question.service";
+export { getQuestionDetails, getQuestions } from "./question.service";

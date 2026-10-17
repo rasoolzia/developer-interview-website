@@ -12,13 +12,25 @@ export async function getQuestions(
   return data.questions;
 }
 
-export async function getQuestionBySlug(
+export async function getQuestionDetails(
   domain: string,
   topic: string,
   language: Language,
   slug: string,
-): Promise<Question | undefined> {
+) {
   const questions = await getQuestions(domain, topic, language);
 
-  return questions.find((question) => question.slug === slug);
+  const index = questions.findIndex((question) => question.slug === slug);
+
+  if (index === -1) {
+    return undefined;
+  }
+
+  return {
+    question: questions[index],
+    navigation: {
+      previousSlug: questions[index - 1]?.slug,
+      nextSlug: questions[index + 1]?.slug,
+    },
+  };
 }
