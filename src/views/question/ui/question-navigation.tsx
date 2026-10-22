@@ -2,11 +2,12 @@
 
 import { ArrowLeftIcon, ArrowRightIcon, LoaderCircleIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 
 import type { Question } from "@/entities/question/model";
 import { ROUTES } from "@/shared/config";
 import { useRouter } from "@/shared/config/i18n";
+import { cn } from "@/shared/lib";
 import { Button } from "@/shared/ui/shadcn";
 
 type Direction = "previous" | "next";
@@ -16,6 +17,7 @@ type Props = {
   previousSlug?: string;
   nextSlug?: string;
   onNavigate?: () => void;
+  className?: string;
 };
 
 const NAV_ITEMS = [
@@ -42,6 +44,7 @@ export function QuestionNavigation({
   previousSlug,
   nextSlug,
   onNavigate,
+  className,
 }: Props) {
   const t = useTranslations("question");
   const router = useRouter();
@@ -65,8 +68,22 @@ export function QuestionNavigation({
     });
   };
 
+  useEffect(() => {
+    if (previousSlug) {
+      router.prefetch(
+        ROUTES.question(question.domain, question.topic, previousSlug),
+      );
+    }
+
+    if (nextSlug) {
+      router.prefetch(
+        ROUTES.question(question.domain, question.topic, nextSlug),
+      );
+    }
+  }, [router, previousSlug, nextSlug, question.domain, question.topic]);
+
   return (
-    <nav className="flex gap-2">
+    <nav className={cn("flex gap-2", className)}>
       {NAV_ITEMS.map(
         ({ direction, icon: Icon, labelKey, iconClassName, iconPosition }) => {
           const slug = slugs[direction];

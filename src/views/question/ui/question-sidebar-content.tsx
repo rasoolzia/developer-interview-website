@@ -76,6 +76,7 @@ export function QuestionSidebarContent({
       <QuestionActions id={question.id} />
 
       <QuestionNavigation
+        className="hidden lg:flex"
         question={question}
         previousSlug={navigation.previousSlug}
         nextSlug={navigation.nextSlug}

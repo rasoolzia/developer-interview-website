@@ -2,6 +2,7 @@ import type { Question } from "@/entities/question/model";
 
 import { QuestionContent } from "./question-content";
 import { QuestionHeader } from "./question-header";
+import { QuestionNavigation } from "./question-navigation";
 import { QuestionSidebar } from "./question-sidebar";
 import { QuestionSidebarSheet } from "./question-sidebar-sheet";
 
@@ -24,7 +25,15 @@ export function QuestionDetailsView({ question, navigation }: Props) {
 
       <article className="min-w-0 flex-1 lg:max-w-4xl">
         <QuestionHeader className="mb-10" question={question} />
+
         <QuestionContent markdown={question.markdown} />
+
+        <QuestionNavigation
+          className="mt-10 lg:hidden"
+          question={question}
+          previousSlug={navigation.previousSlug}
+          nextSlug={navigation.nextSlug}
+        />
       </article>
 
       <QuestionSidebar
