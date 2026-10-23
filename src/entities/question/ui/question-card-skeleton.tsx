@@ -19,7 +19,7 @@ export function QuestionCardSkeleton({ count = 1 }: Props) {
 
           <div className="flex items-center gap-1.5">
             <Skeleton className="size-3.5 rounded-full" />
-            <Skeleton className="h-3 w-24 rounded-md" />
+            <Skeleton className="h-4 w-24 rounded-md" />
           </div>
         </div>
       ))}
