@@ -1,10 +1,9 @@
-import { ArrowLeftIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import type { Question } from "@/entities/question/model";
 import { ROUTES } from "@/shared/config";
-import { Link } from "@/shared/config/i18n";
 import { formatLabel } from "@/shared/lib";
+import { BackLink } from "@/shared/ui";
 
 type Props = {
   question: Question;
@@ -16,15 +15,12 @@ export function QuestionHeader({ question, className }: Props) {
 
   return (
     <header className={className}>
-      <Link
+      <BackLink
         href={ROUTES.topic(question.domain, question.topic)}
-        className="text-muted-foreground hover:text-foreground mb-4 inline-flex items-center gap-1.5 text-sm transition-colors"
+        className="mb-4"
       >
-        <ArrowLeftIcon className="size-4 rtl:rotate-180" />
-        {t("backToPage", {
-          page: formatLabel(question.topic),
-        })}
-      </Link>
+        {t("backToPage", { page: formatLabel(question.topic) })}
+      </BackLink>
 
       <h1 className="text-2xl leading-tight font-bold tracking-tight sm:text-3xl">
         {question.title}

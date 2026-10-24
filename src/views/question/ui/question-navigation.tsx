@@ -2,7 +2,7 @@
 
 import { ArrowLeftIcon, ArrowRightIcon, LoaderCircleIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useEffect, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 
 import type { Question } from "@/entities/question/model";
 import { ROUTES } from "@/shared/config";
@@ -67,20 +67,6 @@ export function QuestionNavigation({
       );
     });
   };
-
-  useEffect(() => {
-    if (previousSlug) {
-      router.prefetch(
-        ROUTES.question(question.domain, question.topic, previousSlug),
-      );
-    }
-
-    if (nextSlug) {
-      router.prefetch(
-        ROUTES.question(question.domain, question.topic, nextSlug),
-      );
-    }
-  }, [router, previousSlug, nextSlug, question.domain, question.topic]);
 
   return (
     <nav className={cn("flex gap-2", className)}>

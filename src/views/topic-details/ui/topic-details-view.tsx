@@ -1,14 +1,13 @@
 "use client";
 
-import { ArrowLeftIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import type { Question } from "@/entities/question/model";
 import type { TopicDetails } from "@/entities/topic/model";
 import { ROUTES } from "@/shared/config";
-import { Link } from "@/shared/config/i18n";
 import { QueryStateProvider, useQueryState } from "@/shared/hooks";
 import { formatLabel } from "@/shared/lib";
+import { BackLink } from "@/shared/ui";
 import { QuestionList, QuestionListLoading } from "@/widgets/question-list";
 
 import { TopicFilters } from "./topic-filters";
@@ -41,13 +40,9 @@ function TopicDetailsContent({ data, questions, filters }: Props) {
             {data.content.title}
           </h1>
 
-          <Link
-            href={ROUTES.domain(data.meta.domain)}
-            className="text-muted-foreground hover:text-foreground flex items-center gap-1 text-sm transition-colors select-none"
-          >
-            <ArrowLeftIcon className="rtl:rotate-180" />
+          <BackLink href={ROUTES.domain(data.meta.domain)} className="mb-4">
             {t("backToPage", { page: formatLabel(data.meta.domain) })}
-          </Link>
+          </BackLink>
         </div>
 
         <p className="text-muted-foreground mt-2">

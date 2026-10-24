@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 import type { Topic } from "@/entities/topic/model";
 import { ROUTES } from "@/shared/config";
 import type { Locale } from "@/shared/config/i18n";
-import { BaseCard } from "@/shared/ui/base-card";
+import { BaseCard } from "@/shared/ui";
 
 type TopicCardProps = {
   topic: Topic;

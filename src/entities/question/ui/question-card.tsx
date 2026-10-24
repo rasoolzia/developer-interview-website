@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { ROUTES } from "@/shared/config";
 import { formatLabel } from "@/shared/lib";
 import type { QuestionBase } from "@/shared/types";
-import { BaseCard } from "@/shared/ui/base-card";
+import { BaseCard } from "@/shared/ui";
 import { Badge } from "@/shared/ui/shadcn";
 
 type Props = {

@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 
 import { Domain } from "@/entities/domain/model";
 import { ROUTES } from "@/shared/config";
-import { BaseCard } from "@/shared/ui/base-card";
+import { BaseCard } from "@/shared/ui";
 
 type Props = {
   domain: Domain;
