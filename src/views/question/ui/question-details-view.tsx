@@ -3,6 +3,7 @@ import type { QuestionDetails } from "@/entities/question/model";
 import { QuestionContent } from "./question-content";
 import { QuestionHeader } from "./question-header";
 import { QuestionNavigation } from "./question-navigation";
+import { QuestionProgress } from "./question-progress";
 import { QuestionSidebar } from "./question-sidebar";
 import { QuestionSidebarSheet } from "./question-sidebar-sheet";
 
@@ -19,6 +20,11 @@ export function QuestionDetailsView({ question, navigation }: QuestionDetails) {
         <QuestionHeader className="mb-10" question={question} />
 
         <QuestionContent markdown={question.markdown} />
+
+        <QuestionProgress
+          className="mt-10 lg:hidden"
+          progress={navigation.progress}
+        />
 
         <QuestionNavigation
           className="mt-10 lg:hidden"
