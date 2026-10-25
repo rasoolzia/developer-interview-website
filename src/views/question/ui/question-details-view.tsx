@@ -1,4 +1,4 @@
-import type { Question } from "@/entities/question/model";
+import type { QuestionDetails } from "@/entities/question/model";
 
 import { QuestionContent } from "./question-content";
 import { QuestionHeader } from "./question-header";
@@ -6,15 +6,7 @@ import { QuestionNavigation } from "./question-navigation";
 import { QuestionSidebar } from "./question-sidebar";
 import { QuestionSidebarSheet } from "./question-sidebar-sheet";
 
-type Props = {
-  question: Question;
-  navigation: {
-    previousSlug?: string;
-    nextSlug?: string;
-  };
-};
-
-export function QuestionDetailsView({ question, navigation }: Props) {
+export function QuestionDetailsView({ question, navigation }: QuestionDetails) {
   return (
     <main className="mx-auto max-w-7xl lg:flex lg:gap-10 lg:px-6">
       <QuestionSidebarSheet

@@ -4,7 +4,7 @@ import { SlidersHorizontalIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 
-import type { Question } from "@/entities/question/model";
+import type { QuestionDetails } from "@/entities/question/model";
 import { getDrawerSide } from "@/shared/config/i18n";
 import {
   Button,
@@ -17,12 +17,7 @@ import {
 
 import { QuestionSidebarContent } from "./question-sidebar-content";
 
-type Props = {
-  question: Question;
-  navigation: {
-    previousSlug?: string;
-    nextSlug?: string;
-  };
+type Props = QuestionDetails & {
   className?: string;
 };
 

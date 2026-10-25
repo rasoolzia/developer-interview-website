@@ -1,4 +1,4 @@
-import type { Question } from "@/entities/question/model";
+import type { Question, QuestionDetails } from "@/entities/question/model";
 import { getTopicDetails } from "@/entities/topic/api";
 import type { Language } from "@/shared/types";
 
@@ -17,7 +17,7 @@ export async function getQuestionDetails(
   topic: string,
   language: Language,
   slug: string,
-) {
+): Promise<QuestionDetails | undefined> {
   const questions = await getQuestions(domain, topic, language);
 
   const index = questions.findIndex((question) => question.slug === slug);
@@ -31,6 +31,10 @@ export async function getQuestionDetails(
     navigation: {
       previousSlug: questions[index - 1]?.slug,
       nextSlug: questions[index + 1]?.slug,
+      progress: {
+        current: index + 1,
+        total: questions.length,
+      },
     },
   };
 }
