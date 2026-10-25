@@ -97,9 +97,17 @@ export function QuestionLoading() {
             </div>
           </section>
 
+          {/* Progress */}
+          <div>
+            <div className="mb-2 flex items-center justify-between">
+              <Skeleton className="h-4 w-20 rounded-md" />
+            </div>
+            <Skeleton className="h-1.5 w-full rounded-full" />
+          </div>
+
           {/* Actions */}
           <section className="rounded-xl border p-5">
-            <Skeleton className="mb-4 h-4 w-16 rounded-md" />
+            <Skeleton className="mb-4 h-4.25 w-16 rounded-md" />
 
             <div className="space-y-1.5">
               <Skeleton className="h-8 w-full rounded-md" />

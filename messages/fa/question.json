@@ -11,5 +11,6 @@
   "save": "ذخیره سوال",
   "copyLink": "کپی لینک",
   "linkCopied": "لینک کپی شد",
-  "report": "گزارش مشکل"
+  "report": "گزارش مشکل",
+  "progress": "سؤال {current} از {total}"
 }

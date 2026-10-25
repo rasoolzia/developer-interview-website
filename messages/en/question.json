@@ -11,5 +11,6 @@
   "save": "Save question",
   "copyLink": "Copy link",
   "linkCopied": "Link copied",
-  "report": "Report issue"
+  "report": "Report issue",
+  "progress": "Question {current} of {total}"
 }
