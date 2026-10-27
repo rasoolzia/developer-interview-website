@@ -7,7 +7,6 @@ export function mapTopicDetails(api: ApiTopic): TopicDetails {
     version: api.version,
     meta: api.meta,
     content: api.content,
-    stats: api.stats,
     questions: mapQuestions(api),
   };
 }

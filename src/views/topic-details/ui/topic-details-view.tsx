@@ -46,13 +46,15 @@ function TopicDetailsContent({ data, questions, filters }: Props) {
         </div>
 
         <p className="text-muted-foreground mt-2">
-          {t("questionsCount", { count: data.stats.total })} -{" "}
-          {t("version", { version: data.version })}
+          {t("version", { version: data.version })} -{" "}
+          {t("questionsShowing", {
+            filtered: questions.length,
+            total: data.questions.length,
+          })}
         </p>
 
         <TopicFilters
           difficulties={data.content.difficulties}
-          byDifficulty={data.stats.byDifficulty}
           categories={data.content.categories}
           activeDifficulty={filters.difficulty}
           activeCategory={filters.category}

@@ -1,8 +1,9 @@
 {
   "topicsCount": "{count, plural, =1 {# topic} other {# topics}}",
   "questionsCount": "{count, plural, =1 {# question} other {# questions}}",
+  "questionsShowing": "Showing {filtered} of {total} {total, plural, =1 {question} other {questions}}",
   "backToPage": "Back to {page}",
-  "version": "version {version}",
+  "version": "Version {version}",
   "noQuestions": "No questions available for {topic}",
   "noFilteredQuestions": "No questions match this filter."
 }

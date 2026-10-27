@@ -23,11 +23,6 @@ export interface TopicMeta {
   label: string;
 }
 
-export interface TopicStats {
-  total: number;
-  byDifficulty: Record<string, number>;
-}
-
 export interface TopicContent {
   title: string;
   categories: string[];
@@ -38,6 +33,5 @@ export interface TopicDetails {
   version: number;
   meta: TopicMeta;
   content: TopicContent;
-  stats: TopicStats;
   questions: Question[];
 }

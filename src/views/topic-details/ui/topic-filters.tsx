@@ -7,7 +7,6 @@ import { Badge } from "@/shared/ui/shadcn";
 
 type Props = {
   difficulties: string[];
-  byDifficulty: Record<string, number>;
   categories: string[];
   activeDifficulty?: string;
   activeCategory?: string;
@@ -15,7 +14,6 @@ type Props = {
 
 export function TopicFilters({
   difficulties,
-  byDifficulty,
   categories,
   activeDifficulty,
   activeCategory,
@@ -50,7 +48,7 @@ export function TopicFilters({
                 className="font-normal"
                 variant={isActive ? "default" : "outline"}
               >
-                {difficulty} ({byDifficulty[difficulty] ?? 0})
+                {difficulty}
               </Badge>
             </button>
           );

@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: data.content.title,
-    description: `${data.stats.total} questions in ${data.content.title}`,
+    description: `${data.questions.length} questions in ${data.content.title}`,
   };
 }
 

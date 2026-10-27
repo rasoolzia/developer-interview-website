@@ -1,6 +1,7 @@
 {
   "topicsCount": "{count} موضوع",
   "questionsCount": "{count} سوال",
+  "questionsShowing": "نمایش {filtered} از {total} سوال",
   "backToPage": "بازگشت به {page}",
   "version": "نسخه {version}",
   "noQuestions": "هیچ سوالی برای {topic} موجود نیست",
