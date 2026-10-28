@@ -1,11 +1,11 @@
 import type { QuestionDetails } from "@/entities/question/model";
 
-import { QuestionContent } from "./question-content";
-import { QuestionHeader } from "./question-header";
-import { QuestionNavigation } from "./question-navigation";
-import { QuestionProgress } from "./question-progress";
-import { QuestionSidebar } from "./question-sidebar";
-import { QuestionSidebarSheet } from "./question-sidebar-sheet";
+import { QuestionContent } from "./content/question-content";
+import { QuestionHeader } from "./navigation/question-header";
+import { QuestionNavigation } from "./navigation/question-navigation";
+import { QuestionProgress } from "./navigation/question-progress";
+import { QuestionSidebar } from "./sidebar/question-sidebar";
+import { QuestionSidebarSheet } from "./sidebar/question-sidebar-sheet";
 
 export function QuestionDetailsView({ question, navigation }: QuestionDetails) {
   return (

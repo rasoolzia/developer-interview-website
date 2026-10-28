@@ -1,9 +1,9 @@
 import type { QuestionDetails } from "@/entities/question/model";
 
-import { QuestionActions } from "./question-actions";
-import { QuestionInfo } from "./question-info";
-import { QuestionNavigation } from "./question-navigation";
-import { QuestionProgress } from "./question-progress";
+import { QuestionNavigation } from "../navigation/question-navigation";
+import { QuestionProgress } from "../navigation/question-progress";
+import { QuestionActions } from "../question-actions";
+import { QuestionInfo } from "../question-info";
 
 type Props = QuestionDetails & {
   onNavigate?: () => void;

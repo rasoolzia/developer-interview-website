@@ -1,6 +1,6 @@
 import type { ReactElement, ReactNode } from "react";
 
-import { highlightCode } from "../lib";
+import { highlightCode } from "../../lib";
 import { MarkdownCodeCopy } from "./markdown-code-copy";
 
 type CodeElementProps = {
