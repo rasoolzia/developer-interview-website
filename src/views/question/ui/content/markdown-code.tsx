@@ -1,7 +1,8 @@
 import type { ReactElement, ReactNode } from "react";
 
+import { CopyButton } from "@/features/copy";
+
 import { highlightCode } from "../../lib";
-import { MarkdownCodeCopy } from "./markdown-code-copy";
 
 type CodeElementProps = {
   children?: ReactNode;
@@ -40,7 +41,7 @@ export function MarkdownCode({ codeElement, language }: Props) {
       <div className="bg-muted sticky top-16 z-10 flex items-center justify-between rounded-lg border-b px-3 py-2">
         <span className="text-muted-foreground text-xs">{language ?? ""}</span>
 
-        <MarkdownCodeCopy code={code} />
+        <CopyButton value={code} size="icon-sm" aria-label="Copy code" />
       </div>
 
       <pre dir="ltr" className="m-0! overflow-x-auto p-4 text-sm leading-6">

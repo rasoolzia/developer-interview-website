@@ -1,63 +1,34 @@
 "use client";
 
-import { BookmarkIcon, CheckIcon, FlagIcon, LinkIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
 
-import { Button } from "@/shared/ui/shadcn";
+import { Question } from "@/entities/question/model";
+import { SaveQuestionButton } from "@/features/bookmark";
+import { CopyButton } from "@/features/copy";
+import { ReportQuestionButton } from "@/features/report";
 
 type Props = {
-  id: string;
+  questionId: Question["id"];
 };
 
-export function QuestionActions({ id }: Props) {
-  console.log("id :", id);
+export function QuestionActions({ questionId }: Props) {
   const t = useTranslations("question");
-  const [copied, setCopied] = useState(false);
-
-  async function handleCopyLink() {
-    await navigator.clipboard.writeText(window.location.href);
-
-    setCopied(true);
-
-    setTimeout(() => {
-      setCopied(false);
-    }, 1500);
-  }
 
   return (
     <section className="rounded-xl border p-5">
       <h2 className="mb-4 text-sm font-semibold">{t("actions")}</h2>
 
       <div className="space-y-1">
-        <Button type="button" variant="ghost" className="w-full justify-start">
-          <BookmarkIcon className="size-4" />
-          {t("save")}
-        </Button>
+        <SaveQuestionButton questionId={questionId} />
 
-        <Button
-          type="button"
-          variant="ghost"
+        <CopyButton
+          value={() => window.location.href}
           className="w-full justify-start"
-          onClick={handleCopyLink}
         >
-          {copied ? (
-            <CheckIcon className="size-4" />
-          ) : (
-            <LinkIcon className="size-4" />
-          )}
+          {t("copyLink")}
+        </CopyButton>
 
-          {copied ? t("linkCopied") : t("copyLink")}
-        </Button>
-
-        <Button
-          type="button"
-          variant="ghost"
-          className="text-muted-foreground hover:text-foreground w-full justify-start"
-        >
-          <FlagIcon className="size-4" />
-          {t("report")}
-        </Button>
+        <ReportQuestionButton questionId={questionId} />
       </div>
     </section>
   );

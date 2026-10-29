@@ -2,8 +2,8 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-@import "../views/question/ui/question-markdown.css";
-@import "../views/question/ui/markdown-code.css";
+@import "../views/question/ui/content/question-markdown.css";
+@import "../views/question/ui/content/markdown-code.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 

@@ -23,7 +23,7 @@ export function QuestionSidebarContent({
         progress={navigation.progress}
       />
 
-      <QuestionActions id={question.id} />
+      <QuestionActions questionId={question.id} />
 
       <QuestionNavigation
         className="hidden lg:flex"
