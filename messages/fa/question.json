@@ -4,7 +4,7 @@
   "info": "اطلاعات سوال",
   "topic": "موضوع",
   "difficulty": "سطح دشواری",
-  "categories": "دسته‌بندی‌ها",
+  "categories": "دستهبندیها",
   "readingTimeLabel": "زمان مطالعه",
   "readingTime": "{minutes} دقیقه مطالعه",
   "actions": "عملیات",
@@ -12,5 +12,13 @@
   "copyLink": "کپی لینک",
   "linkCopied": "لینک کپی شد",
   "report": "گزارش مشکل",
-  "progress": "سؤال {current} از {total}"
+  "reported": "گزارش شده",
+  "progress": "سؤال {current} از {total}",
+  "reportDialog": {
+    "title": "گزارش مشکل",
+    "description": "شما در حال گزارش سوال {questionId} هستید. این عمل یک issue در مخزن محتوا در GitHub باز می‌کند. گزارش قبل از هدایت شما به صورت محلی ذخیره می‌شود.",
+    "openGithub": "ادامه در GitHub",
+    "cancel": "انصراف",
+    "errorReport": "ذخیره گزارش ناموفق بود. لطفاً دوباره تلاش کنید."
+  }
 }

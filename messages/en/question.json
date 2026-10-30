@@ -12,5 +12,13 @@
   "copyLink": "Copy link",
   "linkCopied": "Link copied",
   "report": "Report issue",
-  "progress": "Question {current} of {total}"
+  "reported": "Reported",
+  "progress": "Question {current} of {total}",
+  "reportDialog": {
+    "title": "Report an issue",
+    "description": "You are reporting question {questionId}. This will open a GitHub issue in the content repository. The report will be saved locally before you are redirected.",
+    "openGithub": "Continue to GitHub",
+    "cancel": "Cancel",
+    "errorReport": "Failed to save report. Please try again."
+  }
 }
