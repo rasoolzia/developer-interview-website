@@ -41,7 +41,7 @@ export function LanguageSwitcher() {
           </Button>
         }
       />
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="end" className="space-y-1">
         {Object.values(LOCALES).map((l) => (
           <DropdownMenuItem
             key={l.code}
