@@ -6,7 +6,6 @@ import {
   ManifestSchema,
   QuestionBaseSchema,
   QuestionSchema,
-  SearchItemSchema,
   TopicSchema,
 } from "@/shared/api/schemas";
 
@@ -22,5 +21,3 @@ export type ApiTopic = z.infer<typeof TopicSchema>;
 export type QuestionBase = z.infer<typeof QuestionBaseSchema>;
 
 export type ApiQuestion = z.infer<typeof QuestionSchema>;
-
-export type ApiSearchItem = z.infer<typeof SearchItemSchema>;

@@ -122,7 +122,7 @@ public/api/*.json  (manifest, search-index, per-topic files)
 shared/api  (fetch client + Zod schemas)
         │
         ▼
-entities/*  (typed domain models: Question, SearchItem, ...)
+entities/*  (typed domain models: Question, QuestionBase, ...)
         │
         ▼
 views/*  (server-rendered pages, e.g. /search)

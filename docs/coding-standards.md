@@ -12,7 +12,7 @@
 | Mapper / adapter functions | `to<Target>` / `from<Source>` | `toSearchFilters`                        |
 | Functions & variables      | camelCase                     | `getSearch`, `trimmedQuery`              |
 | Constants                  | SCREAMING_SNAKE_CASE          | `SEARCH_PARAMS`, `SEARCH_PAGE_SIZE`      |
-| Zod schemas                | `<Name>Schema`                | `DifficultySchema`, `SearchItemSchema`   |
+| Zod schemas                | `<Name>Schema`                | `DifficultySchema`, `SearchIndexSchema`  |
 
 ---
 

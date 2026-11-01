@@ -1,16 +1,13 @@
 import { toCanonicalDifficulty } from "@/entities/question/lib";
-import type {
-  FacetOption,
-  SearchFilters,
-  SearchItem,
-} from "@/entities/search/model";
+import type { FacetOption, SearchFilters } from "@/entities/search/model";
 import { SEARCH_PAGE_SIZE } from "@/shared/config";
 import { formatLabel, normalize } from "@/shared/lib";
+import type { QuestionBase } from "@/shared/types";
 
 import type { SearchViewModel } from "../model";
 
 export function mapSearch(
-  items: SearchItem[],
+  items: QuestionBase[],
   filters: SearchFilters,
 ): SearchViewModel {
   const query = normalize(filters.query ?? "");
@@ -90,7 +87,7 @@ export function mapSearch(
   };
 }
 
-function matchesQuery(item: SearchItem, query: string): boolean {
+function matchesQuery(item: QuestionBase, query: string): boolean {
   return (
     normalize(item.title).includes(query) ||
     item.categories.some((category) => normalize(category).includes(query))
@@ -98,9 +95,9 @@ function matchesQuery(item: SearchItem, query: string): boolean {
 }
 
 function toOptions(
-  items: SearchItem[],
-  getValue: (item: SearchItem) => string,
-  getLabel: (item: SearchItem) => string,
+  items: QuestionBase[],
+  getValue: (item: QuestionBase) => string,
+  getLabel: (item: QuestionBase) => string,
 ): FacetOption[] {
   const seen = new Map<string, FacetOption>();
 
@@ -113,7 +110,7 @@ function toOptions(
   return [...seen.values()].sort((a, b) => a.label.localeCompare(b.label));
 }
 
-function toCategoryOptions(items: SearchItem[]): FacetOption[] {
+function toCategoryOptions(items: QuestionBase[]): FacetOption[] {
   const seen = new Map<string, FacetOption>();
 
   for (const item of items) {

@@ -1,7 +1,3 @@
-import type { QuestionBase } from "@/shared/types";
-
-export type SearchItem = QuestionBase;
-
 export interface SearchFilters {
   query?: string;
   domain?: string;

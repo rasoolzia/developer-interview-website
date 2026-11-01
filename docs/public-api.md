@@ -119,10 +119,10 @@ Consumed by: `entities/question/api/question.service.ts` (topic list / question 
 
 ## Frontend Type Model
 
-Both `search-index.json` items and per-question entries in a topic file share the same core fields. Rather than maintaining two independent, drift-prone interfaces, the frontend defines one base shape and extends it:
+Both `search-index.json` entries and per-question entries in a topic file share the same core fields. Rather than maintaining two independent, drift-prone interfaces, the frontend defines one base shape and extends it:
 
 ```ts
-// shared/types/question-base.ts
+// shared/types
 interface QuestionBase {
   id: string;
   slug: string;
@@ -134,9 +134,6 @@ interface QuestionBase {
   categories: string[];
   readingTime: number;
 }
-
-// entities/search/model
-interface SearchItem extends QuestionBase {}
 
 // entities/question/model
 interface Question extends QuestionBase {
