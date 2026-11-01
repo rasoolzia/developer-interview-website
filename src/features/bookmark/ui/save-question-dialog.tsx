@@ -1,6 +1,6 @@
 "use client";
 
-import { PlusIcon } from "lucide-react";
+import { LoaderCircleIcon, PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { startTransition, useEffect, useState } from "react";
 
@@ -85,7 +85,7 @@ export function SaveQuestionDialog({ questionId, onSaved }: Props) {
     setError(null);
     try {
       const list = await bookmarkRepository.createList(name);
-      setLists((prev) => [...prev, list]);
+      setLists((prev) => [list, ...prev]);
       setSelected((prev) => new Set([...prev, list.id]));
       setNewName("");
     } catch (err) {
@@ -138,27 +138,32 @@ export function SaveQuestionDialog({ questionId, onSaved }: Props) {
 
       {error && <p className="text-destructive text-sm">{error}</p>}
 
-      <ScrollArea className="max-h-60 overflow-auto">
-        <div className="space-y-1 pe-2">
-          {lists.length === 0 && !isLoading && !error && (
-            <p className="text-muted-foreground text-sm">{t("noLists")}</p>
-          )}
-          {lists.map((list) => (
-            <label
-              key={list.id}
-              className="hover:bg-muted flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1.5"
-            >
-              <input
-                type="checkbox"
-                className="accent-primary"
-                checked={selected.has(list.id)}
-                onChange={() => toggleList(list.id)}
-              />
-              <span className="text-sm">{list.name}</span>
-            </label>
-          ))}
+      {isLoading ? (
+        <div className="text-muted-foreground flex items-center justify-center">
+          <LoaderCircleIcon className="size-4 animate-spin" />
         </div>
-      </ScrollArea>
+      ) : lists.length === 0 && !error ? (
+        <p className="text-muted-foreground text-sm">{t("noLists")}</p>
+      ) : (
+        <ScrollArea className="max-h-60">
+          <div className="space-y-1 pe-2">
+            {lists.map((list) => (
+              <label
+                key={list.id}
+                className="hover:bg-muted flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1.5"
+              >
+                <input
+                  type="checkbox"
+                  className="accent-primary"
+                  checked={selected.has(list.id)}
+                  onChange={() => toggleList(list.id)}
+                />
+                <span className="text-sm">{list.name}</span>
+              </label>
+            ))}
+          </div>
+        </ScrollArea>
+      )}
 
       <div className="flex gap-2">
         <Input

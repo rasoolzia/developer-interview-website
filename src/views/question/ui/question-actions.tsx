@@ -25,7 +25,7 @@ export function QuestionActions({ questionId }: Props) {
           value={() => window.location.href}
           className="w-full justify-start"
         >
-          {t("copyLink")}
+          {({ copied }) => (copied ? t("linkCopied") : t("copyLink"))}
         </CopyButton>
 
         <ReportQuestionButton questionId={questionId} />

@@ -6,12 +6,16 @@ export class DuplicateListNameError extends Error {}
 
 export const indexedDbBookmarkRepository: BookmarkRepository = {
   getLists(): Promise<BookmarkList[]> {
-    return dbGetAll<BookmarkList>("bookmarkLists");
+    return dbGetAll<BookmarkList>("bookmarkLists").then((lists) =>
+      lists.sort((a, b) => b.createdAt - a.createdAt),
+    );
   },
 
   getItems(listId: string): Promise<BookmarkItem[]> {
     return dbGetAll<BookmarkItem>("bookmarkItems").then((items) =>
-      items.filter((item) => item.listId === listId),
+      items
+        .filter((item) => item.listId === listId)
+        .sort((a, b) => b.createdAt - a.createdAt),
     );
   },
 
