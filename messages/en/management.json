@@ -1,0 +1,27 @@
+{
+  "bookmarks": {
+    "title": "Bookmarks",
+    "newList": "New list",
+    "newListPlaceholder": "List name",
+    "create": "Create list",
+    "rename": "Rename",
+    "delete": "Delete",
+    "open": "Open list",
+    "save": "Save",
+    "cancel": "Cancel",
+    "questions": "{count, plural, =0 {No questions} one {# question} other {# questions}}",
+    "empty": "You have no bookmark lists yet.",
+    "emptyList": "This list has no saved questions.",
+    "notFound": "This bookmark list could not be found.",
+    "error": "We could not load your bookmarks.",
+    "confirmDelete": "Delete this bookmark list?",
+    "confirmRemove": "Remove this question from the list?"
+  },
+  "reports": {
+    "title": "Reported questions",
+    "empty": "You have no reported questions.",
+    "error": "We could not load your reported questions.",
+    "remove": "Remove report",
+    "confirmRemove": "Remove this report?"
+  }
+}

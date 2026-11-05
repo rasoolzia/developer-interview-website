@@ -18,5 +18,7 @@
       "topics": "Topics",
       "domains": "Domains"
     }
-  }
+  },
+  "bookmarks": "Bookmarks",
+  "reports": "Reports"
 }

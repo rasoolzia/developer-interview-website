@@ -3,6 +3,12 @@ export const ROUTES = {
 
   search: "/search",
 
+  bookmarks: "/bookmarks",
+
+  bookmarkList: (listId: string) => `/bookmarks/${listId}`,
+
+  reports: "/reports",
+
   topics: "/topics",
 
   domains: "/domains",
