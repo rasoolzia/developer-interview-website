@@ -34,7 +34,7 @@ export function LanguageSwitcher() {
         render={
           <Button
             variant="outline"
-            className="h-8 w-9"
+            className="h-9 px-2"
             aria-label="Language switcher"
           >
             <Languages className="size-5" />

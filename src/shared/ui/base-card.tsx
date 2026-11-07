@@ -8,6 +8,7 @@ type BaseCardProps = {
   href?: string;
   className?: string;
   showArrow?: boolean;
+  action?: React.ReactNode;
 };
 
 export function BaseCard({
@@ -15,6 +16,7 @@ export function BaseCard({
   href,
   className,
   showArrow = true,
+  action,
 }: BaseCardProps) {
   const baseClassName = cn(
     "group hover:border-primary/50 hover:bg-accent/30 relative block rounded-xl border p-5 transition-all hover:shadow-md [content-visibility:auto] [contain-intrinsic-size:auto_140px]",
@@ -22,15 +24,31 @@ export function BaseCard({
   );
 
   if (!href) {
-    return <div className={baseClassName}>{children}</div>;
+    return (
+      <div className={cn(baseClassName, action && "relative")}>
+        {children}
+        {action && (
+          <div className="absolute inset-e-5 top-5 z-10">{action}</div>
+        )}
+      </div>
+    );
   }
 
-  return (
+  const link = (
     <Link href={href} className={baseClassName}>
       {children}
-      {showArrow && (
+      {!action && showArrow && (
         <ArrowRightIcon className="text-muted-foreground group-hover:text-primary absolute inset-e-5 top-5 size-4 opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100 rtl:rotate-180 rtl:group-hover:-translate-x-0.5" />
       )}
     </Link>
+  );
+
+  if (!action) return link;
+
+  return (
+    <div className="relative">
+      {link}
+      <div className="absolute inset-e-5 top-5 z-10">{action}</div>
+    </div>
   );
 }

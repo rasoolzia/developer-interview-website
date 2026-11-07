@@ -9,14 +9,20 @@ type TopicCardProps = {
   topic: Topic;
   domainSlug: string;
   locale: Locale;
+  showArrow?: boolean;
 };
 
-export function TopicCard({ topic, domainSlug, locale }: TopicCardProps) {
+export function TopicCard({
+  topic,
+  domainSlug,
+  locale,
+  showArrow,
+}: TopicCardProps) {
   const t = useTranslations("topic");
   const totalQuestions = topic.languages[locale]?.total ?? 0;
 
   return (
-    <BaseCard href={ROUTES.topic(domainSlug, topic.slug)}>
+    <BaseCard href={ROUTES.topic(domainSlug, topic.slug)} showArrow={showArrow}>
       <h3 className="group-hover:text-primary font-heading pe-8 text-start text-lg font-semibold transition-colors">
         {topic.label}
       </h3>

@@ -7,13 +7,14 @@ import { BaseCard } from "@/shared/ui";
 
 type Props = {
   domain: Domain;
+  showArrow?: boolean;
 };
 
-export function DomainCard({ domain }: Props) {
+export function DomainCard({ domain, showArrow }: Props) {
   const t = useTranslations("topic");
 
   return (
-    <BaseCard href={ROUTES.domain(domain.slug)}>
+    <BaseCard href={ROUTES.domain(domain.slug)} showArrow={showArrow}>
       <div className="bg-primary/10 text-primary mb-4 flex size-10 items-center justify-center rounded-lg">
         <Code2Icon className="size-5" />
       </div>
