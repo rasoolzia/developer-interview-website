@@ -3,23 +3,23 @@ import { dbDelete, dbGet, dbGetAll, dbPut } from "@/shared/lib";
 import type { ReportItem, ReportRepository } from "../model";
 
 export const indexedDbReportRepository: ReportRepository = {
-  getReports(): Promise<ReportItem[]> {
+  getReports() {
     return dbGetAll<ReportItem>("reports");
   },
 
-  async isQuestionReported(questionId: string): Promise<boolean> {
+  async isQuestionReported(questionId) {
     const item = await dbGet<ReportItem>("reports", questionId);
     return item !== undefined;
   },
 
-  async addReport(questionId: string): Promise<void> {
+  async addReport(questionId) {
     const existing = await dbGet<ReportItem>("reports", questionId);
     if (!existing) {
       await dbPut("reports", { questionId, createdAt: Date.now() });
     }
   },
 
-  removeReport(questionId: string): Promise<void> {
+  removeReport(questionId) {
     return dbDelete("reports", questionId);
   },
 };

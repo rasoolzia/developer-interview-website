@@ -16,6 +16,8 @@ export type BookmarkRepository = {
 
   getItems(listId: string): Promise<BookmarkItem[]>;
 
+  getItemsCount(listId: string): Promise<number>;
+
   isQuestionSaved(questionId: string): Promise<boolean>;
 
   createList(name: string): Promise<BookmarkList>;
