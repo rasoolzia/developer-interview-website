@@ -3,7 +3,8 @@
 import { useCallback, useEffect, useState } from "react";
 
 import { getReportedQuestions } from "@/features/report/api";
-import type { QuestionBase } from "@/shared/types";
+import { filterQuestionsByLanguage } from "@/shared/lib";
+import type { Language, QuestionBase } from "@/shared/types";
 
 type State = {
   questions: QuestionBase[];
@@ -13,25 +14,34 @@ type State = {
 
 const initialState: State = { questions: [], loading: true, error: false };
 
-export function useReportedQuestions() {
+export function useReportedQuestions(language: Language) {
   const [state, setState] = useState<State>(initialState);
 
   const reload = useCallback(async () => {
     setState((s) => ({ ...s, loading: true, error: false }));
     try {
-      const questions = await getReportedQuestions();
+      const questions = filterQuestionsByLanguage(
+        await getReportedQuestions(),
+        language,
+      );
       setState({ questions, loading: false, error: false });
     } catch {
       setState((s) => ({ ...s, loading: false, error: true }));
     }
-  }, []);
+  }, [language]);
 
   useEffect(() => {
     let ignore = false;
 
     getReportedQuestions()
       .then((questions) => {
-        if (!ignore) setState({ questions, loading: false, error: false });
+        if (!ignore) {
+          setState({
+            questions: filterQuestionsByLanguage(questions, language),
+            loading: false,
+            error: false,
+          });
+        }
       })
       .catch(() => {
         if (!ignore) setState((s) => ({ ...s, loading: false, error: true }));
@@ -40,7 +50,7 @@ export function useReportedQuestions() {
     return () => {
       ignore = true;
     };
-  }, []);
+  }, [language]);
 
   const removeLocal = useCallback((questionId: string) => {
     setState((s) => ({

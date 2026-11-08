@@ -5,29 +5,39 @@ import { useCallback, useEffect, useState } from "react";
 import { getBookmarkedQuestions } from "@/features/bookmark/api";
 import type { BookmarkList } from "@/features/bookmark/model";
 import { bookmarkRepository } from "@/features/bookmark/storage";
-import type { QuestionBase } from "@/shared/types";
+import { filterQuestionsByLanguage } from "@/shared/lib";
+import type { Language, QuestionBase } from "@/shared/types";
 
 export type ListWithCount = BookmarkList & { questionCount: number };
 
 // ---------- Pure fetchers (no React state) ----------
 
-export async function fetchListsWithCounts(): Promise<ListWithCount[]> {
+export async function fetchListsWithCounts(
+  language: Language,
+): Promise<ListWithCount[]> {
   const storedLists = await bookmarkRepository.getLists();
   return Promise.all(
     storedLists.map(async (list) => ({
       ...list,
-      questionCount: (await bookmarkRepository.getItems(list.id)).length,
+      questionCount: filterQuestionsByLanguage(
+        await getBookmarkedQuestions(list.id),
+        language,
+      ).length,
     })),
   );
 }
 
 export async function fetchListWithQuestions(
   listId: string,
+  language: Language,
 ): Promise<{ list: BookmarkList; questions: QuestionBase[] } | null> {
   const lists = await bookmarkRepository.getLists();
   const list = lists.find((item) => item.id === listId);
   if (!list) return null;
-  const questions = await getBookmarkedQuestions(listId);
+  const questions = filterQuestionsByLanguage(
+    await getBookmarkedQuestions(listId),
+    language,
+  );
   return { list, questions };
 }
 
@@ -45,22 +55,22 @@ const listsInitialState: ListsState = {
   error: false,
 };
 
-export function useBookmarkLists() {
+export function useBookmarkLists(language: Language) {
   const [state, setState] = useState<ListsState>(listsInitialState);
 
   const reload = useCallback(async () => {
     setState((s) => ({ ...s, loading: true, error: false }));
     try {
-      const lists = await fetchListsWithCounts();
+      const lists = await fetchListsWithCounts(language);
       setState({ lists, loading: false, error: false });
     } catch {
       setState((s) => ({ ...s, loading: false, error: true }));
     }
-  }, []);
+  }, [language]);
 
   useEffect(() => {
     let ignore = false;
-    fetchListsWithCounts()
+    fetchListsWithCounts(language)
       .then((lists) => {
         if (!ignore) setState({ lists, loading: false, error: false });
       })
@@ -70,7 +80,7 @@ export function useBookmarkLists() {
     return () => {
       ignore = true;
     };
-  }, []);
+  }, [language]);
 
   return { ...state, reload };
 }
@@ -93,13 +103,13 @@ const detailInitialState: ListDetailState = {
   notFound: false,
 };
 
-export function useBookmarkList(listId: string) {
+export function useBookmarkList(listId: string, language: Language) {
   const [state, setState] = useState<ListDetailState>(detailInitialState);
 
   const reload = useCallback(async () => {
     setState((s) => ({ ...s, loading: true, error: false, notFound: false }));
     try {
-      const result = await fetchListWithQuestions(listId);
+      const result = await fetchListWithQuestions(listId, language);
       if (!result) {
         setState({ ...detailInitialState, loading: false, notFound: true });
         return;
@@ -114,11 +124,11 @@ export function useBookmarkList(listId: string) {
     } catch {
       setState((s) => ({ ...s, loading: false, error: true }));
     }
-  }, [listId]);
+  }, [language, listId]);
 
   useEffect(() => {
     let ignore = false;
-    fetchListWithQuestions(listId)
+    fetchListWithQuestions(listId, language)
       .then((result) => {
         if (ignore) return;
         if (!result) {
@@ -139,7 +149,7 @@ export function useBookmarkList(listId: string) {
     return () => {
       ignore = true;
     };
-  }, [listId]);
+  }, [listId, language]);
 
   const removeQuestionLocal = useCallback((questionId: string) => {
     setState((s) => ({
