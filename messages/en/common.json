@@ -20,5 +20,13 @@
     }
   },
   "bookmarks": "Bookmarks",
-  "reports": "Reports"
+  "reports": "Reports",
+  "navigation": {
+    "label": "Main navigation",
+    "menu": "Open navigation menu",
+    "search": "Search",
+    "bookmarks": "Bookmarks",
+    "reports": "Reported questions",
+    "github": "GitHub"
+  }
 }
