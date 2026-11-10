@@ -1,27 +1,30 @@
 "use client";
 
-import { PencilIcon, PlusIcon, Trash2Icon } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { PlusIcon } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 
 import type { BookmarkList } from "@/features/bookmark/model";
 import { bookmarkRepository } from "@/features/bookmark/storage";
-import { ROUTES } from "@/shared/config";
-import { Link } from "@/shared/config/i18n";
+import { Locale } from "@/shared/config/i18n";
 import { useMutationState } from "@/shared/hooks";
+import { ConfirmationDialog } from "@/shared/ui";
 import { Button, Input } from "@/shared/ui/shadcn";
 
 import { useBookmarkLists } from "../model";
+import { BookmarkListItem } from "./bookmark-list-item";
 import { BookmarkLoading } from "./bookmark-loading";
 
 export function BookmarksView() {
   const t = useTranslations("management.bookmarks");
-  const { lists, loading, error, reload } = useBookmarkLists();
+  const locale = useLocale();
+  const { lists, loading, error, reload } = useBookmarkLists(locale as Locale);
   const { saving, error: mutationError, run: runMutation } = useMutationState();
 
   const [name, setName] = useState("");
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editingName, setEditingName] = useState("");
+  const [pendingDelete, setPendingDelete] = useState<BookmarkList | null>(null);
 
   async function createList(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -33,19 +36,19 @@ export function BookmarksView() {
     });
   }
 
-  async function renameList(listId: string) {
-    if (!editingName.trim()) return;
+  async function renameList(listId: string, newName: string) {
     await runMutation(async () => {
-      await bookmarkRepository.renameList(listId, editingName);
+      await bookmarkRepository.renameList(listId, newName);
       setEditingId(null);
       await reload();
     });
   }
 
-  async function deleteList(list: BookmarkList) {
-    if (!confirm(t("confirmDelete"))) return;
+  async function deleteList() {
+    if (!pendingDelete) return;
     await runMutation(async () => {
-      await bookmarkRepository.deleteList(list.id);
+      await bookmarkRepository.deleteList(pendingDelete.id);
+      setPendingDelete(null);
       await reload();
     });
   }
@@ -79,79 +82,37 @@ export function BookmarksView() {
       ) : (
         <div className="space-y-3">
           {lists.map((list) => (
-            <div
+            <BookmarkListItem
               key={list.id}
-              className="bg-card flex flex-wrap items-center justify-between gap-3 rounded-xl border p-4"
-            >
-              {editingId === list.id ? (
-                <form
-                  onSubmit={(event) => {
-                    event.preventDefault();
-                    void renameList(list.id);
-                  }}
-                  className="flex min-w-0 flex-1 gap-2"
-                >
-                  <Input
-                    value={editingName}
-                    onChange={(event) => setEditingName(event.target.value)}
-                    autoFocus
-                    aria-label={t("rename")}
-                  />
-                  <Button type="submit" size="sm" disabled={saving}>
-                    {t("save")}
-                  </Button>
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant="outline"
-                    onClick={() => setEditingId(null)}
-                  >
-                    {t("cancel")}
-                  </Button>
-                </form>
-              ) : (
-                <div className="min-w-0">
-                  <Link
-                    href={ROUTES.bookmarkList(list.id)}
-                    className="hover:text-primary text-lg font-semibold"
-                  >
-                    {list.name}
-                  </Link>
-                  <p className="text-muted-foreground text-sm">
-                    {t("questions", { count: list.questionCount })}
-                  </p>
-                </div>
-              )}
-
-              {editingId !== list.id && (
-                <div className="flex items-center gap-1">
-                  <Button
-                    type="button"
-                    size="icon-sm"
-                    variant="ghost"
-                    aria-label={t("rename")}
-                    onClick={() => {
-                      setEditingId(list.id);
-                      setEditingName(list.name);
-                    }}
-                  >
-                    <PencilIcon />
-                  </Button>
-                  <Button
-                    type="button"
-                    size="icon-sm"
-                    variant="destructive"
-                    aria-label={t("delete")}
-                    onClick={() => void deleteList(list)}
-                  >
-                    <Trash2Icon />
-                  </Button>
-                </div>
-              )}
-            </div>
+              list={list}
+              editing={{
+                id: editingId,
+                name: editingName,
+                onCancel: () => setEditingId(null),
+              }}
+              saving={saving}
+              onStartEditing={() => {
+                setEditingId(list.id);
+                setEditingName(list.name);
+              }}
+              onRename={(newName) => void renameList(list.id, newName)}
+              onDelete={() => setPendingDelete(list)}
+            />
           ))}
         </div>
       )}
+
+      <ConfirmationDialog
+        open={pendingDelete !== null}
+        title={t("deleteTitle")}
+        description={t("deleteDescription")}
+        cancelLabel={t("cancel")}
+        confirmLabel={t("delete")}
+        onOpenChange={(open) => {
+          if (!open) setPendingDelete(null);
+        }}
+        onConfirm={deleteList}
+      />
     </div>
   );
 }

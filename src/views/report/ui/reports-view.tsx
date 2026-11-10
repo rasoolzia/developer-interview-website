@@ -1,10 +1,13 @@
 "use client";
 
-import { XIcon } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { Trash2Icon } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
+import { useState } from "react";
 
 import { reportRepository } from "@/features/report/storage";
+import { Locale } from "@/shared/config/i18n";
 import { useMutationState } from "@/shared/hooks";
+import { ConfirmationDialog } from "@/shared/ui";
 import { Button } from "@/shared/ui/shadcn";
 import { QuestionList } from "@/widgets/question-list";
 
@@ -13,13 +16,19 @@ import { ReportLoading } from "./report-loading";
 
 export function ReportsView() {
   const t = useTranslations("management.reports");
-  const { questions, loading, error, removeLocal } = useReportedQuestions();
+  const locale = useLocale();
+  const { questions, loading, error, removeLocal } = useReportedQuestions(
+    locale as Locale,
+  );
   const { saving, error: mutationError, run: runMutation } = useMutationState();
+  const [pendingQuestionId, setPendingQuestionId] = useState<string | null>(
+    null,
+  );
 
   async function removeReport(questionId: string) {
-    if (!confirm(t("confirmRemove"))) return;
     await runMutation(async () => {
       await reportRepository.removeReport(questionId);
+      setPendingQuestionId(null);
       removeLocal(questionId);
     });
   }
@@ -37,24 +46,37 @@ export function ReportsView() {
       {questions.length === 0 ? (
         <p className="text-muted-foreground py-10 text-center">{t("empty")}</p>
       ) : (
-        <div className="space-y-4">
-          {questions.map((question) => (
-            <div key={question.id} className="relative">
-              <QuestionList questions={[question]} />
-              <Button
-                variant="ghost"
-                size="icon-sm"
-                className="absolute inset-e-3 top-3"
-                aria-label={t("remove")}
-                disabled={saving}
-                onClick={() => void removeReport(question.id)}
-              >
-                <XIcon />
-              </Button>
-            </div>
-          ))}
-        </div>
+        <QuestionList
+          questions={questions}
+          getAction={(question) => (
+            <Button
+              type="button"
+              size="icon-sm"
+              variant="ghost"
+              className="text-destructive hover:text-destructive"
+              aria-label={t("remove")}
+              disabled={saving}
+              onClick={() => setPendingQuestionId(question.id)}
+            >
+              <Trash2Icon />
+            </Button>
+          )}
+        />
       )}
+
+      <ConfirmationDialog
+        open={pendingQuestionId !== null}
+        title={t("removeTitle")}
+        description={t("removeDescription")}
+        cancelLabel={t("cancel")}
+        confirmLabel={t("remove")}
+        onOpenChange={(open) => {
+          if (!open) setPendingQuestionId(null);
+        }}
+        onConfirm={() => {
+          if (pendingQuestionId) return removeReport(pendingQuestionId);
+        }}
+      />
     </div>
   );
 }

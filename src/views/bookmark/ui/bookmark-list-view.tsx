@@ -1,13 +1,14 @@
 "use client";
 
-import { ArrowLeftIcon, PencilIcon, Trash2Icon, XIcon } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { PencilIcon, Trash2Icon } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { bookmarkRepository } from "@/features/bookmark/storage";
 import { ROUTES } from "@/shared/config";
-import { Link, useRouter } from "@/shared/config/i18n";
+import { Locale, useRouter } from "@/shared/config/i18n";
 import { useMutationState } from "@/shared/hooks";
+import { BackLink, ConfirmationDialog } from "@/shared/ui";
 import { Button, Input } from "@/shared/ui/shadcn";
 import { QuestionList } from "@/widgets/question-list";
 
@@ -16,6 +17,7 @@ import { BookmarkLoading } from "./bookmark-loading";
 
 export function BookmarkListView({ listId }: { listId: string }) {
   const t = useTranslations("management.bookmarks");
+  const locale = useLocale();
   const router = useRouter();
 
   const {
@@ -26,12 +28,18 @@ export function BookmarkListView({ listId }: { listId: string }) {
     notFound,
     removeQuestionLocal,
     applyRename,
-  } = useBookmarkList(listId);
+  } = useBookmarkList(listId, locale as Locale);
 
   const { saving, error: mutationError, run: runMutation } = useMutationState();
 
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState("");
+  const [confirmAction, setConfirmAction] = useState<
+    "delete" | "remove" | null
+  >(null);
+  const [pendingQuestionId, setPendingQuestionId] = useState<string | null>(
+    null,
+  );
 
   function startEditing() {
     if (!list) return;
@@ -56,17 +64,18 @@ export function BookmarkListView({ listId }: { listId: string }) {
 
   async function deleteList() {
     if (!list) return;
-    if (!confirm(t("confirmDelete"))) return;
     await runMutation(async () => {
       await bookmarkRepository.deleteList(list.id);
+      setConfirmAction(null);
       router.push(ROUTES.bookmarks);
     });
   }
 
   async function removeQuestion(questionId: string) {
-    if (!confirm(t("confirmRemove"))) return;
     await runMutation(async () => {
       await bookmarkRepository.removeQuestion(listId, questionId);
+      setPendingQuestionId(null);
+      setConfirmAction(null);
       removeQuestionLocal(questionId);
     });
   }
@@ -85,13 +94,7 @@ export function BookmarkListView({ listId }: { listId: string }) {
 
   return (
     <div className="space-y-6 py-6 sm:py-8">
-      <Link
-        href={ROUTES.bookmarks}
-        className="text-muted-foreground hover:text-foreground inline-flex items-center gap-2 text-sm"
-      >
-        <ArrowLeftIcon className="size-4 rtl:rotate-180" />
-        {t("title")}
-      </Link>
+      <BackLink href={ROUTES.bookmarks}>{t("title")}</BackLink>
 
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
@@ -131,7 +134,7 @@ export function BookmarkListView({ listId }: { listId: string }) {
               variant="destructive"
               size="icon-sm"
               aria-label={t("delete")}
-              onClick={() => void deleteList()}
+              onClick={() => setConfirmAction("delete")}
             >
               <Trash2Icon />
             </Button>
@@ -148,24 +151,48 @@ export function BookmarkListView({ listId }: { listId: string }) {
           {t("emptyList")}
         </p>
       ) : (
-        <div className="space-y-4">
-          {questions.map((question) => (
-            <div key={question.id} className="relative">
-              <QuestionList questions={[question]} />
-              <Button
-                variant="ghost"
-                size="icon-sm"
-                className="absolute inset-e-3 top-3"
-                aria-label={t("delete")}
-                disabled={saving}
-                onClick={() => void removeQuestion(question.id)}
-              >
-                <XIcon />
-              </Button>
-            </div>
-          ))}
-        </div>
+        <QuestionList
+          questions={questions}
+          getAction={(question) => (
+            <Button
+              type="button"
+              size="icon-sm"
+              variant="ghost"
+              className="text-destructive hover:text-destructive"
+              aria-label={t("remove")}
+              disabled={saving}
+              onClick={() => {
+                setPendingQuestionId(question.id);
+                setConfirmAction("remove");
+              }}
+            >
+              <Trash2Icon />
+            </Button>
+          )}
+        />
       )}
+
+      <ConfirmationDialog
+        open={confirmAction !== null}
+        title={confirmAction === "delete" ? t("deleteTitle") : t("removeTitle")}
+        description={
+          confirmAction === "delete"
+            ? t("deleteDescription")
+            : t("removeDescription")
+        }
+        cancelLabel={t("cancel")}
+        confirmLabel={confirmAction === "delete" ? t("delete") : t("remove")}
+        onOpenChange={(open) => {
+          if (!open) {
+            setConfirmAction(null);
+            setPendingQuestionId(null);
+          }
+        }}
+        onConfirm={() => {
+          if (confirmAction === "delete") return deleteList();
+          if (pendingQuestionId) return removeQuestion(pendingQuestionId);
+        }}
+      />
     </div>
   );
 }
