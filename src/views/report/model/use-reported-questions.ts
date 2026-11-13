@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useState } from "react";
 
 import { getReportedQuestions } from "@/features/report/api";
-import { filterQuestionsByLanguage } from "@/shared/lib";
 import type { Language, QuestionBase } from "@/shared/types";
 
 type State = {
@@ -20,10 +19,7 @@ export function useReportedQuestions(language: Language) {
   const reload = useCallback(async () => {
     setState((s) => ({ ...s, loading: true, error: false }));
     try {
-      const questions = filterQuestionsByLanguage(
-        await getReportedQuestions(),
-        language,
-      );
+      const questions = await getReportedQuestions(language);
       setState({ questions, loading: false, error: false });
     } catch {
       setState((s) => ({ ...s, loading: false, error: true }));
@@ -33,11 +29,11 @@ export function useReportedQuestions(language: Language) {
   useEffect(() => {
     let ignore = false;
 
-    getReportedQuestions()
+    getReportedQuestions(language)
       .then((questions) => {
         if (!ignore) {
           setState({
-            questions: filterQuestionsByLanguage(questions, language),
+            questions,
             loading: false,
             error: false,
           });

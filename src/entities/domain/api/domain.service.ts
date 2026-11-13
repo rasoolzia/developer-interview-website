@@ -1,6 +1,6 @@
 import { fetchManifest } from "@/shared/api/repositories";
-import { mapManifestToDomains } from "@/shared/mappers";
 
+import { mapManifestToDomains } from "../lib";
 import type { Domain } from "../model";
 
 export async function getDomains(): Promise<Domain[]> {

@@ -12,15 +12,7 @@ export function mapSearch(
 ): SearchViewModel {
   const query = normalize(filters.query ?? "");
 
-  const byLanguage = items.filter(
-    (item) =>
-      !filters.language ||
-      normalize(item.language) === normalize(filters.language),
-  );
-
-  const byQuery = byLanguage.filter(
-    (item) => !query || matchesQuery(item, query),
-  );
+  const byQuery = items.filter((item) => !query || matchesQuery(item, query));
 
   const domains = toOptions(
     byQuery,

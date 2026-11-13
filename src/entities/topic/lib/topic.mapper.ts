@@ -1,5 +1,5 @@
-import type { Question } from "@/entities/question/model";
 import type { TopicDetails } from "@/entities/topic/model";
+import { mapQuestions } from "@/shared/mappers";
 import type { ApiTopic } from "@/shared/types";
 
 export function mapTopicDetails(api: ApiTopic): TopicDetails {
@@ -7,13 +7,6 @@ export function mapTopicDetails(api: ApiTopic): TopicDetails {
     version: api.version,
     meta: api.meta,
     content: api.content,
-    questions: mapQuestions(api),
+    questions: mapQuestions(api.questions),
   };
-}
-
-function mapQuestions(api: ApiTopic): Question[] {
-  return api.questions.map((question) => ({
-    ...question,
-    id: `${question.id}-${question.language}`,
-  }));
 }

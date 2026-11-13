@@ -4,7 +4,7 @@ export interface SearchFilters {
   topic?: string;
   difficulty?: string;
   category?: string;
-  language?: string;
+  language: string;
   page?: number;
 }
 

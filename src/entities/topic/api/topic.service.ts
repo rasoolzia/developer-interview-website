@@ -1,5 +1,5 @@
+import { mapTopicDetails } from "@/entities/topic/lib";
 import { fetchTopic } from "@/shared/api/repositories";
-import { mapTopicDetails } from "@/shared/mappers";
 import type { Language } from "@/shared/types";
 
 import type { TopicDetails } from "../model";

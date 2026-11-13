@@ -5,7 +5,6 @@ import { useCallback, useEffect, useState } from "react";
 import { getBookmarkedQuestions } from "@/features/bookmark/api";
 import type { BookmarkList } from "@/features/bookmark/model";
 import { bookmarkRepository } from "@/features/bookmark/storage";
-import { filterQuestionsByLanguage } from "@/shared/lib";
 import type { Language, QuestionBase } from "@/shared/types";
 
 export type ListWithCount = BookmarkList & { questionCount: number };
@@ -19,10 +18,7 @@ export async function fetchListsWithCounts(
   return Promise.all(
     storedLists.map(async (list) => ({
       ...list,
-      questionCount: filterQuestionsByLanguage(
-        await getBookmarkedQuestions(list.id),
-        language,
-      ).length,
+      questionCount: (await getBookmarkedQuestions(list.id, language)).length,
     })),
   );
 }
@@ -34,10 +30,7 @@ export async function fetchListWithQuestions(
   const lists = await bookmarkRepository.getLists();
   const list = lists.find((item) => item.id === listId);
   if (!list) return null;
-  const questions = filterQuestionsByLanguage(
-    await getBookmarkedQuestions(listId),
-    language,
-  );
+  const questions = await getBookmarkedQuestions(listId, language);
   return { list, questions };
 }
 

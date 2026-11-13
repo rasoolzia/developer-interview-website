@@ -1,22 +1,17 @@
 "use server";
 
-import { fetchSearchIndex } from "@/shared/api/repositories";
-import type { QuestionBase } from "@/shared/types";
+import type { Language, QuestionBase } from "@/shared/types";
 
-function createQuestionKey(id: string, language: string) {
-  return `${id}-${language}`;
-}
+import { getSearchQuestions } from "./search.service";
 
 export async function getQuestionsByIds(
   questionIds: string[],
+  language: Language,
 ): Promise<QuestionBase[]> {
-  const questions = await fetchSearchIndex();
+  const questions = await getSearchQuestions(language);
 
   const questionsById = new Map(
-    questions.map((question) => [
-      createQuestionKey(question.id, question.language),
-      question,
-    ]),
+    questions.map((question) => [question.id, question]),
   );
 
   return questionIds.flatMap((id) => {
