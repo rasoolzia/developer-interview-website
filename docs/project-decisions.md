@@ -19,6 +19,7 @@ Impact:
 - No effect on linting.
 
 Status:
+
 Deferred.
 
 ## Commit Convention
@@ -27,15 +28,15 @@ We follow the Conventional Commits specification.
 
 Examples:
 
-- feat:
-- fix:
-- docs:
-- refactor:
-- test:
-- build:
-- chore:
-- ci:
-- perf:
+- `feat:`
+- `fix:`
+- `docs:`
+- `refactor:`
+- `test:`
+- `build:`
+- `chore:`
+- `ci:`
+- `perf:`
 
 ## Continuous Integration
 
@@ -48,14 +49,6 @@ GitHub Actions is used to verify every push and pull request.
 - Prevent broken builds
 - Ensure reproducible installs
 - Keep the main branch stable
-
-# Pending Refactors
-
-- Replace DTOs with Domain Models in Services.
-- Add Mapper Layer.
-- Add Repository Layer.
-- Add Domain Errors.
-- Add React Query only if needed.
 
 ## Cache Strategy
 
@@ -79,3 +72,17 @@ The content API consists of generated static JSON files that are safe to share b
 - Keep request-specific rendering outside the cache boundary.
 
 See [`caching.md`](caching.md) for the complete caching policy and implementation guidance.
+
+## Locale and Language
+
+The project keeps **UI locale** and **content language** as separate concepts.
+
+- `Locale` represents the language of the application UI and is derived from `LOCALES`.
+- `Language` represents the language of content and API data and is derived from `LanguageSchema`.
+- Route parameters remain typed as `string` because they are runtime URL values.
+- The `[locale]` layout is the single route-level validation boundary for supported locales.
+- Server components use `getLocale()` from `next-intl/server` for the current typed UI locale.
+- `parseLanguage()` is used when converting UI or external string values into the API/content `Language` type.
+- `Locale` and `Language` must not be treated as interchangeable types.
+
+See [`locale-and-language.md`](locale-and-language.md) for the complete policy and rationale.
