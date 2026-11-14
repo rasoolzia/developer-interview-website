@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import type { SearchParams } from "@/entities/search/model";
 import { SearchView } from "@/views/search";
@@ -16,12 +16,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function SearchPage({
   searchParams,
-  params,
 }: {
   searchParams?: Promise<SearchParams>;
-  params: Promise<{ locale: string }>;
 }) {
-  const [{ locale }, paramsValue] = await Promise.all([params, searchParams]);
+  const [locale, paramsValue] = await Promise.all([getLocale(), searchParams]);
 
   return <SearchView filters={toSearchFilters(paramsValue ?? {}, locale)} />;
 }

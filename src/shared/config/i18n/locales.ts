@@ -16,18 +16,22 @@ export const LOCALES = {
   },
 } as const;
 
-export const LANGUAGE_CODES = Object.keys(LOCALES) as Locale[];
+export const LOCALE_CODES = Object.keys(LOCALES).filter(isLocale);
 
 export const defaultLocale: Locale = "en";
 
-export function getDirection(locale: string): Direction {
-  return LOCALES[locale as Locale]?.direction ?? "ltr";
+export function isLocale(value: string): value is Locale {
+  return Object.hasOwn(LOCALES, value);
 }
 
-export function isRTL(locale: string): boolean {
+export function getDirection(locale: Locale): Direction {
+  return LOCALES[locale]?.direction ?? "ltr";
+}
+
+export function isRTL(locale: Locale): boolean {
   return getDirection(locale) === "rtl";
 }
 
-export function getDrawerSide(locale: string): "right" | "left" {
+export function getDrawerSide(locale: Locale): "right" | "left" {
   return isRTL(locale) ? "right" : "left";
 }

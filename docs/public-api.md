@@ -166,6 +166,6 @@ This keeps the _value_ language-independent (`?difficulty=easy` means the same t
 Fetched JSON is validated at the boundary with Zod (`shared/api/schemas`) before it's trusted anywhere downstream — the generator repository guarantees shape at build time, but the frontend doesn't assume that guarantee holds at runtime (network issues, stale caches, a future schema change landing before this repo is updated).
 
 - `DifficultySchema` — currently `z.string()`, since difficulty is freeform per-language text (see above), not a fixed enum
-- `LanguageSchema` — `z.enum(LANGUAGE_CODES)`, matching `shared/config/i18n`
+- `LanguageSchema` — `z.enum(LOCALE_CODES)`, matching `shared/config/i18n`
 
 If the generator's output shape changes, update the corresponding schema in `shared/api/schemas` first — TypeScript and Zod will then surface every place in the frontend that needs to change as a result.

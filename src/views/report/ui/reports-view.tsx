@@ -5,8 +5,8 @@ import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { reportRepository } from "@/features/report/storage";
-import { Locale } from "@/shared/config/i18n";
 import { useMutationState } from "@/shared/hooks";
+import { parseLanguage } from "@/shared/lib";
 import { ConfirmationDialog } from "@/shared/ui";
 import { Button } from "@/shared/ui/shadcn";
 import { QuestionList } from "@/widgets/question-list";
@@ -18,7 +18,7 @@ export function ReportsView() {
   const t = useTranslations("management.reports");
   const locale = useLocale();
   const { questions, loading, error, removeLocal } = useReportedQuestions(
-    locale as Locale,
+    parseLanguage(locale),
   );
   const { saving, error: mutationError, run: runMutation } = useMutationState();
   const [pendingQuestionId, setPendingQuestionId] = useState<string | null>(

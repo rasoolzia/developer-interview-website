@@ -16,24 +16,17 @@ type Props = {
 };
 
 export function SearchView({ filters }: Props) {
-  const trimmedQuery = filters.query?.trim();
-
   return (
     <QueryStateProvider>
       <Suspense fallback={<SearchLoading />}>
-        <SearchContent filters={filters} trimmedQuery={trimmedQuery} />
+        <SearchContent filters={filters} />
       </Suspense>
     </QueryStateProvider>
   );
 }
 
-async function SearchContent({
-  filters,
-  trimmedQuery,
-}: {
-  filters: SearchFilters;
-  trimmedQuery: string | undefined;
-}) {
+async function SearchContent({ filters }: { filters: SearchFilters }) {
+  const trimmedQuery = filters.query?.trim();
   const data = await getSearch(filters);
   const hasResults = data.results.length > 0;
 

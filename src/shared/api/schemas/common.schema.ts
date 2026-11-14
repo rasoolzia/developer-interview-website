@@ -1,8 +1,10 @@
 import { z } from "zod";
 
-import { LANGUAGE_CODES } from "@/shared/config/i18n";
+export const SUPPORTED_LANGUAGES = ["en", "fa"] as const;
 
-export const LanguageSchema = z.enum(LANGUAGE_CODES);
+export const DEFAULT_LANGUAGE = "en" as const;
+
+export const LanguageSchema = z.enum(SUPPORTED_LANGUAGES);
 
 export const DifficultySchema = z.string();
 

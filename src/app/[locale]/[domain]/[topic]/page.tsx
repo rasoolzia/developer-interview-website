@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { getLocale } from "next-intl/server";
 
 import { getTopicDetails } from "@/entities/topic/api";
 import { SEARCH_PARAMS } from "@/shared/config";
-import { toSingleParam } from "@/shared/lib";
-import type { Language } from "@/shared/types";
+import { parseLanguage, toSingleParam } from "@/shared/lib";
 import { TopicDetailsView } from "@/views/topic-details";
 import { filterQuestions } from "@/views/topic-details/lib";
 
@@ -14,8 +14,9 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale, domain, topic } = await params;
-  const data = await getTopicDetails(domain, topic, locale as Language);
+  const [{ domain, topic }, locale] = await Promise.all([params, getLocale()]);
+
+  const data = await getTopicDetails(domain, topic, parseLanguage(locale));
 
   if (!data) {
     return { title: "Not Found" };
@@ -28,12 +29,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function TopicPage({ params, searchParams }: Props) {
-  const [{ locale, domain, topic }, rawParams] = await Promise.all([
+  const [{ domain, topic }, rawParams, locale] = await Promise.all([
     params,
     searchParams,
+    getLocale(),
   ]);
 
-  const data = await getTopicDetails(domain, topic, locale as Language);
+  const data = await getTopicDetails(domain, topic, parseLanguage(locale));
 
   if (!data) {
     notFound();

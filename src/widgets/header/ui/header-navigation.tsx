@@ -79,6 +79,7 @@ export function HeaderNavigation() {
   const t = useTranslations("common.navigation");
   const locale = useLocale();
   const [open, setOpen] = useState(false);
+  const side = getDrawerSide(locale);
 
   return (
     <>
@@ -116,7 +117,7 @@ export function HeaderNavigation() {
           >
             <MenuIcon />
           </SheetTrigger>
-          <SheetContent side={getDrawerSide(locale)}>
+          <SheetContent side={side}>
             <SheetHeader>
               <SheetTitle>{t("menu")}</SheetTitle>
             </SheetHeader>

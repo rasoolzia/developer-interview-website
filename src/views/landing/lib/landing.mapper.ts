@@ -1,5 +1,4 @@
-import { Locale } from "@/shared/config/i18n";
-import type { ApiManifest } from "@/shared/types";
+import type { ApiManifest, Language } from "@/shared/types";
 
 import type { LandingStats } from "../model";
 
@@ -11,21 +10,20 @@ export function mapLandingStats(manifest: ApiManifest): LandingStats {
     0,
   );
 
-  const questions = Object.fromEntries(
-    manifest.languages.map((language) => [
-      language,
-      domains.reduce(
-        (total, domain) =>
-          total +
-          Object.values(domain.topics).reduce(
-            (topicTotal, topic) =>
-              topicTotal + (topic.languages[language]?.total ?? 0),
-            0,
-          ),
-        0,
-      ),
-    ]),
-  ) as Record<Locale, number>;
+  const questions: Partial<Record<Language, number>> = {};
+
+  for (const language of manifest.languages) {
+    questions[language] = domains.reduce(
+      (total, domain) =>
+        total +
+        Object.values(domain.topics).reduce(
+          (topicTotal, topic) =>
+            topicTotal + (topic.languages[language]?.total ?? 0),
+          0,
+        ),
+      0,
+    );
+  }
 
   return {
     questions,

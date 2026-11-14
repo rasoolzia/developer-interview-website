@@ -6,8 +6,9 @@ import { useState } from "react";
 
 import { bookmarkRepository } from "@/features/bookmark/storage";
 import { ROUTES } from "@/shared/config";
-import { Locale, useRouter } from "@/shared/config/i18n";
+import { useRouter } from "@/shared/config/i18n";
 import { useMutationState } from "@/shared/hooks";
+import { parseLanguage } from "@/shared/lib";
 import { BackLink, ConfirmationDialog } from "@/shared/ui";
 import { Button, Input } from "@/shared/ui/shadcn";
 import { QuestionList } from "@/widgets/question-list";
@@ -28,7 +29,7 @@ export function BookmarkListView({ listId }: { listId: string }) {
     notFound,
     removeQuestionLocal,
     applyRename,
-  } = useBookmarkList(listId, locale as Locale);
+  } = useBookmarkList(listId, parseLanguage(locale));
 
   const { saving, error: mutationError, run: runMutation } = useMutationState();
 

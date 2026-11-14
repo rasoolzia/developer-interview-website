@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { getLocale } from "next-intl/server";
 
 import { getQuestionDetails } from "@/entities/question/api";
-import { decodeUrlParam } from "@/shared/lib";
-import type { Language } from "@/shared/types";
+import { decodeUrlParam, parseLanguage } from "@/shared/lib";
 import { QuestionDetailsView } from "@/views/question";
 
 type Props = {
@@ -16,14 +16,17 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale, domain, topic, questionSlug } = await params;
+  const [{ domain, topic, questionSlug }, locale] = await Promise.all([
+    params,
+    getLocale(),
+  ]);
 
   const decodedQuestionSlug = decodeUrlParam(questionSlug);
 
   const questionDetails = await getQuestionDetails(
     domain,
     topic,
-    locale as Language,
+    parseLanguage(locale),
     decodedQuestionSlug,
   );
 
@@ -48,14 +51,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function QuestionPage({ params }: Props) {
-  const { locale, domain, topic, questionSlug } = await params;
+  const [{ domain, topic, questionSlug }, locale] = await Promise.all([
+    params,
+    getLocale(),
+  ]);
 
   const decodedQuestionSlug = decodeUrlParam(questionSlug);
 
   const questionDetails = await getQuestionDetails(
     domain,
     topic,
-    locale as Language,
+    parseLanguage(locale),
     decodedQuestionSlug,
   );
 

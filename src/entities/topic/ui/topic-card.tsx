@@ -3,6 +3,7 @@ import { useTranslations } from "next-intl";
 import type { Topic } from "@/entities/topic/model";
 import { ROUTES } from "@/shared/config";
 import type { Locale } from "@/shared/config/i18n";
+import { parseLanguage } from "@/shared/lib";
 import { BaseCard } from "@/shared/ui";
 
 type TopicCardProps = {
@@ -19,7 +20,7 @@ export function TopicCard({
   showArrow,
 }: TopicCardProps) {
   const t = useTranslations("topic");
-  const totalQuestions = topic.languages[locale]?.total ?? 0;
+  const totalQuestions = topic.languages[parseLanguage(locale)]?.total ?? 0;
 
   return (
     <BaseCard href={ROUTES.topic(domainSlug, topic.slug)} showArrow={showArrow}>

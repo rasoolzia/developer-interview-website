@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { getLocale } from "next-intl/server";
 
-import type { Locale } from "@/shared/config/i18n";
 import { TopicsView } from "@/views/topic";
 import { getDomainBySlug } from "@/views/topic/api";
 
@@ -24,14 +24,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function DomainPage({ params }: Props) {
-  const { domain, locale } = await params;
+  const [{ domain }, locale] = await Promise.all([params, getLocale()]);
+
   const data = await getDomainBySlug(domain);
 
   if (!data) {
     notFound();
   }
 
-  return (
-    <TopicsView groups={[data]} locale={locale as Locale} isSingleDomain />
-  );
+  return <TopicsView groups={[data]} locale={locale} isSingleDomain />;
 }

@@ -1,10 +1,12 @@
+import type { Language } from "@/shared/types";
+
 export interface SearchFilters {
   query?: string;
   domain?: string;
   topic?: string;
   difficulty?: string;
   category?: string;
-  language: string;
+  language: Language;
   page?: number;
 }
 

@@ -6,8 +6,8 @@ import { useState } from "react";
 
 import type { BookmarkList } from "@/features/bookmark/model";
 import { bookmarkRepository } from "@/features/bookmark/storage";
-import { Locale } from "@/shared/config/i18n";
 import { useMutationState } from "@/shared/hooks";
+import { parseLanguage } from "@/shared/lib";
 import { ConfirmationDialog } from "@/shared/ui";
 import { Button, Input } from "@/shared/ui/shadcn";
 
@@ -18,7 +18,9 @@ import { BookmarkLoading } from "./bookmark-loading";
 export function BookmarksView() {
   const t = useTranslations("management.bookmarks");
   const locale = useLocale();
-  const { lists, loading, error, reload } = useBookmarkLists(locale as Locale);
+  const { lists, loading, error, reload } = useBookmarkLists(
+    parseLanguage(locale),
+  );
   const { saving, error: mutationError, run: runMutation } = useMutationState();
 
   const [name, setName] = useState("");

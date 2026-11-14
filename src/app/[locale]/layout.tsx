@@ -2,15 +2,16 @@ import "./../globals.css";
 
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
-import { hasLocale, NextIntlClientProvider } from "next-intl";
+import { NextIntlClientProvider } from "next-intl";
 import {
+  getLocale,
   getMessages,
   getTranslations,
   setRequestLocale,
 } from "next-intl/server";
 import { Suspense } from "react";
 
-import { getDirection, routing } from "@/shared/config/i18n";
+import { getDirection, isLocale, routing } from "@/shared/config/i18n";
 import { BRAND_COLORS } from "@/shared/constants";
 import { vazirmatn } from "@/shared/styles/fonts";
 import { Footer, FooterLoading } from "@/widgets/footer";
@@ -23,13 +24,8 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}): Promise<Metadata> {
-  const { locale } = await params;
-
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
   const t = await getTranslations({
     locale,
     namespace: "common.Metadata",
@@ -97,7 +93,7 @@ async function IntlProvider({ children }: { children: React.ReactNode }) {
 export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;
 
-  if (!hasLocale(routing.locales, locale)) {
+  if (!isLocale(locale)) {
     notFound();
   }
 

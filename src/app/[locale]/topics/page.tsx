@@ -1,14 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
-import type { Locale } from "@/shared/config/i18n";
 import { TopicsView } from "@/views/topic";
 import { getAllDomains } from "@/views/topic/api";
-
-type Props = {
-  params: Promise<{ locale: string }>;
-};
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("common.site");
@@ -19,9 +14,9 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function TopicsPage({ params }: Props) {
-  const [{ locale }, topicsByDomain] = await Promise.all([
-    params,
+export default async function TopicsPage() {
+  const [locale, topicsByDomain] = await Promise.all([
+    getLocale(),
     getAllDomains(),
   ]);
 
@@ -29,5 +24,5 @@ export default async function TopicsPage({ params }: Props) {
     notFound();
   }
 
-  return <TopicsView groups={topicsByDomain} locale={locale as Locale} />;
+  return <TopicsView groups={topicsByDomain} locale={locale} />;
 }

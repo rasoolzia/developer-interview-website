@@ -1,6 +1,6 @@
 import { getLocale, getTranslations } from "next-intl/server";
 
-import { Locale } from "@/shared/config/i18n";
+import { parseLanguage } from "@/shared/lib";
 import { Container } from "@/shared/ui";
 
 import { getLandingStats } from "../../../api";
@@ -11,6 +11,7 @@ export async function StatsSection() {
     getLandingStats(),
     getTranslations("landing.stats"),
   ]);
+  const questions = stats.questions[parseLanguage(locale)] ?? 0;
 
   return (
     <section className="bg-muted/30 border-y">
@@ -24,10 +25,7 @@ export async function StatsSection() {
         </div>
 
         <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
-          <StatCard
-            title={t("questions")}
-            value={stats.questions[locale as Locale]}
-          />
+          <StatCard title={t("questions")} value={questions} />
 
           <StatCard title={t("topics")} value={stats.topics} />
 
@@ -40,7 +38,7 @@ export async function StatsSection() {
   );
 }
 
-function StatCard({ title, value }: { title: string; value: number }) {
+function StatCard({ title, value = 0 }: { title: string; value: number }) {
   return (
     <div className="bg-card rounded-xl border p-6 text-center shadow-sm sm:p-8">
       <div dir="ltr" className="text-3xl font-bold tabular-nums sm:text-4xl">
