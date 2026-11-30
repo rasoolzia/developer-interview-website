@@ -154,6 +154,7 @@ export function BookmarkListView({ listId }: { listId: string }) {
       ) : (
         <QuestionList
           questions={questions}
+          getHref={(question) => ROUTES.bookmarkReview(listId, question.id)}
           getAction={(question) => (
             <Button
               type="button"

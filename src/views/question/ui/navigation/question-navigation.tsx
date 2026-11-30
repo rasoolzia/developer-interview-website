@@ -16,6 +16,9 @@ type Props = {
   question: Question;
   previousSlug?: string;
   nextSlug?: string;
+  previousQuestionId?: string;
+  nextQuestionId?: string;
+  bookmarkListId?: string;
   onNavigate?: () => void;
   className?: string;
 };
@@ -43,6 +46,9 @@ export function QuestionNavigation({
   question,
   previousSlug,
   nextSlug,
+  previousQuestionId,
+  nextQuestionId,
+  bookmarkListId,
   onNavigate,
   className,
 }: Props) {
@@ -52,19 +58,22 @@ export function QuestionNavigation({
   const [isPending, startTransition] = useTransition();
   const [navigatingTo, setNavigatingTo] = useState<Direction | null>(null);
 
-  const slugs: Record<Direction, string | undefined> = {
-    previous: previousSlug,
-    next: nextSlug,
-  };
+  const useBookmarkNav = bookmarkListId != null;
 
-  const navigateQuestion = (direction: Direction, questionSlug: string) => {
+  const neighbors: Record<Direction, string | undefined> = useBookmarkNav
+    ? { previous: previousQuestionId, next: nextQuestionId }
+    : { previous: previousSlug, next: nextSlug };
+
+  const navigateQuestion = (direction: Direction, target: string) => {
     setNavigatingTo(direction);
     onNavigate?.();
 
     startTransition(() => {
-      router.push(
-        ROUTES.question(question.domain, question.topic, questionSlug),
-      );
+      const href = useBookmarkNav
+        ? ROUTES.bookmarkReview(bookmarkListId, target)
+        : ROUTES.question(question.domain, question.topic, target);
+
+      router.push(href);
     });
   };
 
@@ -72,8 +81,8 @@ export function QuestionNavigation({
     <nav className={cn("flex gap-2", className)}>
       {NAV_ITEMS.map(
         ({ direction, icon: Icon, labelKey, iconClassName, iconPosition }) => {
-          const slug = slugs[direction];
-          if (!slug) return null;
+          const target = neighbors[direction];
+          if (!target) return null;
 
           const isLoading = isPending && navigatingTo === direction;
           const indicator = isLoading ? (
@@ -88,7 +97,7 @@ export function QuestionNavigation({
               variant="outline"
               className="group flex-1 cursor-pointer"
               disabled={isPending}
-              onClick={() => navigateQuestion(direction, slug)}
+              onClick={() => navigateQuestion(direction, target)}
             >
               {iconPosition === "start" && indicator}
               {t(labelKey)}

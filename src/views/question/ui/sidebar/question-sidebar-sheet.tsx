@@ -18,12 +18,14 @@ import {
 import { QuestionSidebarContent } from "./question-sidebar-content";
 
 type Props = QuestionDetails & {
+  bookmarkListId?: string;
   className?: string;
 };
 
 export function QuestionSidebarSheet({
   question,
   navigation,
+  bookmarkListId,
   className,
 }: Props) {
   const t = useTranslations("question");
@@ -53,6 +55,7 @@ export function QuestionSidebarSheet({
             <QuestionSidebarContent
               question={question}
               navigation={navigation}
+              bookmarkListId={bookmarkListId}
               onNavigate={() => setOpen(false)}
             />
           </div>

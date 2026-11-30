@@ -7,17 +7,32 @@ import { QuestionProgress } from "./navigation/question-progress";
 import { QuestionSidebar } from "./sidebar/question-sidebar";
 import { QuestionSidebarSheet } from "./sidebar/question-sidebar-sheet";
 
-export function QuestionDetailsView({ question, navigation }: QuestionDetails) {
+type Props = QuestionDetails & {
+  bookmarkListId?: string;
+};
+
+export function QuestionDetailsView({
+  question,
+  navigation,
+  header,
+  bookmarkListId,
+}: Props) {
   return (
     <main className="mx-auto max-w-7xl lg:flex lg:gap-10 lg:px-6">
       <QuestionSidebarSheet
         className="mb-6 lg:hidden"
         question={question}
         navigation={navigation}
+        bookmarkListId={bookmarkListId}
       />
 
       <article className="min-w-0 flex-1 lg:max-w-4xl">
-        <QuestionHeader className="mb-10" question={question} />
+        <QuestionHeader
+          className="mb-10"
+          question={question}
+          backHref={header?.backHref}
+          backPage={header?.backPage}
+        />
 
         <QuestionContent markdown={question.markdown} />
 
@@ -31,6 +46,9 @@ export function QuestionDetailsView({ question, navigation }: QuestionDetails) {
           question={question}
           previousSlug={navigation.previousSlug}
           nextSlug={navigation.nextSlug}
+          previousQuestionId={navigation.previousQuestionId}
+          nextQuestionId={navigation.nextQuestionId}
+          bookmarkListId={bookmarkListId}
         />
       </article>
 
@@ -38,6 +56,7 @@ export function QuestionDetailsView({ question, navigation }: QuestionDetails) {
         className="hidden w-72 shrink-0 lg:block"
         question={question}
         navigation={navigation}
+        bookmarkListId={bookmarkListId}
       />
     </main>
   );

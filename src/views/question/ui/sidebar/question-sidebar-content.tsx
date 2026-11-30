@@ -6,12 +6,14 @@ import { QuestionActions } from "../question-actions";
 import { QuestionInfo } from "../question-info";
 
 type Props = QuestionDetails & {
+  bookmarkListId?: string;
   onNavigate?: () => void;
 };
 
 export function QuestionSidebarContent({
   question,
   navigation,
+  bookmarkListId,
   onNavigate,
 }: Props) {
   return (
@@ -30,6 +32,9 @@ export function QuestionSidebarContent({
         question={question}
         previousSlug={navigation.previousSlug}
         nextSlug={navigation.nextSlug}
+        previousQuestionId={navigation.previousQuestionId}
+        nextQuestionId={navigation.nextQuestionId}
+        bookmarkListId={bookmarkListId}
         onNavigate={onNavigate}
       />
     </div>

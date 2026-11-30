@@ -8,18 +8,27 @@ import { BackLink } from "@/shared/ui";
 type Props = {
   question: Question;
   className?: string;
+  backHref?: string;
+  backPage?: string;
 };
 
-export function QuestionHeader({ question, className }: Props) {
+export function QuestionHeader({
+  question,
+  className,
+  backHref,
+  backPage,
+}: Props) {
   const t = useTranslations("topic");
 
   return (
     <header className={className}>
       <BackLink
-        href={ROUTES.topic(question.domain, question.topic)}
+        href={backHref ?? ROUTES.topic(question.domain, question.topic)}
         className="mb-4"
       >
-        {t("backToPage", { page: formatLabel(question.topic) })}
+        {t("backToPage", {
+          page: backPage ?? formatLabel(question.topic),
+        })}
       </BackLink>
 
       <h1 className="text-2xl leading-tight font-bold tracking-tight sm:text-3xl">

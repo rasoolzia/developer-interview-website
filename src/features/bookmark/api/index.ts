@@ -1,1 +1,4 @@
-export { getBookmarkedQuestions } from "./bookmark.service";
+export {
+  getBookmarkedQuestions,
+  resolveBookmarkListContext,
+} from "./bookmark.service";

@@ -7,6 +7,9 @@ export const ROUTES = {
 
   bookmarkList: (listId: string) => `/bookmarks/${listId}`,
 
+  bookmarkReview: (listId: string, questionId: string) =>
+    `/bookmarks/${listId}/review/${questionId}`,
+
   reports: "/reports",
 
   topics: "/topics",

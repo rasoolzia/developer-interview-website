@@ -9,6 +9,7 @@ import { Badge } from "@/shared/ui/shadcn";
 
 type Props = {
   question: QuestionBase;
+  href?: string;
   action?: React.ReactNode;
   showArrow?: boolean;
 };
@@ -17,6 +18,7 @@ const VISIBLE_CATEGORIES = 2;
 
 export function QuestionCard({
   question,
+  href,
   action,
   showArrow: showArrowProp,
 }: Props) {
@@ -28,7 +30,9 @@ export function QuestionCard({
 
   return (
     <BaseCard
-      href={ROUTES.question(question.domain, question.topic, question.slug)}
+      href={
+        href ?? ROUTES.question(question.domain, question.topic, question.slug)
+      }
       showArrow={showArrow}
       action={action}
     >

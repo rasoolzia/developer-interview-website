@@ -1,1 +1,5 @@
-export { getQuestionDetails, getQuestions } from "./question.service";
+export {
+  getQuestionById,
+  getQuestionDetails,
+  getQuestions,
+} from "./question.service";

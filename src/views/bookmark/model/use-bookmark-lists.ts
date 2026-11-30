@@ -2,7 +2,10 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-import { getBookmarkedQuestions } from "@/features/bookmark/api";
+import {
+  getBookmarkedQuestions,
+  resolveBookmarkListContext,
+} from "@/features/bookmark/api";
 import type { BookmarkList } from "@/features/bookmark/model";
 import { bookmarkRepository } from "@/features/bookmark/storage";
 import type { Language, QuestionBase } from "@/shared/types";
@@ -27,11 +30,9 @@ export async function fetchListWithQuestions(
   listId: string,
   language: Language,
 ): Promise<{ list: BookmarkList; questions: QuestionBase[] } | null> {
-  const lists = await bookmarkRepository.getLists();
-  const list = lists.find((item) => item.id === listId);
-  if (!list) return null;
-  const questions = await getBookmarkedQuestions(listId, language);
-  return { list, questions };
+  const context = await resolveBookmarkListContext(listId, language);
+  if (!context) return null;
+  return { list: context.list, questions: context.questions };
 }
 
 // ---------- Hook: all lists ----------
