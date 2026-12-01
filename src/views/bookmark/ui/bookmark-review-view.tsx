@@ -51,5 +51,19 @@ export function BookmarkReviewView({
     );
   }
 
-  return <QuestionDetailsView {...details} bookmarkListId={listId} />;
+  const { previousQuestionId, nextQuestionId } = details.navigation;
+
+  return (
+    <QuestionDetailsView
+      {...details}
+      navigationHrefs={{
+        previous: previousQuestionId
+          ? ROUTES.bookmarkReview(listId, previousQuestionId)
+          : undefined,
+        next: nextQuestionId
+          ? ROUTES.bookmarkReview(listId, nextQuestionId)
+          : undefined,
+      }}
+    />
+  );
 }

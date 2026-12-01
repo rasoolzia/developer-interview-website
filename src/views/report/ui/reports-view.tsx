@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { reportRepository } from "@/features/report/storage";
+import { ROUTES } from "@/shared/config";
 import { useMutationState } from "@/shared/hooks";
 import { parseLanguage } from "@/shared/lib";
 import { ConfirmationDialog } from "@/shared/ui";
@@ -48,6 +49,7 @@ export function ReportsView() {
       ) : (
         <QuestionList
           questions={questions}
+          getHref={(question) => ROUTES.reportReview(question.id)}
           getAction={(question) => (
             <Button
               type="button"

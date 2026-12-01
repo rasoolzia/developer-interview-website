@@ -1,16 +1,17 @@
 import type { QuestionDetails } from "@/entities/question/model";
 
+import type { QuestionNavigationHrefs } from "../../model/question-navigation.model";
 import { QuestionSidebarContent } from "./question-sidebar-content";
 
 type Props = QuestionDetails & {
-  bookmarkListId?: string;
+  navigationHrefs?: QuestionNavigationHrefs;
   className?: string;
 };
 
 export function QuestionSidebar({
   question,
   navigation,
-  bookmarkListId,
+  navigationHrefs,
   className,
 }: Props) {
   return (
@@ -19,7 +20,7 @@ export function QuestionSidebar({
         <QuestionSidebarContent
           question={question}
           navigation={navigation}
-          bookmarkListId={bookmarkListId}
+          navigationHrefs={navigationHrefs}
         />
       </div>
     </aside>

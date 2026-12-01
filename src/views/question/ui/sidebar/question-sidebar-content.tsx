@@ -1,19 +1,20 @@
 import type { QuestionDetails } from "@/entities/question/model";
 
+import type { QuestionNavigationHrefs } from "../../model/question-navigation.model";
 import { QuestionNavigation } from "../navigation/question-navigation";
 import { QuestionProgress } from "../navigation/question-progress";
 import { QuestionActions } from "../question-actions";
 import { QuestionInfo } from "../question-info";
 
 type Props = QuestionDetails & {
-  bookmarkListId?: string;
+  navigationHrefs?: QuestionNavigationHrefs;
   onNavigate?: () => void;
 };
 
 export function QuestionSidebarContent({
   question,
   navigation,
-  bookmarkListId,
+  navigationHrefs,
   onNavigate,
 }: Props) {
   return (
@@ -32,9 +33,7 @@ export function QuestionSidebarContent({
         question={question}
         previousSlug={navigation.previousSlug}
         nextSlug={navigation.nextSlug}
-        previousQuestionId={navigation.previousQuestionId}
-        nextQuestionId={navigation.nextQuestionId}
-        bookmarkListId={bookmarkListId}
+        navigationHrefs={navigationHrefs}
         onNavigate={onNavigate}
       />
     </div>

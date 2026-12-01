@@ -1,5 +1,6 @@
 import type { QuestionDetails } from "@/entities/question/model";
 
+import type { QuestionNavigationHrefs } from "../model/question-navigation.model";
 import { QuestionContent } from "./content/question-content";
 import { QuestionHeader } from "./navigation/question-header";
 import { QuestionNavigation } from "./navigation/question-navigation";
@@ -8,14 +9,14 @@ import { QuestionSidebar } from "./sidebar/question-sidebar";
 import { QuestionSidebarSheet } from "./sidebar/question-sidebar-sheet";
 
 type Props = QuestionDetails & {
-  bookmarkListId?: string;
+  navigationHrefs?: QuestionNavigationHrefs;
 };
 
 export function QuestionDetailsView({
   question,
   navigation,
   header,
-  bookmarkListId,
+  navigationHrefs,
 }: Props) {
   return (
     <main className="mx-auto max-w-7xl lg:flex lg:gap-10 lg:px-6">
@@ -23,7 +24,7 @@ export function QuestionDetailsView({
         className="mb-6 lg:hidden"
         question={question}
         navigation={navigation}
-        bookmarkListId={bookmarkListId}
+        navigationHrefs={navigationHrefs}
       />
 
       <article className="min-w-0 flex-1 lg:max-w-4xl">
@@ -46,9 +47,7 @@ export function QuestionDetailsView({
           question={question}
           previousSlug={navigation.previousSlug}
           nextSlug={navigation.nextSlug}
-          previousQuestionId={navigation.previousQuestionId}
-          nextQuestionId={navigation.nextQuestionId}
-          bookmarkListId={bookmarkListId}
+          navigationHrefs={navigationHrefs}
         />
       </article>
 
@@ -56,7 +55,7 @@ export function QuestionDetailsView({
         className="hidden w-72 shrink-0 lg:block"
         question={question}
         navigation={navigation}
-        bookmarkListId={bookmarkListId}
+        navigationHrefs={navigationHrefs}
       />
     </main>
   );

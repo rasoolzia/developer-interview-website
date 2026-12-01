@@ -10,15 +10,15 @@ import { useRouter } from "@/shared/config/i18n";
 import { cn } from "@/shared/lib";
 import { Button } from "@/shared/ui/shadcn";
 
+import type { QuestionNavigationHrefs } from "../../model/question-navigation.model";
+
 type Direction = "previous" | "next";
 
 type Props = {
   question: Question;
   previousSlug?: string;
   nextSlug?: string;
-  previousQuestionId?: string;
-  nextQuestionId?: string;
-  bookmarkListId?: string;
+  navigationHrefs?: QuestionNavigationHrefs;
   onNavigate?: () => void;
   className?: string;
 };
@@ -46,9 +46,7 @@ export function QuestionNavigation({
   question,
   previousSlug,
   nextSlug,
-  previousQuestionId,
-  nextQuestionId,
-  bookmarkListId,
+  navigationHrefs,
   onNavigate,
   className,
 }: Props) {
@@ -58,10 +56,11 @@ export function QuestionNavigation({
   const [isPending, startTransition] = useTransition();
   const [navigatingTo, setNavigatingTo] = useState<Direction | null>(null);
 
-  const useBookmarkNav = bookmarkListId != null;
-
-  const neighbors: Record<Direction, string | undefined> = useBookmarkNav
-    ? { previous: previousQuestionId, next: nextQuestionId }
+  const neighbors: Record<Direction, string | undefined> = navigationHrefs
+    ? {
+        previous: navigationHrefs.previous,
+        next: navigationHrefs.next,
+      }
     : { previous: previousSlug, next: nextSlug };
 
   const navigateQuestion = (direction: Direction, target: string) => {
@@ -69,8 +68,8 @@ export function QuestionNavigation({
     onNavigate?.();
 
     startTransition(() => {
-      const href = useBookmarkNav
-        ? ROUTES.bookmarkReview(bookmarkListId, target)
+      const href = navigationHrefs
+        ? target
         : ROUTES.question(question.domain, question.topic, target);
 
       router.push(href);

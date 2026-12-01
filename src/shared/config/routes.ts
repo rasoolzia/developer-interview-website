@@ -12,6 +12,8 @@ export const ROUTES = {
 
   reports: "/reports",
 
+  reportReview: (questionId: string) => `/reports/review/${questionId}`,
+
   topics: "/topics",
 
   domains: "/domains",

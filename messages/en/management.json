@@ -27,6 +27,8 @@
     "title": "Reported questions",
     "empty": "You have no reported questions.",
     "error": "We could not load your reported questions.",
+    "questionUnavailable": "This question is no longer in your reports.",
+    "questionNotFound": "This question could not be found.",
     "removeTitle": "Remove report",
     "removeDescription": "Are you sure you want to remove this report?",
     "remove": "Remove report",

@@ -15,17 +15,18 @@ import {
   SheetTrigger,
 } from "@/shared/ui/shadcn";
 
+import type { QuestionNavigationHrefs } from "../../model/question-navigation.model";
 import { QuestionSidebarContent } from "./question-sidebar-content";
 
 type Props = QuestionDetails & {
-  bookmarkListId?: string;
+  navigationHrefs?: QuestionNavigationHrefs;
   className?: string;
 };
 
 export function QuestionSidebarSheet({
   question,
   navigation,
-  bookmarkListId,
+  navigationHrefs,
   className,
 }: Props) {
   const t = useTranslations("question");
@@ -55,7 +56,7 @@ export function QuestionSidebarSheet({
             <QuestionSidebarContent
               question={question}
               navigation={navigation}
-              bookmarkListId={bookmarkListId}
+              navigationHrefs={navigationHrefs}
               onNavigate={() => setOpen(false)}
             />
           </div>
