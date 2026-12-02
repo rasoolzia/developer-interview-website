@@ -37,7 +37,7 @@ export function ReportsView() {
   if (loading) return <ReportLoading />;
 
   return (
-    <div className="space-y-6 py-6 sm:py-8">
+    <div className="space-y-6">
       <h1 className="text-2xl font-bold sm:text-3xl">{t("title")}</h1>
 
       {(error || mutationError) && (

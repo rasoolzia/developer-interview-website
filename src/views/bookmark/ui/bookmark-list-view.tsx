@@ -94,7 +94,7 @@ export function BookmarkListView({ listId }: { listId: string }) {
   }
 
   return (
-    <div className="space-y-6 py-6 sm:py-8">
+    <div className="space-y-6">
       <BackLink href={ROUTES.bookmarks}>{t("title")}</BackLink>
 
       <div className="flex flex-wrap items-center justify-between gap-3">

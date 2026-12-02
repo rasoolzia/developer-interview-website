@@ -43,7 +43,7 @@ export const indexedDbBookmarkRepository: BookmarkRepository = {
 
     const now = Date.now();
     const list: BookmarkList = {
-      id: crypto.randomUUID(),
+      id: crypto.randomUUID().split("-")[0],
       name: trimmed,
       createdAt: now,
       updatedAt: now,

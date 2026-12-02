@@ -58,7 +58,7 @@ export function BookmarksView() {
   if (loading) return <BookmarkLoading />;
 
   return (
-    <div className="space-y-6 py-6 sm:py-8">
+    <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-2xl font-bold sm:text-3xl">{t("title")}</h1>
         <form onSubmit={createList} className="flex w-full gap-2 sm:w-auto">

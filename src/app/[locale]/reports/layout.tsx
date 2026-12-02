@@ -5,5 +5,9 @@ type Props = {
 };
 
 export default function SearchLayout({ children }: Props) {
-  return <Container>{children}</Container>;
+  return (
+    <Container className="py-6" as="section">
+      {children}
+    </Container>
+  );
 }
